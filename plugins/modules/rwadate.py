@@ -117,9 +117,8 @@ async def account_logins(bot,subjectid,chatid):
                 except Exception as e:
                     print(e)
                 # print(all_important)
-                    
-            # date="2024-05-31"
-            date=get_current_date()
+            date="2024-05-31"
+            #date=get_current_date()
             print(all_important.keys())
             # print(date)
             if  date not in all_important.keys():
