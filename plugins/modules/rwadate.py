@@ -1,36 +1,17 @@
 import asyncio
 import aiohttp
-import base64,pytz
+import base64
+import pytz
 from pytz import utc
-from datetime import datetime, time,timedelta
-
-from pyrogram import  filters
-from .. import bot as Client
-from .. import bot
+from datetime import datetime, timedelta
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
 
-import pytz
-
-def get_current_date():
-    # Get the current time in IST
-    ist = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist)
-    yesterday = now - timedelta(days=1)
-    formatted_date = yesterday.strftime("%Y-%m-%d")
-    return formatted_date
-
-
-def convert_timestamp_to_datetime(timestamp: int) -> str:
-    date_time = datetime.utcfromtimestamp(timestamp)
-    return date_time.strftime('%Y-%m-%d')
+AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
 
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
@@ -48,27 +29,23 @@ def decrypt_link(link):
         pass
     except Exception as e:
         pass
-    
+
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+
 async def all_subject_send(bot):
-    subject_and_channel = {828:-1002220717270, 829:-1002150895743, 830:-1002215220596, 831:-1002160342193,832:-1002223971836,833:-1002175682830,917:-1002212816386}
-    # subject_and_channel = {828:6741261680, 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
+    subject_and_channel = {828: -1002220717270, 829: -1002150895743, 830: -1002215220596, 831: -1002160342193, 832: -1002223971836, 833: -1002175682830, 917: -1002212816386}
     for subjectid, chatid in subject_and_channel.items():
         try:
-            await account_logins(bot,subjectid, chatid)
-            # asyncio.sleep(180)
+            await account_logins(bot, subjectid, chatid)
         except FloodWait as e:
-            asyncio.sleep(e.value)
-            await account_logins(bot,subjectid, chatid)
-            
-        
+            await asyncio.sleep(e.value)
+            await account_logins(bot, subjectid, chatid)
 
-
-async def account_logins(bot,subjectid,chatid):
-    userid ="1245678"
+async def account_logins(bot, subjectid, chatid):
+    userid = "1245678"
     async with aiohttp.ClientSession() as session:
         try:
-            token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY2ODEzOTAiLCJlbWFpbCI6InByYWNoaXlhZGF2MTIzNEBnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3MTQxODgwNDV9.Q9sHS33SjupDr0dvAnCjweKU2fdamClFBfFGg8hC66U"
+            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY2ODEzOTAiLCJlbWFpbCI6InByYWNoaXlhZGF2MTIzNEBnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3MTQxODgwNDV9.Q9sHS33SjupDr0dvAnCjweKU2fdamClFBfFGg8hC66U"
             hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
@@ -78,27 +55,20 @@ async def account_logins(bot,subjectid,chatid):
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
            
-            bname=bdetail[0]["course_name"]
-            # print(bdetail)
+            bname = bdetail[0]["course_name"]
             
-            
-            all_urls = ""
-            
-            
+            all_important = {}
             
             res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=156&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
-            # print(topic)
             
             topicids = [i["topicid"] for i in topic]
-            all_important = {}
                 
             for t in topicids:
                 url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=156&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
-                # print(videodata)
                 
                 try:
                     for i in videodata:
@@ -110,13 +80,9 @@ async def account_logins(bot,subjectid,chatid):
                         }
                 except Exception as e:
                     print(e)
-                # print(all_important)
-            #date="2024-05-31"
-            date=get_current_date()
-            print(all_important.keys())
-            print(date)
-            if  date not in all_important.keys():
-                
+            
+            date = get_current_date()
+            if date not in all_important.keys():
                 return await bot.send_message(chatid,text="🐇दोस्तों कल इस विषय में कोई 𝐂𝐥𝐚𝐬𝐬 , नहीं हुई थी, आपलोग 𝐑𝐞𝐯𝐢𝐬𝐢𝐨𝐧 करिए❤️")
 
             data = all_important[date]
@@ -137,11 +103,22 @@ async def account_logins(bot,subjectid,chatid):
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot,all_urls,bname,chatid)
+            await account_login(bot, all_urls, bname, chatid)
         
         except Exception as e:
             print(f"An error occurred: {e}")
-            # await m.reply(f"An error occurred. Please try again. {e}")
+
+def get_current_date():
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    yesterday = now - timedelta(days=1)
+    formatted_date = yesterday.strftime("%Y-%m-%d")
+    return formatted_date
+
+def convert_timestamp_to_datetime(timestamp: int) -> str:
+    date_time = datetime.utcfromtimestamp(timestamp)
+    return date_time.strftime('%Y-%m-%d')
+
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
