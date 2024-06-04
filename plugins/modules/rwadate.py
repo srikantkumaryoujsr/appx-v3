@@ -119,7 +119,6 @@ async def account_logins(bot,subjectid,chatid):
                 # print(all_important)
                     
              date="2024-05-31"
-            date=get_current_date()
             print(all_important.keys())
             # print(date)
             if  date not in all_important.keys():
@@ -152,8 +151,8 @@ async def account_logins(bot,subjectid,chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-     hour=6,
-     minute=55,
+     hour=07,
+     minute=07,
      second=0, 
      args=[Client]
 )
