@@ -52,7 +52,7 @@ def decrypt_link(link):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def all_subject_send(bot):
     subject_and_channel = {828:-1002220717270, 829:-1002150895743, 830:-1002215220596, 831:-1002160342193,832:-1002223971836,833:-1002175682830,917:-1002212816386}
-    # subject_and_channel = {828: "@RPF_TEST", 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
+    # subject_and_channel = {828: "@RPF_RWA", 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
     for subjectid, chatid in subject_and_channel.items():
         try:
             await account_logins(bot,subjectid, chatid)
@@ -146,7 +146,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=15,
-     minute=2,
+     minute=11,
      second=0, 
      args=[Client]
 )
