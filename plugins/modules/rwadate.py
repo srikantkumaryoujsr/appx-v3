@@ -2,7 +2,7 @@ import asyncio
 import aiohttp
 import base64,pytz
 from pytz import utc
-from datetime import datetime, time
+from datetime import datetime, time,timedelta
 
 from pyrogram import  filters
 from .. import bot as Client
@@ -146,8 +146,8 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=11,
-     minute=3,
-     second=10, 
+     minute=7,
+     second=0, 
      args=[Client]
 )
 
