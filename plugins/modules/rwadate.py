@@ -23,14 +23,8 @@ def get_current_date():
     # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
-
-    # Extract year, month, and date
-    current_year = now.year
-    current_month = now.month
-    current_date = now.day-1
-
-    
-    formatted_date = now.strftime("%Y-%m-%d")
+    yesterday = now - timedelta(days=1)
+    formatted_date = yesterday.strftime("%Y-%m-%d")
     return formatted_date
 
 
@@ -151,8 +145,8 @@ async def account_logins(bot,subjectid,chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-     hour=10,
-     minute=53,
+     hour=11,
+     minute=3,
      second=10, 
      args=[Client]
 )
