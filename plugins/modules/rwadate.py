@@ -117,7 +117,7 @@ async def account_logins(bot,subjectid,chatid):
             print(date)
             if  date not in all_important.keys():
                 
-                return await bot.send_message(chatid,text="🐇NO CLASS TODAY AAJ REVISION KARO BALKON❤️")
+                return await bot.send_message(chatid,text="🐇दोस्तों कल इस विषय में कोई 𝐂𝐥𝐚𝐬𝐬 , नहीं हुई थी, आपलोग 𝐑𝐞𝐯𝐢𝐬𝐢𝐨𝐧 करिए❤️")
 
             data = all_important[date]
             title = data.get("title")
