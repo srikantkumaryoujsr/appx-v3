@@ -3,7 +3,7 @@ import aiohttp
 import base64,pytz
 from pytz import utc
 from datetime import datetime, time,timedelta
-
+import signal
 from pyrogram import  filters
 from .. import bot as Client
 from .. import bot
