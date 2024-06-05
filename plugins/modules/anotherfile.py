@@ -116,7 +116,7 @@ async def start_msg(bot, message):
     await bot.send_photo(
         message.chat.id,
         photo="http://graph.org/file/3d4121f27426f00e58063.jpg",
-        caption="**𝐇𝐢, 𝐈 𝐚𝐦 𝐀𝐥𝐢𝐯𝐞..𝐈 𝐚𝐦 𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐨𝐫 𝐁𝐨𝐭...𝐢𝐟 𝐲𝐨𝐮 𝐰𝐚𝐧𝐭 𝐮𝐬𝐞 𝐦𝐞 𝐭𝐡𝐞𝐧 𝐬𝐞𝐧𝐝**\n\n 𝐁𝐨𝐭 𝐦𝐚𝐝𝐞 𝐛𝐲 @sarkari_student\n𝐘𝐨𝐮 𝐜𝐚𝐧 𝐞𝐱𝐭𝐫𝐚𝐜𝐭 𝐮𝐫𝐥 𝐡𝐞𝐥𝐩 𝐨𝐟 𝐭𝐡𝐢𝐬 𝐛𝐨𝐭\nSupport all App\n**𝐁𝐚𝐛𝐲  𝐛𝐨𝐭**\nPres /rwadate for rojgar date wise txt \nPres /rgdate for rg vikramjeet date wise\nPres /merge all txt merge in one\nPres /telegraph thumnail link maker",
+        caption="**𝐇𝐢, 𝐈 𝐚𝐦 𝐀𝐥𝐢𝐯𝐞..𝐈 𝐚𝐦 𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐨𝐫 𝐁𝐨𝐭...𝐢𝐟 𝐲𝐨𝐮 𝐰𝐚𝐧𝐭 𝐮𝐬𝐞 𝐦𝐞 𝐭𝐡𝐞𝐧 𝐬𝐞𝐧𝐝**\n\n 𝐁𝐨𝐭 𝐦𝐚𝐝𝐞 𝐛𝐲 @sarkari_student",
         reply_markup=reply_mark
     )
         
