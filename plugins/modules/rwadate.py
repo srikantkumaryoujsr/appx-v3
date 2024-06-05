@@ -51,8 +51,8 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def all_subject_send(bot):
-    subject_and_channel = {828: -1002195563900, 829: -1002195563900, 830: -1002195563900, 831: -1002195563900,832: -1002195563900,833: -1002195563900,917: -1002195563900}
-    # subject_and_channel = {828: "RPF_RWA", 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
+    subject_and_channel = {848: -1002172298027, 849: -1002235512099, 850: -1002211669142, 851: -1002180965513,852: -1002161059509,853: -1002149612783,854: -1002166225417}
+    # subject_and_channel = {848: "6741261680", 849:6741261680, 850:6741261680, 851:6741261680, 852:6741261680, 853:6741261680}
     for subjectid, chatid in subject_and_channel.items():
         try:
             await account_logins(bot,subjectid, chatid)
@@ -68,7 +68,7 @@ async def account_logins(bot,subjectid,chatid):
     userid ="1245678"
     async with aiohttp.ClientSession() as session:
         try:
-            token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY2ODEzOTAiLCJlbWFpbCI6InByYWNoaXlhZGF2MTIzNEBnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3MTQxODgwNDV9.Q9sHS33SjupDr0dvAnCjweKU2fdamClFBfFGg8hC66U"
+            token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjM3NTIyNDEiLCJlbWFpbCI6InNoYWtpdGt1bWFybndkODA1MTA0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxNTI0NTYwNH0.AcUSabkEnTY0kXzNaSovcHPeNPmQWh5LMltyUnJJfoU"
             hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
@@ -86,7 +86,7 @@ async def account_logins(bot,subjectid,chatid):
             
             
             
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=156&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=157&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             # print(topic)
             
@@ -94,7 +94,7 @@ async def account_logins(bot,subjectid,chatid):
             all_important = {}
                 
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=156&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=157&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
