@@ -2,8 +2,8 @@ import asyncio
 import aiohttp
 import base64,pytz
 from pytz import utc
-from datetime import datetime, time,timedelta
-import signal
+from datetime import datetime, time
+
 from pyrogram import  filters
 from .. import bot as Client
 from .. import bot
@@ -23,8 +23,14 @@ def get_current_date():
     # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
-    yesterday = now - timedelta(days=1)
-    formatted_date = yesterday.strftime("%Y-%m-%d")
+
+    # Extract year, month, and date
+    current_year = now.year
+    current_month = now.month
+    current_date = now.day
+
+    
+    formatted_date = now.strftime("%Y-%m-%d")
     return formatted_date
 
 
@@ -51,8 +57,8 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def all_subject_send(bot):
-    subject_and_channel = {848: -1002172298027, 849: -1002235512099, 850: -1002211669142, 851: -1002180965513, 852: -1002161059509,  853: -1002149612783, 854: -1002166225417}
-    # subject_and_channel = {848: -1002172298027, 849: -1002235512099, 850: -1002211669142, 851: -1002180965513, 852: -1002161059509, 853: -1002149612783, 854: -1002166225417}
+    subject_and_channel = {724: -1002078281899, 785: -1002078281899, 838: -1002078281899, 914: -1002078281899}
+    # subject_and_channel = {828: "@RPF_TEST", 829: 6741261680, 830: 6741261680, 831: 6741261680, 833:6741261680, 917:6741261680}
     for subjectid, chatid in subject_and_channel.items():
         try:
             await account_logins(bot,subjectid, chatid)
@@ -68,7 +74,7 @@ async def account_logins(bot,subjectid,chatid):
     userid ="1245678"
     async with aiohttp.ClientSession() as session:
         try:
-            token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjM3NTIyNDEiLCJlbWFpbCI6InNoYWtpdGt1bWFybndkODA1MTA0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxNTI0NTYwNH0.AcUSabkEnTY0kXzNaSovcHPeNPmQWh5LMltyUnJJfoU"
+            token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjI3MTcyODAiLCJlbWFpbCI6Imt1bGRpcGtyaXNobmExQGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxMzk0MDk3MH0.VhjdY81xSWilp_DuszLNkb79zWfo2tG8gVI_crR1lec"
             hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
@@ -86,7 +92,7 @@ async def account_logins(bot,subjectid,chatid):
             
             
             
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=157&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=126&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             # print(topic)
             
@@ -94,7 +100,7 @@ async def account_logins(bot,subjectid,chatid):
             all_important = {}
                 
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=157&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=126&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -117,7 +123,7 @@ async def account_logins(bot,subjectid,chatid):
             print(date)
             if  date not in all_important.keys():
                 
-                return await bot.send_message(chatid,text="🐇दोस्तों कल इस विषय में कोई 𝐂𝐥𝐚𝐬𝐬 , नहीं हुई थी, आपलोग 𝐑𝐞𝐯𝐢𝐬𝐢𝐨𝐧 करिए❤️")
+                return await bot.send_message(chatid,text="🐇")
 
             data = all_important[date]
             title = data.get("title")
@@ -145,8 +151,8 @@ async def account_logins(bot,subjectid,chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-     hour=7,
-     minute=30,
+    #  hour=10,
+     minute=4,
      second=10, 
      args=[Client]
 )
