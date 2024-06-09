@@ -2,8 +2,8 @@ import asyncio
 import aiohttp
 import base64,pytz
 from pytz import utc
-from datetime import datetime, time
-
+from datetime import datetime, time,timedelta
+import signal
 from pyrogram import  filters
 from .. import bot as Client
 from .. import bot
@@ -23,14 +23,8 @@ def get_current_date():
     # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
-
-    # Extract year, month, and date
-    current_year = now.year
-    current_month = now.month
-    current_date = now.day
-
-    
-    formatted_date = now.strftime("%Y-%m-%d")
+    yesterday = now - timedelta(days=1)
+    formatted_date = yesterday.strftime("%Y-%m-%d")
     return formatted_date
 
 
@@ -151,8 +145,8 @@ async def account_logins(bot,subjectid,chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-    #  hour=21,
-     minute=9,
+    #  hour=20,
+     minute=10,
      second=10, 
      args=[Client]
 )
