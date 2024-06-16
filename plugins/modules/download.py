@@ -17,6 +17,14 @@ from pyrogram.errors import FloodWait
 from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
 from pyrogram.types.messages_and_media import message
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from datetime import datetime, timedelta
+
+# Function to get yesterday's date
+def get_yesterday_date():
+    yesterday = datetime.now() - timedelta(1)
+    return yesterday.strftime("%Y-%m-%d")
+
+date = get_yesterday_date()
 
 
 
@@ -81,8 +89,8 @@ async def account_login(bot:Client, content, title, chatid):
 
             try:  
                 
-                cc = f'**[📕 ] 𝐕𝐢𝐝 𝐈𝐃 ➤** {name1} {res} 𝐃𝐒𝐏.mkv\n**𝐁𝐚𝐭𝐜𝐡 ➤** {raw_text0}\n\n**𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 ➤** {raw_text3}\n\n'
-                cc1 = f'**[📕 ] 𝐏𝐝𝐟 𝐈𝐃 ➤** {name1} 𝐃𝐒𝐏.pdf \n**𝐁𝐚𝐭𝐜𝐡 ➤** {raw_text0}\n\n**𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 ➤** {raw_text3}\n\n'
+                cc = f'**[📕 ] 𝐕𝐢𝐝 𝐈𝐃 ➤** {name1} {res} 𝐃𝐒𝐏.mkv\n**𝐁𝐚𝐭𝐜𝐡 ➤** {raw_text0}\n\n**𝐂𝐋𝐀𝐒𝐒 𝐃𝐀𝐓𝐄 ➤ {date}**\n\n**𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 ➤** {raw_text3}\n\nℍ𝔼𝕃ℙ_𝕆𝕋ℍ𝔼ℝ_𝔾𝕆𝔻_𝕎𝕀𝕃𝕃_ℍ𝔼𝕃ℙ_𝕐𝕆𝕌\n\n'
+                cc1 = f'**[📕 ] 𝐏𝐝𝐟 𝐈𝐃 ➤** {name1} 𝐃𝐒𝐏.pdf \n**𝐁𝐚𝐭𝐜𝐡 ➤** {raw_text0}\n\n**𝐏𝐃𝐅 𝐃𝐀𝐓𝐄 ➤ {date}**\n\n**𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 ➤** {raw_text3}\n\nℍ𝔼𝕃ℙ_𝕆𝕋ℍ𝔼ℝ_𝔾𝕆𝔻_𝕎𝕀𝕃𝕃_ℍ𝔼𝕃ℙ_𝕐𝕆𝕌\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -125,5 +133,4 @@ async def account_login(bot:Client, content, title, chatid):
     except Exception as e:
         await bot.send_message(chat_id=chatid,text=e)
         await m.reply_text("❤️𝘾𝙡𝙖𝙨𝙨 𝙐𝙥𝙙𝙖𝙩𝙚 𝙆𝙖𝙧 𝘿𝙞𝙮𝙖 𝙃𝙪𝙣 , 𝙍𝙚𝙖𝙘𝙩𝙞𝙤𝙣 𝘿𝙚𝙙𝙤 𝙙𝙤𝙨𝙩𝙤𝙣❤️")
-
 
