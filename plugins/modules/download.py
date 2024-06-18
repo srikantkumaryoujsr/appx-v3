@@ -19,13 +19,18 @@ from pyrogram.types.messages_and_media import message
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from datetime import datetime, timedelta
 
-# Function to get yesterday's date
-def get_yesterday_date():
-    yesterday = datetime.now() - timedelta(1)
-    return yesterday.strftime("%Y-%m-%d")
+def get_current_date():
+    # Get the current time in IST
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    yesterday = now - timedelta(days=1)
+    formatted_date = yesterday.strftime("%Y-%m-%d")
+    return formatted_date
 
-date = get_yesterday_date()
 
+def convert_timestamp_to_datetime(timestamp: int) -> str:
+    date_time = datetime.utcfromtimestamp(timestamp)
+    return date_time.strftime('%Y-%m-%d')
 
 
 @bot.on_message(filters.command("stop"))
