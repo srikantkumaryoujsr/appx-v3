@@ -133,4 +133,3 @@ async def account_login(bot: Client, content, title, chatid):
     except Exception as e:
         await bot.send_message(chat_id=chatid, text=str(e))
         await m.reply_text("❤️𝘾𝙡𝙖𝙨𝙨 𝙐𝙥𝙙𝙖𝙩𝙚 𝙆𝙖𝙧 𝘿𝙞𝙮𝙖 𝙃𝙪𝙣 , 𝙍𝙚𝙖𝙘𝙩𝙞𝙤𝙣 𝘿𝙚𝙙𝙤 𝙙𝙤𝙨𝙩𝙤𝙣❤️")
-*'
