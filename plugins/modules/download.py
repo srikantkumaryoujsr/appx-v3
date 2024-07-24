@@ -35,7 +35,7 @@ def convert_timestamp_to_datetime(timestamp: int) -> str:
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
-    await m.reply_text("**STOPPED**🚦", True)
+    await m.reply_text("**STOPPED**", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
@@ -49,7 +49,7 @@ async def account_login(bot: Client, content, title, chatid):
     raw_text2 = "360"
     if raw_text2 == "360":
         res = "640x360"
-    raw_text3 = "@sarkari_student"
+    raw_text3 = "(••÷[ कौटिल्य ]÷••)"
     MR = raw_text3
     thumb = "no"
     if len(links) == 1:
@@ -58,8 +58,6 @@ async def account_login(bot: Client, content, title, chatid):
         count = int(raw_text)
 
     try:
-        hi = await bot.send_message(chatid, text=f"**𝐓𝐨𝐭𝐚𝐥 𝐋𝐢𝐧𝐤𝐬 𝐅𝐨𝐮𝐧𝐝 𝐈𝐧 𝐓𝐗𝐓** - `{len(links)}`\n**𝐒𝐭𝐚𝐫𝐭𝐬 𝐟𝐫𝐨𝐦** - `{raw_text}`\n**𝐑𝐞𝐬𝐨𝐥𝐮𝐭𝐢𝐨𝐧** - `{res}`({raw_text2})\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞** - `{raw_text0}`\n𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 :- @sarkari_student")
-        await hi.delete()
         for i in range(count - 1, len(links)):
             V = links[i][1].replace("file/d/", "uc?export=download&id=").replace("www.youtube-nocookie.com/embed", "youtu.be").replace("?modestbranding=1", "").replace("/view?usp=sharing", "")  # .replace("mpd","m3u8")
             url = "https://" + V
@@ -93,8 +91,8 @@ async def account_login(bot: Client, content, title, chatid):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[📕 ] 𝐕𝐢𝐝 𝐈𝐃 ➤** {name1} {res} 𝐃𝐒𝐏.mkv\n**𝐁𝐚𝐭𝐜𝐡 ➤** {raw_text0}\n\n**𝐂𝐋𝐀𝐒𝐒 𝐃𝐀𝐓𝐄 ➤ {get_current_date()}**\n\n**𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 ➤** {raw_text3}\n\nℍ𝔼𝕃ℙ_𝕆𝕋ℍ𝔼ℝ_𝔾𝕆𝔻_𝕎𝕀𝕃𝕃_ℍ𝔼𝕃ℙ_𝕐𝕆𝕌\n\n'
-                cc1 = f'**[📕 ] 𝐏𝐝𝐟 𝐈𝐃 ➤** {name1} 𝐃𝐒𝐏.pdf \n**𝐁𝐚𝐭𝐜𝐡 ➤** {raw_text0}\n\n**𝐏𝐃𝐅 𝐃𝐀𝐓𝐄 ➤ {get_current_date()}**\n\n**𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 ➤** {raw_text3}\n\nℍ𝔼𝕃ℙ_𝕆𝕋ℍ𝔼ℝ_𝔾𝕆𝔻_𝕎𝕀𝕃𝕃_ℍ𝔼𝕃ℙ_𝕐𝕆𝕌\n\n'
+                cc = f'**Vid_id** {name1} {res} .mkv\n**BATCH NAME** {raw_text0}\n\n**DATE** {get_current_date()}**\n\n**Download By** {raw_text3}\n\n'
+                cc1 = f'**Pdf_id** {name1} .pdf \n**BATCH NAME** {raw_text0}\n\n**DATE** {get_current_date()}**\n\n**Download By** {raw_text3}\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -117,7 +115,7 @@ async def account_login(bot: Client, content, title, chatid):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**☞𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠:-📥➤ 𝐌𝐲 𝐁𝐨𝐬𝐬 ❤️𝐃𝐒𝐏❤️**\n\n**☞𝐍𝐚𝐦𝐞:-➤** `{name}\nQuality - {raw_text2}`\n\n**☞𝐔𝐑𝐋:-➤** `{url}`"
+                    Show = f"**🤡𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠🤡Video...**"
                     prog = await bot.send_message(chatid, text=Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
@@ -127,7 +125,7 @@ async def account_login(bot: Client, content, title, chatid):
                     time.sleep(1)
 
             except Exception as e:
-                await bot.send_message(chatid, text=f"**downloading failed bro ,guys link browser me hol lo khul jayega 🤣💔**\n{str(e)}\n**Name** - {name}\n**Link** - {url}")
+                await bot.send_message(chatid, text=f"**Link** - {url}")
                 continue
 
     except Exception as e:
