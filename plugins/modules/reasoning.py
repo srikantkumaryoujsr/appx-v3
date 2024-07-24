@@ -1,9 +1,9 @@
-import asyncio
+import asyncio, requests
 import aiohttp
 import base64,pytz
 from pytz import utc
 from datetime import datetime, time,timedelta
-import signal
+
 from pyrogram import  filters
 from .. import bot as Client
 from .. import bot
@@ -51,14 +51,14 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def all_subject_send(bot):
-    subject_and_channel = {724: -1002078281899, 785: -1002078281899, 838: -1002078281899, 914: -1002078281899}
-    # subject_and_channel = {848: -1002172298027, 849: -1002235512099, 850: -1002211669142, 851: -1002180965513, 852: -1002161059509, 853: -1002149612783, 854: -1002166225417}
+    subject_and_channel = {724: -1002078281899, 914: -1002078281899, 838: -1002078281899, 785: -1002078281899, 674: -1002078281899}
+    # subject_and_channel = {828: "RPF_RWA", 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
     for subjectid, chatid in subject_and_channel.items():
         try:
             await account_logins(bot,subjectid, chatid)
-            # asyncio.sleep(180)
+            # asyncio.sleep(1)
         except FloodWait as e:
-            asyncio.sleep(e.value)
+            asyncio.sleep(1)
             await account_logins(bot,subjectid, chatid)
             
         
@@ -85,46 +85,67 @@ async def account_logins(bot,subjectid,chatid):
             all_urls = ""
             
             
-            
+            couserid=[]
             res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=126&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             # print(topic)
             
             topicids = [i["topicid"] for i in topic]
-            all_important = {}
-                
+            
+            
+            
+            videos=[]  
+            all_important = {}  
+            all_urls = ""
             for t in topicids:
                 url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=126&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
-                # print(videodata)
                 
                 try:
                     for i in videodata:
-                        all_important[convert_timestamp_to_datetime(i["strtotime"])] = {
-                            "title": i["Title"],
-                            'pdf_link': decrypt_link(i['pdf_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link") else "",
-                            'pdf_link2': decrypt_link(i['pdf_link2'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link2") else "",
-                            'download_link': decrypt_link(i['download_link']).replace("720p", "360p")
-                        }
+                        couserid.append(i["id"])
+                        
                 except Exception as e:
                     print(e)
                 # print(all_important)
-            #date="2024-05-31"
+            for c in couserid:
+                url=f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=126&video_id={c}&ytflag=0&folder_wise_course=0"
+                res4 = requests.get(url, headers=hdr1).json()
+                video = res4.get("data", [])
+                videos.append(video)
+              
+            for i in videos:
+                
+                try:
+                   
+                    all_important[convert_timestamp_to_datetime(i["strtotime"])] = {
+                                                "title": i["Title"],
+                                                'pdf_link': decrypt_link(i['pdf_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link") else "",
+                                                'pdf_link2': decrypt_link(i['pdf_link2'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link2") else "",
+                                            'download_link': decrypt_link(i['download_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]).replace("720p", "360p") if i.get("download_link") else ""
+                                        }
+                    
+                except Exception :
+                    pass
+                            
+            date="2024-05-31"
             date=get_current_date()
-            print(all_important.keys())
-            print(date)
+            
             if  date not in all_important.keys():
                 
-                return await bot.send_message(chatid,text="🐇")
+                return await bot.send_message(chatid,text="🐇**𝗧𝗼𝗱𝗮𝘆 𝗖𝗹𝗮𝘀𝘀 𝗨𝗽𝗱𝗮𝘁𝗲**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧 𝐝𝐞𝐝𝐨 𝐌𝐢𝐭𝐫𝐨𝐧**❤️")
 
             data = all_important[date]
             title = data.get("title")
-            all_urls = ""
+            
             video = data.get("download_link")
+            
             pdf_1 = data.get("pdf_link")
+            
             pdf_2 = data.get("pdf_link2")
+            
 
             if video:
                 all_urls += f"{title}: {video}"
@@ -132,7 +153,7 @@ async def account_logins(bot,subjectid,chatid):
                 all_urls += f"\n{title} : {pdf_1}"
             if pdf_2:
                 all_urls += f"\n{title} : {pdf_2}"
-
+            
             if all_urls:
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
@@ -145,9 +166,9 @@ async def account_logins(bot,subjectid,chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-     hour=5,
-     minute=52,
-     second=10, 
+     hour=7,
+     minute=10,
+     second=0, 
      args=[Client]
 )
 
