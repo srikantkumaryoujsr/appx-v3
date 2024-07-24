@@ -115,14 +115,14 @@ async def start_msg(bot, message):
     reply_mark = gen_start_kb()
     await bot.send_photo(
         message.chat.id,
-        photo="http://graph.org/file/3d4121f27426f00e58063.jpg",
-        caption="**𝐇𝐢, 𝐈 𝐚𝐦 𝐀𝐥𝐢𝐯𝐞..𝐈 𝐚𝐦 𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐨𝐫 𝐁𝐨𝐭...𝐢𝐟 𝐲𝐨𝐮 𝐰𝐚𝐧𝐭 𝐮𝐬𝐞 𝐦𝐞 𝐭𝐡𝐞𝐧 𝐬𝐞𝐧𝐝**\n\n 𝐁𝐨𝐭 𝐦𝐚𝐝𝐞 𝐛𝐲 @sarkari_student",
+        photo="https://te.legra.ph/file/4cb09d75328ff12e5be56.jpg",
+        caption="**𝐇𝐢, 𝐈 𝐚𝐦 𝐀𝐥𝐢𝐯𝐞..𝐈 𝐚𝐦 𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐨𝐫 𝐁𝐨𝐭...𝐢𝐟 𝐲𝐨𝐮 𝐰𝐚𝐧𝐭 𝐮𝐬𝐞 𝐦𝐞 𝐭𝐡𝐞𝐧 𝐬𝐞𝐧𝐝**\n\n 𝐁𝐨𝐭 𝐦𝐚𝐝𝐞 𝐛𝐲 chutiya",
         reply_markup=reply_mark
     )
         
 def gen_start_kb():
     keyboard = [
-        [key("❤️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫❤️", url="https://t.me/SARKARI_STUDENT")],           
+        [key("❤️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫❤️", url="https://t.me/wewq")],           
         
     ]
     return m(keyboard)
