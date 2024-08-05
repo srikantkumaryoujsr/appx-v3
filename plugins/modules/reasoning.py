@@ -130,8 +130,8 @@ async def account_logins(bot,subjectid,chatid):
                 except Exception :
                     pass
                             
+            #date=2024-08-02
             date=2024-08-02
-            #date=get_current_date()
             
             if  date not in all_important.keys():
                 
