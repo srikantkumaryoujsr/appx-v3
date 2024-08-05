@@ -1,3 +1,4 @@
+#@sarkari_student
 import asyncio
 import importlib
 from pyrogram import idle
