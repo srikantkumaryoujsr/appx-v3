@@ -130,8 +130,8 @@ async def account_logins(bot,subjectid,chatid):
                 except Exception :
                     pass
                             
-            date="2024-05-31"
-            date=get_current_date()
+            date=2024-08-02
+            #date=get_current_date()
             
             if  date not in all_important.keys():
                 
@@ -166,8 +166,8 @@ async def account_logins(bot,subjectid,chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-     hour=12,
-     minute=55,
+     hour=13,
+     minute=07,
      second=0, 
      args=[Client]
 )
