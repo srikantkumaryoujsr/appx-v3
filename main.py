@@ -1,4 +1,4 @@
-#Code write by @St2Master
+#Code write by @sarkari_student
 
 import os
 from config import Config
@@ -10,7 +10,7 @@ import asyncio
 import logging
 
 from logging.handlers import RotatingFileHandler
-#Code write by @St2Master
+#Code write by @sarkari_student
 
 logging.basicConfig(
     level=logging.INFO,
@@ -23,7 +23,7 @@ logging.basicConfig(
         logging.StreamHandler(),
     ],
 )
-#Code write by @St2Master
+#Code write by @sarkari_student
 LOGGER = logging.getLogger(__name__)
 LOGGER.info("live log streaming to telegram.")
 #####################################################################
