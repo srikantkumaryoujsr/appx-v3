@@ -2,7 +2,7 @@
 {
     "name": "@sarkari_student",
     "description": "@sarkari_student",
-    "repository": "https://github.com/NtrRaz",
+    "repository": "https://github.com",
     "keywords": [
         "telegram bot",
         "pyrogram"
