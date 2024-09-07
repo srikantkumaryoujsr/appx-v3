@@ -3,6 +3,8 @@ import math
 import os
 from pyrogram.errors import FloodWait
 
+from datetime import datetime,timedelta
+
 class Timer:
     def __init__(self, time_between=5):
         self.start_time = time.time()
@@ -15,7 +17,6 @@ class Timer:
         return False
 
 
-from datetime import datetime,timedelta
 
 #lets do calculations
 def hrb(value, digits= 2, delim= "", postfix=""):
@@ -89,9 +90,9 @@ async def progress_bar(current, total, reply, start):
             bar_length = 11
             completed_length = int(current * bar_length / total)
             remaining_length = bar_length - completed_length
-            progress_bar = "▰" * completed_length + "▱" * remaining_length
+            progress_bar = "⚫" * completed_length + "⚪" * remaining_length
             
             try:
-                await reply.edit(f'\n╭──🌩 𝗨𝗣𝗟𝗢𝗔𝗗𝗘𝗥 🌩──╮ \n├ {progress_bar}\n├ 𝗦𝗣𝗘𝗘𝗗  ➠ {sp} \n├ 𝗣𝗥𝗢𝗚𝗥𝗘𝗦𝗦  ➠ {perc} \n├ 𝗟𝗢𝗔𝗗𝗘𝗥  ➠ {cur}\n├ 𝗦𝗜𝗭𝗘  ➠  {tot} \n├ 𝗘𝗧𝗔  ➠ {eta} \n╰────🌩 𝗨𝗣𝗟𝗢𝗔𝗗𝗘𝗥 🌩────╯\n')
+                await reply.edit(f'\n ╭──⌯📤𝐔𝐩𝐥𝐨𝐚𝐝𝐢𝐧𝐠📤⌯──╮ \n├✦ {progress_bar}|﹝{perc}﹞ \n├✦ 𝐬𝐩𝐞𝐞𝐝 ➠ {sp} \n├✦ 𝐏𝐫𝐨𝐜𝐞𝐬𝐬𝐞𝐝 ➠ {cur}\n├✦ 𝐒𝐢𝐳𝐞 ➛ 𝐄𝐓𝐀 ➠ {tot} - {eta} \n╰─═❤️@ImTgHacker❤️═─╯\n') 
             except FloodWait as e:
                 time.sleep(e.x)
