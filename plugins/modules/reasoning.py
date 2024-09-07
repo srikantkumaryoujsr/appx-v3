@@ -57,17 +57,19 @@ async def all_subject_send(bot):
     try:
         # Send start message
         start_message = await bot.send_message(chat_id=-1002344440579, text="📢 Processing has started for the subjects!")
-        # Print the start_message object to see its structure
-        print(f"Start message object: {start_message}")
-        # Check for 'message_id' in start_message
-        if hasattr(start_message, 'message_id'):
-            # Pin the start message
-            await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
-            print(f"Start message sent and pinned with ID: {start_message.message_id}")
-        else:
-            print("The 'start_message' object does not have 'message_id' attribute.")
-    except Exception as e:
-        print(f"Failed to send and pin start message: {e}")
+        
+        async def pin_latest_message():
+            try:
+                # Fetch the latest message from the channel
+                updates = await bot.get_chat_history(chat_id=-1002344440579, limit=1)
+                if updates:
+                    latest_message_id = updates[0].message_id
+
+                    # Pin the latest message
+                    await bot.pin_chat_message(chat_id=-1002344440579, message_id=latest_message_id, disable_notification=False)
+                    print(f"Message {latest_message_id} pinned.")
+            except Exception as e:
+                print(f"Failed to pin message: {e}")
     
     for subjectid, chatid in subject_and_channel.items():
         try:
@@ -186,7 +188,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=12,
-     minute=24,
+     minute=41,
      second=0, 
      args=[Client]
 )
