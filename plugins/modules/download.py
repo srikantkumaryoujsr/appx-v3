@@ -49,7 +49,7 @@ async def account_login(bot: Client, content, title, chatid):
     raw_text2 = "360"
     if raw_text2 == "360":
         res = "640x360"
-    raw_text3 = "@ImTgHacker"
+    raw_text3 = "𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 ❤️"
     MR = raw_text3
     thumb = "no"
     if len(links) == 1:
