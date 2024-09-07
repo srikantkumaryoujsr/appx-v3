@@ -51,12 +51,12 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def all_subject_send(bot):
-    subject_and_channel = {724: -1002239308171, 914: -1002239308171, 838: -1002239308171, 785: -1002239308171, 674: -1002239308171}
+    subject_and_channel = {724: -1002344440579, 914: -1002344440579, 838: -1002344440579, 785: -1002344440579, 674: -1002344440579}
     # subject_and_channel = {828: "RPF_RWA", 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
     for subjectid, chatid in subject_and_channel.items():
         try:
-            start_message = await bot.send_message(chat_id=-1002172298027, text="📢 Processing has started for the subjects!")
-            await bot.pin_chat_message(chat_id=-1002172298027, message_id=start_message.message_id)
+            start_message = await bot.send_message(chat_id=-1002344440579, text="📢 Processing has started for the subjects!")
+            await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
         except Exception as e:
         logging.error(f"Failed to send start message: {e}")
     
@@ -69,7 +69,7 @@ async def all_subject_send(bot):
 
     # Send end message
     try:
-        await bot.send_message(chat_id=-1002172298027, text="✅ Processing has completed for the subjects!")
+        await bot.send_message(chat_id=-1002344440579, text="✅ Processing has completed for the subjects!")
     except Exception as e:
         logging.error(f"Failed to send end message: {e}")
 
