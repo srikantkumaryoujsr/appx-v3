@@ -55,11 +55,19 @@ async def all_subject_send(bot):
     subject_and_channel = {828: -1002344440579, 832: -1002344440579, 958: -1002344440579, 1043: -1002344440579, 1050: -1002344440579}
     
     try:
+        # Send start message
         start_message = await bot.send_message(chat_id=-1002344440579, text="📢 Processing has started for the subjects!")
-        await asyncio.sleep(2)
-        await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
+        # Print the start_message object to see its structure
+        print(f"Start message object: {start_message}")
+        # Check for 'message_id' in start_message
+        if hasattr(start_message, 'message_id'):
+            # Pin the start message
+            await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
+            print(f"Start message sent and pinned with ID: {start_message.message_id}")
+        else:
+            print("The 'start_message' object does not have 'message_id' attribute.")
     except Exception as e:
-        print(f"Failed to send start message: {e}")
+        print(f"Failed to send and pin start message: {e}")
     
     for subjectid, chatid in subject_and_channel.items():
         try:
@@ -178,7 +186,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=12,
-     minute=16,
+     minute=24,
      second=0, 
      args=[Client]
 )
