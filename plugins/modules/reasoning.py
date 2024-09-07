@@ -61,7 +61,7 @@ async def all_subject_send(bot):
         try:
             await account_logins(bot, subjectid, chatid)
         except FloodWait as e:
-            await asyncio.sleep(1)
+            await asyncio.sleep(e.x)
             await account_logins(bot, subjectid, chatid)
 
     # Send end message
@@ -148,7 +148,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=11,
-     minute=30,
+     minute=36,
      second=0, 
      args=[Client]
 )
