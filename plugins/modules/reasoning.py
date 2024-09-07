@@ -140,11 +140,7 @@ async def account_logins(bot, subjectid, chatid):
                     pass
                             
             #date="2024-08-02"
-            date="2024-08-02"
-            
-            if  date not in all_important.keys():
-                
-                return await bot.send_message(chatid,text="🐇**𝗧𝗼𝗱𝗮𝘆 𝗖𝗹𝗮𝘀𝘀 𝗨𝗽𝗱𝗮𝘁𝗲**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧 𝐝𝐞𝐝𝐨 𝐌𝐢𝐭𝐫𝐨𝐧**❤️")
+            date=get_current_date()
 
             data = all_important[date]
             title = data.get("title")
