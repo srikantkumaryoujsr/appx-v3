@@ -2,7 +2,6 @@ import asyncio
 import aiohttp
 import base64
 import pytz
-from pytz import utc
 from datetime import datetime, timedelta
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
@@ -101,6 +100,9 @@ async def account_logins(bot, subjectid, chatid):
             
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
+            if not bdetail:
+                print(f"No course details found for user {userid}.")
+                return
             bname = bdetail[0]["course_name"]
             
             couserid = []
@@ -134,11 +136,11 @@ async def account_logins(bot, subjectid, chatid):
                         'download_link': decrypt_link(i['download_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]).replace("720p", "360p") if i.get("download_link") else ""
                     }
                 except Exception as e:
-                    print(f"Error processing video: {e}")
+                    print(f"Error processing video data: {e}")
 
             date = get_current_date()
             
-            if date not in all_important.keys():
+            if date not in all_important:
                 return await bot.send_message(chatid, text="🐇**कल् इस सब्जेक्ट मे कोई क्लास नही हुई**\n\n**आप आगे का रिवीजन कर लेना दोस्तो**❤️")
 
             data = all_important[date]
@@ -168,7 +170,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=12,
-    minute=56,
+    minute=59,
     second=0, 
     args=[Client]
 )
