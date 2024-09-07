@@ -56,6 +56,7 @@ async def all_subject_send(bot):
     
     try:
         start_message = await bot.send_message(chat_id=-1002344440579, text="📢 Processing has started for the subjects!")
+        await asyncio.sleep(2)
         await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
     except Exception as e:
         print(f"Failed to send start message: {e}")
@@ -176,8 +177,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-     hour=11,
-     minute=56,
+     hour=12,
+     minute=16,
      second=0, 
      args=[Client]
 )
