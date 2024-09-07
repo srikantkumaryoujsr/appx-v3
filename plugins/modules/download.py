@@ -33,9 +33,9 @@ def convert_timestamp_to_datetime(timestamp: int) -> str:
     return date_time.strftime('%Y-%m-%d')
 
 
-@bot.on_message(filters.command("stop"))
+@bot.on_message(filters.command("stopji"))
 async def restart_handler(_, m):
-    await m.reply_text("**STOPPED**", True)
+    await m.reply_text("**STOPPED**🚦", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
@@ -49,7 +49,7 @@ async def account_login(bot: Client, content, title, chatid):
     raw_text2 = "360"
     if raw_text2 == "360":
         res = "640x360"
-    raw_text3 = "(••÷[ कौटिल्य ]÷••)"
+    raw_text3 = "@ImTgHacker"
     MR = raw_text3
     thumb = "no"
     if len(links) == 1:
@@ -91,8 +91,8 @@ async def account_login(bot: Client, content, title, chatid):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**Vid_id** {name1} {res} .mkv\n**BATCH NAME** {raw_text0}\n\n**DATE** {get_current_date()}**\n\n**Download By** {raw_text3}\n\n'
-                cc1 = f'**Pdf_id** {name1} .pdf \n**BATCH NAME** {raw_text0}\n\n**DATE** {get_current_date()}**\n\n**Download By** {raw_text3}\n\n'
+                cc = f'**𝐕𝐈𝐃 𝐍𝐀𝐌𝐄 :- {name1}** {res} 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳.mkv\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 :- {raw_text0}**\n\n**𝐂𝐋𝐀𝐒𝐒 𝐃𝐀𝐓𝐄 :- {get_current_date()}**\n\n**𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐛𝐲 :-{raw_text3}**\n\n'
+                cc1 = f'**𝐏𝐝𝐟 𝐍𝐚𝐦𝐞 :- {name1}** 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳.pdf \n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 :- {raw_text0}**\n\n**𝐏𝐃𝐅 𝐃𝐀𝐓𝐄 :- {get_current_date()}**\n\n**𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐛𝐲 :-{raw_text3}**\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -115,7 +115,7 @@ async def account_login(bot: Client, content, title, chatid):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**🤡𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠🤡Video...**"
+                    Show = f"**📥𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠📥**\n\n**𝐍𝐚𝐦𝐞:-** `{name}\n𝐐𝐮𝐚𝐥𝐢𝐭𝐲 : - {raw_text2}`\n\n**𝐔𝐑𝐋:-** `{url}`\n𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 :- @ImTgHacker"
                     prog = await bot.send_message(chatid, text=Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
@@ -125,7 +125,7 @@ async def account_login(bot: Client, content, title, chatid):
                     time.sleep(1)
 
             except Exception as e:
-                await bot.send_message(chatid, text=f"**Link** - {url}")
+                await bot.send_message(chatid, text=f"**Name** - {name}\n**Link** - {url}")
                 continue
 
     except Exception as e:
