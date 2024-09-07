@@ -51,7 +51,6 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def all_subject_send(bot):
     subject_and_channel = {724: -1002344440579, 914: -1002344440579, 838: -1002344440579, 785: -1002344440579, 674: -1002344440579}
     # subject_and_channel = {828: "RPF_RWA", 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
-    for subjectid, chatid in subject_and_channel.items():
         try:
             start_message = await bot.send_message(chat_id=-1002344440579, text="📢 Processing has started for the subjects!")
             await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
@@ -72,7 +71,7 @@ async def all_subject_send(bot):
         print(f"Failed to send end message: {e}")
 
 async def account_logins(bot, subjectid, chatid):
-    userid = "1245678"
+    userid = "2717280"
     async with aiohttp.ClientSession() as session:
         try:
             token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjI3MTcyODAiLCJlbWFpbCI6Imt1bGRpcGtyaXNobmExQGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxMzk0MDk3MH0.VhjdY81xSWilp_DuszLNkb79zWfo2tG8gVI_crR1lec"
@@ -149,7 +148,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=11,
-     minute=12,
+     minute=30,
      second=0, 
      args=[Client]
 )
