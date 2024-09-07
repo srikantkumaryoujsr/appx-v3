@@ -171,8 +171,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
-     hour=13,
-     minute=25,
+     hour=10,
+     minute=2,
      second=0, 
      args=[Client]
 )
