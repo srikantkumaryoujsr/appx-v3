@@ -70,23 +70,23 @@ async def all_subject_send(bot):
                     print(f"Message {latest_message_id} pinned.")
             except Exception as e:
                 print(f"Failed to pin message: {e}")
-    
-    for subjectid, chatid in subject_and_channel.items():
-        try:
-            await account_logins(bot, subjectid, chatid)
-        except FloodWait as e:
-            await asyncio.sleep(e.x)
-            await account_logins(bot, subjectid, chatid)
-        except Exception as e:
-            print(f"Error processing subject {subjectid}: {e}")
 
-    try:
-        await bot.send_message(chat_id=-1002344440579, text=f"✅ Processing has completed for the subjects!\n\nDate :- **{get_current_date()}**")
-    except Exception as e:
-        print(f"Failed to send end message: {e}")
+        for subjectid, chatid in subject_and_channel.items():
+            try:
+                await account_logins(bot, subjectid, chatid)
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+                await account_logins(bot, subjectid, chatid)
+            except Exception as e:
+                print(f"Error processing subject {subjectid}: {e}")
+
+        try:
+            await bot.send_message(chat_id=-1002344440579, text=f"✅ Processing has completed for the subjects!\n\nDate :- **{get_current_date()}**")
+        except Exception as e:
+            print(f"Failed to send end message: {e}")
 
 async def account_logins(bot, subjectid, chatid):
-    userid ="1245678"
+    userid = "1245678"
     async with aiohttp.ClientSession() as session:
         try:
             token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYzODgwMDEiLCJlbWFpbCI6Im5pc2hhbnRrYXVzaGlrODIwNzRjaGFAZ21haWwuY29tIiwidGltZXN0YW1wIjoxNzE0Mjk1OTkxfQ.BIcEIi1fRO2EEfClBEWzLOdAcC7Z5HaMmB-n5UsnAUU"
@@ -188,7 +188,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=12,
-     minute=41,
+     minute=46,
      second=0, 
      args=[Client]
 )
