@@ -55,16 +55,24 @@ async def all_subject_send(bot):
     # subject_and_channel = {828: "RPF_RWA", 829:6741261680, 830:6741261680, 831:6741261680, 833:6741261680, 917:6741261680}
     for subjectid, chatid in subject_and_channel.items():
         try:
-            await account_logins(bot,subjectid, chatid)
-            # asyncio.sleep(1)
+        await bot.send_message(chat_id=-1002172298027, text="📢 Processing has started for the subjects!")
+    except Exception as e:
+        logging.error(f"Failed to send start message: {e}")
+    
+    for subjectid, chatid in subject_and_channel.items():
+        try:
+            await account_logins(bot, subjectid, chatid)
         except FloodWait as e:
-            asyncio.sleep(1)
-            await account_logins(bot,subjectid, chatid)
-            
-        
+            await asyncio.sleep(e.value)
+            await account_logins(bot, subjectid, chatid)
 
+    # Send end message
+    try:
+        await bot.send_message(chat_id=-1002172298027, text="✅ Processing has completed for the subjects!")
+    except Exception as e:
+        logging.error(f"Failed to send end message: {e}")
 
-async def account_logins(bot,subjectid,chatid):
+async def account_logins(bot, subjectid, chatid):
     userid ="1245678"
     async with aiohttp.ClientSession() as session:
         try:
