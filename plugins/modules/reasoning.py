@@ -1,23 +1,19 @@
-import asyncio, requests
+import asyncio
 import aiohttp
-import base64,pytz
+import base64
+import pytz
 from pytz import utc
-from datetime import datetime, time,timedelta
-
-from pyrogram import  filters
-from .. import bot as Client
-from .. import bot
+from datetime import datetime, timedelta
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
+from pyrogram import filters
+from .. import bot as Client
+from .. import bot
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
-
-import pytz
 
 def get_current_date():
     # Get the current time in IST
@@ -188,7 +184,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=12,
-     minute=46,
+     minute=49,
      second=0, 
      args=[Client]
 )
