@@ -1,21 +1,23 @@
-import asyncio
+import asyncio, requests
 import aiohttp
-import base64
-import pytz
+import base64,pytz
 from pytz import utc
-from datetime import datetime, timedelta
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
-from pyrogram import filters
+from datetime import datetime, time,timedelta
+
+from pyrogram import  filters
 from .. import bot as Client
 from .. import bot
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
+AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
 
-AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
+import pytz
 
 def get_current_date():
     # Get the current time in IST
@@ -24,6 +26,7 @@ def get_current_date():
     yesterday = now - timedelta(days=1)
     formatted_date = yesterday.strftime("%Y-%m-%d")
     return formatted_date
+
 
 def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
@@ -41,11 +44,11 @@ def decrypt_link(link):
         cipher = AES.new(key, AES.MODE_CBC, iv)
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
-    except (ValueError, KeyError) as e:
-        print(f"Decryption error: {e}")
+    except ValueError as ve:
+        pass
     except Exception as e:
-        print(f"Unexpected error in decryption: {e}")
-
+        pass
+    
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 async def all_subject_send(bot):
@@ -174,7 +177,7 @@ scheduler.add_job(
     func=all_subject_send,
      trigger="cron",
      hour=11,
-     minute=50,
+     minute=56,
      second=0, 
      args=[Client]
 )
