@@ -20,7 +20,6 @@ PySocks==1.7.1
 pyromod==1.5
 pytz
 pyrofork
-pyrogram
 python-dotenv==1.0.0
 requests==2.31.0
 soupsieve==2.4.1
