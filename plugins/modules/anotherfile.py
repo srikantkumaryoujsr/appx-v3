@@ -25,5 +25,6 @@ def gen_start_kb():
         [key("🤦‍♂️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫🤦‍♂️", url="https://t.me/rojgaarwithankit")],           
         
     ]
-    keyboard = [[key("🤦‍♂️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫🤦‍♂️", url="https://t.me/rojgaarwithankit")]]
+    keyboard = [[key("❤️𝐑𝐨𝐣𝐠𝐚𝐫 𝐖𝐢𝐭𝐡 𝐀𝐧𝐤𝐢𝐭❤️", callback_data='start_rwa')],
+                [key("🤦‍♂️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫🤦‍♂️", url="https://t.me/rojgaarwithankit")]]
     return m(keyboard)
