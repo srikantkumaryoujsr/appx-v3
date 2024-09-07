@@ -64,7 +64,7 @@ async def all_subject_send(bot):
         try:
             await account_logins(bot, subjectid, chatid)
         except FloodWait as e:
-            await asyncio.sleep(e.value)
+            await asyncio.sleep(1)
             await account_logins(bot, subjectid, chatid)
 
     # Send end message
