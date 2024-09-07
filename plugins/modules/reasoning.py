@@ -69,7 +69,7 @@ async def all_subject_send(bot):
 
     # Send end message
     try:
-        await bot.send_message(chat_id=-1002344440579, text="✅ Processing has completed for the subjects!")
+        await bot.send_message(chat_id=-1002344440579, text="✅ Processing has completed for the subjects!\n\nDate :-**{get_current_date()}**")
     except Exception as e:
         logging.error(f"Failed to send end message: {e}")
 
