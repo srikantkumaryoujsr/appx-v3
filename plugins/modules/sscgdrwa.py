@@ -52,11 +52,11 @@ def decrypt_link(link):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 async def all_subject_send(bot):
-    subject_and_channel = {828: -1002344440579, 832: -1002344440579, 958: -1002344440579, 1043: -1002344440579, 1050: -1002344440579}
+    subject_and_channel = {828: -1001999613479, 832: -1001999613479, 958: -1001999613479, 1043: -1001999613479, 1050: -1001999613479}
     
     try:
-        start_message = await bot.send_message(chat_id=-1002344440579, text="**♻️𝐇𝐞𝐥𝐥𝐨 𝐃𝐞𝐚𝐫 𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬...♻️**\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞:- 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 (अवसर बैच 𝟐.𝟎 )**\n**𝐂𝐥𝐚𝐬𝐬 𝐃𝐚𝐭𝐞** :- **{get_current_date()}**\n**नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇**\n𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳")
-        await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
+        start_message = await bot.send_message(chat_id=-1001999613479, text="**♻️𝐇𝐞𝐥𝐥𝐨 𝐃𝐞𝐚𝐫 𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬...♻️**\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞:- 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 (अवसर बैच 𝟐.𝟎 )**\n**𝐂𝐥𝐚𝐬𝐬 𝐃𝐚𝐭𝐞** :- **{get_current_date()}**\n**नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇**\n𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳")
+        await bot.pin_chat_message(chat_id=-1001999613479, message_id=start_message.message_id)
     except Exception as e:
         print(f"Failed to send start message: {e}")
     
@@ -70,15 +70,15 @@ async def all_subject_send(bot):
             print(f"Error processing subject {subjectid}: {e}")
 
     try:
-        await bot.send_message(chat_id=-1002344440579, text=f"**♻️𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 ♻️**\n**𝐃𝐚𝐭𝐞 : {get_current_date()}**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 ❤️ 𝐃𝐢𝐣𝐢𝐲𝐞**")
+        await bot.send_message(chat_id=-1001999613479, text=f"**♻️𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 ♻️**\n**𝐃𝐚𝐭𝐞 : {get_current_date()}**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 ❤️ 𝐃𝐢𝐣𝐢𝐲𝐞**")
     except Exception as e:
         print(f"Failed to send end message: {e}")
 
 async def account_logins(bot, subjectid, chatid):
-    userid ="1245678"
+    userid ="3752241"
     async with aiohttp.ClientSession() as session:
         try:
-            token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjYzODgwMDEiLCJlbWFpbCI6Im5pc2hhbnRrYXVzaGlrODIwNzRjaGFAZ21haWwuY29tIiwidGltZXN0YW1wIjoxNzE0Mjk1OTkxfQ.BIcEIi1fRO2EEfClBEWzLOdAcC7Z5HaMmB-n5UsnAUU"
+            token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjM3NTIyNDEiLCJlbWFpbCI6InNoYWtpdGt1bWFybndkODA1MTA0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxNTI0NTYwNH0.AcUSabkEnTY0kXzNaSovcHPeNPmQWh5LMltyUnJJfoU"
             hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
@@ -96,7 +96,7 @@ async def account_logins(bot, subjectid, chatid):
             
             
             couserid=[]
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=156&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=188&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             # print(topic)
             
@@ -108,7 +108,7 @@ async def account_logins(bot, subjectid, chatid):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=156&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=188&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -121,7 +121,7 @@ async def account_logins(bot, subjectid, chatid):
                     print(e)
                 # print(all_important)
             for c in couserid:
-                url=f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=156&video_id={c}&ytflag=0&folder_wise_course=0"
+                url=f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=188&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
