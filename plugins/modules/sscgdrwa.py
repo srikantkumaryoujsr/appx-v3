@@ -51,18 +51,18 @@ def decrypt_link(link):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 async def all_subject_send(bot):
-    subject_and_channel = {138: -1002344440579, 1029: -1002344440579, 1041: -1002344440579}
+    subject_and_channel = {138: -1001801766701, 1029: -1001801766701, 1041: -1001801766701}
     
     try:
         start_message = await bot.send_message(
-            chat_id=-1002344440579,
+            chat_id=-1001801766701,
             text=f"**♻️𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐓𝐨𝐝𝐚𝐲♻️**\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞:- 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 (अवसर बैच 𝟐.𝟎 )**\n**𝐂𝐥𝐚𝐬𝐬 𝐃𝐚𝐭𝐞 :- {get_current_date()}**\n**नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇**\n𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳"
         )
         print(f"Message sent with ID: {start_message.message_id}")
         await asyncio.sleep(2)
 
         try:
-            await bot.pin_chat_message(chat_id=-1002344440579, message_id=start_message.message_id)
+            await bot.pin_chat_message(chat_id=-1001801766701, message_id=start_message.message_id)
             print("Message pinned successfully.")
         except Exception as e:
             print(f"Failed to pin message: {e}")
@@ -81,7 +81,7 @@ async def all_subject_send(bot):
 
     try:
         await bot.send_message(
-            chat_id=-1002344440579,
+            chat_id=-1001801766701,
             text=f"**♻️𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 ♻️**\n**𝐃𝐚𝐭𝐞 : {get_current_date()}**\n**𝐃𝐚𝐭𝐞 𝐅𝐨𝐫𝐦𝐚𝐭 :- ❤️𝐘𝐞𝐚𝐫-𝐌𝐨𝐧𝐭𝐡-𝐝𝐚𝐭𝐞❤️**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
         )
     except Exception as e:
@@ -173,8 +173,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=9,
-    minute=57,
+    hour=10,
+    minute=12,
     second=0, 
     args=[Client]
 )
