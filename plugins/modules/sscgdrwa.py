@@ -58,11 +58,11 @@ async def all_subject_send(bot):
             chat_id=-1001801766701,
             text=f"**♻️𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐓𝐨𝐝𝐚𝐲♻️**\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞:- 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 (अवसर बैच 𝟐.𝟎 )**\n**𝐂𝐥𝐚𝐬𝐬 𝐃𝐚𝐭𝐞 :- {get_current_date()}**\n**नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇**\n𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳"
         )
-        print(f"Message sent with ID: {start_message.message_id}")
+        print(f"Message sent with ID: {start_message.id}")
         await asyncio.sleep(2)
 
         try:
-            await bot.pin_chat_message(chat_id=-1001801766701, message_id=start_message.message_id)
+            await bot.pin_chat_message(chat_id=-1001801766701, message_id=start_message.id)
             print("Message pinned successfully.")
         except Exception as e:
             print(f"Failed to pin message: {e}")
@@ -174,7 +174,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=10,
-    minute=12,
+    minute=34,
     second=0, 
     args=[Client]
 )
