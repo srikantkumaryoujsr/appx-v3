@@ -145,6 +145,19 @@ async def account_logins(bot, subjectid, chatid):
                     pass
                             
             date = get_current_date()
+            if date not in all_important:
+                # Customize the message based on subjectid
+                messages = {
+                    138: "Maths class aaj nahi hui, revision karo balkay ke andar ❤️",
+                    1029: "Reasoning ki class aaj nahi hui hai, revision karo 📚",
+                    1041: "History ki class aaj nahi hui hai, revision karo 📜",
+                    # Add more subject IDs and their messages as needed
+                }
+                # Send the message if the subjectid is in the messages dictionary
+                if subjectid in messages:
+                    await bot.send_message(chatid, text=messages[subjectid])
+                return
+
             data = all_important.get(date, {})
             title = data.get("title")
             
@@ -173,8 +186,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=10,
-    minute=34,
+    hour=11,
+    minute=23,
     second=0, 
     args=[Client]
 )
