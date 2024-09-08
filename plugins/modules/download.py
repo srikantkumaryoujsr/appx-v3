@@ -50,6 +50,7 @@ async def account_login(bot: Client, content, title, chatid):
     if raw_text2 == "360":
         res = "640x360"
     raw_text3 = "[𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 ❤️](https://t.me/ImTgHacker)"
+    backup = "[❤️𝗖𝗟𝗜𝗖𝗞 𝗛𝗘𝗥𝗘 𝗦𝗘𝗡𝗗 𝗥𝗘𝗤𝗨𝗘𝗦𝗧 𝗙𝗢𝗥 𝗕𝗔𝗖𝗞𝗨𝗣❤️](https://t.me/+YQPgMcccJmoyNjJl)"
     MR = raw_text3
     thumb = "no"
     if len(links) == 1:
@@ -91,8 +92,8 @@ async def account_login(bot: Client, content, title, chatid):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**𝐕𝐈𝐃 𝐍𝐀𝐌𝐄 :- {name1}** {res} 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳.mkv\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 :- {raw_text0}**\n\n**𝐂𝐋𝐀𝐒𝐒 𝐃𝐀𝐓𝐄 :- {get_current_date()}**\n\n**𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐛𝐲 :-{raw_text3}**\n\n'
-                cc1 = f'**𝐏𝐝𝐟 𝐍𝐚𝐦𝐞 :- {name1}** 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳.pdf \n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 :- {raw_text0}**\n\n**𝐏𝐃𝐅 𝐃𝐀𝐓𝐄 :- {get_current_date()}**\n\n**𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐛𝐲 :-{raw_text3}**\n\n'
+                cc = f'**𝐕𝐈𝐃 𝐍𝐀𝐌𝐄 :- {name1}** {res} 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳.mkv\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 :- {raw_text0}**\n\n**𝐂𝐋𝐀𝐒𝐒 𝐃𝐀𝐓𝐄 :- {get_current_date()}**\n\n{backup}\n\n**𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐛𝐲 :-{raw_text3}**\n\n'
+                cc1 = f'**𝐏𝐝𝐟 𝐍𝐚𝐦𝐞 :- {name1}** 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳.pdf \n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 :- {raw_text0}**\n\n**𝐏𝐃𝐅 𝐃𝐀𝐓𝐄 :- {get_current_date()}**\n\n{backup}\n\n**𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐛𝐲 :-{raw_text3}**\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
