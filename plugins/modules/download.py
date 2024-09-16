@@ -94,8 +94,8 @@ async def account_login(bot: Client, content, title, chatid):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[🏖️] 𝐕𝐢𝐝 𝐈𝐃 ➤ {name1}** {res} @ImTgHacker.mkv\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n[🔅]{backup}[🔅]\n**[🔖]𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤{raw_text3}**\n\n'
-                cc1 = f'**[📑]𝐏𝐝𝐟 𝐍𝐚𝐦𝐞:➤ {name1}** @ImTgHacker.pdf \n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n[🔅]{backup}[🔅]\n**[🔖]𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤{raw_text3}**\n\n'
+                cc = f'**[🏖️] 𝐕𝐢𝐝 𝐈𝐃 ➤ {name1}** {res} @ImTgHacker.mkv\n\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n\n🔅{backup}🔅\n\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n'
+                cc1 = f'**[📑]𝐏𝐝𝐟 𝐍𝐚𝐦𝐞:➤ {name1}** @ImTgHacker.pdf \n\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n\n🔅{backup}🔅\n\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
