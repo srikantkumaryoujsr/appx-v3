@@ -155,7 +155,7 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception:
                     pass
                             
-            date = "2024-09-12"
+            date = get_current_date()
             if date not in all_important:
                 # Customize the message based on subjectid
                 messages = {
