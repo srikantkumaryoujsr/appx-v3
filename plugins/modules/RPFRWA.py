@@ -74,7 +74,7 @@ async def all_subject_send(bot):
                 "*नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇*\n"
                 "> *𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳*"
             ),
-            parse_mode='MarkdownV2'
+            parse_mode='Markdown'
         )
         print(f"Message sent with ID: {start_message.id}")
         await asyncio.sleep(0.10)
@@ -106,7 +106,7 @@ async def all_subject_send(bot):
                 "*> 𝐃𝐚𝐭𝐞 𝐅𝐨𝐫𝐦𝐚𝐭 :- ❤️𝐘𝐞𝐚𝐫-𝐌𝐨𝐧𝐭𝐡-𝐝𝐚𝐭𝐞❤️*\n\n"
                 "*𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ *"
             ),
-            parse_mode='MarkdownV2'
+            parse_mode='Markdown'
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
@@ -184,7 +184,7 @@ async def account_logins(bot, subjectid, chatid):
                     1050: "*Chemistry (RPF रक्षक बैच)*\n**> Note⚠️ :- या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है**",
                 }
                 if subjectid in messages:
-                    await bot.send_message(chatid, text=messages[subjectid], parse_mode='MarkdownV2')
+                    await bot.send_message(chatid, text=messages[subjectid], parse_mode='Markdown')
                 return
 
             data = all_important.get(date, {})
@@ -216,7 +216,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=15,
-    minute=29,
+    minute=35,
     second=0, 
     args=[Client]
 )
