@@ -31,6 +31,17 @@ def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
     return date_time.strftime('%Y-%m-%d')
 
+def get_current_date_vsp():
+    # Get the current time in IST
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    yesterday = now - timedelta(days=1)
+    day_of_week = yesterday.strftime("%A").upper()  # Full weekday name
+    month_name = yesterday.strftime("%B").upper()  # Full month name
+    day = yesterday.strftime("%d").zfill(2)  # Day of the month
+    year = yesterday.strftime("%Y")  # Year
+    return f"{day}-{month_name}-{year}, {day_of_week}"
+
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
@@ -56,7 +67,7 @@ async def all_subject_send(bot):
     try:
         start_message = await bot.send_message(
             chat_id=-1002057819179,
-            text=f'**♻️𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐓𝐨𝐝𝐚𝐲♻️**\n**> 𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞:- RPF SI & CONSTABLE 2024( रेल रक्षक बैच )**\n**𝐂𝐥𝐚𝐬𝐬 𝐃𝐚𝐭𝐞 :- {get_current_date()}**\n**नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇**\n> 𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳'
+            text=f'**♻️𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐓𝐨𝐝𝐚𝐲♻️**\n**> 𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞:- RPF SI & CONSTABLE 2024( रेल रक्षक बैच )**\n**𝐂𝐥𝐚𝐬𝐬 𝐃𝐚𝐭𝐞 :- {get_current_date_vsp()}**\n**नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇**\n> 𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳'
         )
         print(f"Message sent with ID: {start_message.id}")
         await asyncio.sleep(2)
@@ -82,7 +93,7 @@ async def all_subject_send(bot):
     try:
         await bot.send_message(
             chat_id=-1002057819179,
-            text=f"**♻️𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 ♻️**\n**𝐃𝐚𝐭𝐞 : {get_current_date()}**\n**> 𝐃𝐚𝐭𝐞 𝐅𝐨𝐫𝐦𝐚𝐭 :- ❤️𝐘𝐞𝐚𝐫-𝐌𝐨𝐧𝐭𝐡-𝐝𝐚𝐭𝐞❤️**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
+            text=f"**♻️𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 ♻️**\n**𝐃𝐚𝐭𝐞 : {get_current_date_vsp()}**\n**> 𝐃𝐚𝐭𝐞 𝐅𝐨𝐫𝐦𝐚𝐭 :- ❤️𝐘𝐞𝐚𝐫-𝐌𝐨𝐧𝐭𝐡-𝐝𝐚𝐭𝐞❤️**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
@@ -194,7 +205,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=9,
-    minute=15,
+    minute=28,
     second=0, 
     args=[Client]
 )
