@@ -24,9 +24,11 @@ def get_current_date():
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
     yesterday = now - timedelta(days=1)
-    formatted_date = yesterday.strftime("%Y-%m-%d")
-    return formatted_date
-
+    day_of_week = yesterday.strftime("%A").upper()  # Full weekday name
+    month_name = yesterday.strftime("%B").upper()  # Full month name
+    day = yesterday.strftime("%d").zfill(2)  # Day of the month
+    year = yesterday.strftime("%Y")  # Year
+    return f"{day}-{month_name}-{year}, {day_of_week}"
 
 def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
