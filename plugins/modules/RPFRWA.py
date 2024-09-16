@@ -93,7 +93,7 @@ async def all_subject_send(bot):
     try:
         await bot.send_message(
             chat_id=-1002057819179,
-            text=f"**🔆𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬{get_current_date_vsp()} 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 🔆**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
+            text=f"**🔆𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬{get_current_date_vsp()} 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 🔆**\n\n**❤️𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
@@ -155,7 +155,7 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception:
                     pass
                             
-            date = {get_current_date()}
+            date = "2024-09-13"
             if date not in all_important:
                 # Customize the message based on subjectid
                 messages = {
@@ -204,8 +204,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=16,
-    minute=59,
+    hour=17,
+    minute=47,
     second=0, 
     args=[Client]
 )
