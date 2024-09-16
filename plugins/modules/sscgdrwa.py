@@ -31,6 +31,17 @@ def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
     return date_time.strftime('%Y-%m-%d')
 
+def get_current_date_vsp():
+    # Get the current time in IST
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    yesterday = now - timedelta(days=1)
+    day_of_week = yesterday.strftime("%A").upper()  # Full weekday name
+    month_name = yesterday.strftime("%B").upper()  # Full month name
+    day = yesterday.strftime("%d").zfill(2)  # Day of the month
+    year = yesterday.strftime("%Y")  # Year
+    return f"{day}-{month_name}-{year}, {day_of_week}"
+
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
@@ -51,18 +62,18 @@ def decrypt_link(link):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 async def all_subject_send(bot):
-    subject_and_channel = {138: -1001801766701, 1029: -1001801766701, 1041: -1001801766701}
+    subject_and_channel = {828: -1001999613479, 829: -1001999613479, 830: -1001999613479, 831: -1001999613479, 832: -1001999613479, 833: -1001999613479, 917: -1001999613479, 935: -1001999613479, 958: -1001999613479, 1050: -1001999613479}
     
     try:
         start_message = await bot.send_message(
-            chat_id=-1001801766701,
-            text=f"**♻️𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐓𝐨𝐝𝐚𝐲♻️**\n**𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞:- > 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 (अवसर बैच 𝟐.𝟎 )**\n**𝐂𝐥𝐚𝐬𝐬 𝐃𝐚𝐭𝐞 :- {get_current_date()}**\n**नीचे इस तारीख की जितनी भी क्लासेस एप्लीकेशन पर हुई थी नीचे दी जा रही है👇👇👇👇**\n>𝐘𝐨𝐮𝐫 𝐇𝐞𝐥𝐩𝐞𝐫 : 𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 🇮🇳"
+            chat_id=-1001999613479,
+            text=f'**🔖{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**\n\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ RPF SI & CONSTABLE 2024( रेल रक्षक बैच )**\n\n** 𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker**'
         )
         print(f"Message sent with ID: {start_message.id}")
-        await asyncio.sleep(2)
+        await asyncio.sleep(0.10)
 
         try:
-            await bot.pin_chat_message(chat_id=-1001801766701, message_id=start_message.id)
+            await bot.pin_chat_message(chat_id=-1001999613479, message_id=start_message.id)
             print("Message pinned successfully.")
         except Exception as e:
             print(f"Failed to pin message: {e}")
@@ -81,8 +92,8 @@ async def all_subject_send(bot):
 
     try:
         await bot.send_message(
-            chat_id=-1001801766701,
-            text=f"**♻️𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 ♻️**\n**𝐃𝐚𝐭𝐞 : {get_current_date()}**\n> **𝐃𝐚𝐭𝐞 𝐅𝐨𝐫𝐦𝐚𝐭 :- ❤️𝐘𝐞𝐚𝐫-𝐌𝐨𝐧𝐭𝐡-𝐝𝐚𝐭𝐞❤️**\n\n**𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
+            chat_id=-1001999613479,
+            text=f"**🔆𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬{get_current_date_vsp()} 𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 🔆**\n\n**❤️𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
@@ -91,7 +102,7 @@ async def account_logins(bot, subjectid, chatid):
     userid = "3752241"
     async with aiohttp.ClientSession() as session:
         try:
-            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjM3NTIyNDEiLCJlbWFpbCI6InNoYWtpdGt1bWFybndkODA1MTA0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxNTI0NTYwNH0.AcUSabkEnTY0kXzNaSovcHPeNPmQWh5LMltyUnJJfoU"
+            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY2ODEzOTAiLCJlbWFpbCI6InByYWNoaXlhZGF2MTIzNEBnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3MTQxODgwNDV9.Q9sHS33SjupDr0dvAnCjweKU2fdamClFBfFGg8hC66U"
             hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
@@ -106,7 +117,7 @@ async def account_logins(bot, subjectid, chatid):
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=157&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=156&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -115,7 +126,7 @@ async def account_logins(bot, subjectid, chatid):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=157&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=156&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -127,7 +138,7 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=157&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=156&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
@@ -144,13 +155,20 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception:
                     pass
                             
-            date = get_current_date()
+            date = "2024-09-13"
             if date not in all_important:
                 # Customize the message based on subjectid
                 messages = {
-                    138: "Maths class aaj nahi hui, revision karo balkay ke andar ❤️",
-                    1029: "Reasoning ki class aaj nahi hui hai, revision karo 📚",
-                    1041: "History ki class aaj nahi hui hai, revision karo 📜",
+                    828: f"Maths (RPF रक्षक बैच ) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    829: f"Reasoning (RPF रक्षक बैच )में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    830: f"Economics (RPF रक्षक बैच )में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    831: f"Geography (RPF रक्षक बैच )में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    832: f"History (RPF रक्षक बैच )में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    833: f" Physics (RPF रक्षक बैच )में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    917: f"Biology (RPF रक्षक बैच)में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    935: f"Static GK (RPF रक्षक बैच)में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    958: f"polity (RPF रक्षक बैच )में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1050: f"Chemistry (RPF रक्षक बैच)में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                     # Add more subject IDs and their messages as needed
                 }
                 # Send the message if the subjectid is in the messages dictionary
@@ -186,8 +204,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=13,
-    minute=14,
+    hour=17,
+    minute=47,
     second=0, 
     args=[Client]
 )
