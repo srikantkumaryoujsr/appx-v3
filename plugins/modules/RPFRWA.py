@@ -155,7 +155,7 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception:
                     pass
                             
-            date={get_current_date()}
+            date=get_current_date()
             if date not in all_important:
                 # Customize the message based on subjectid
                 messages = {
@@ -170,7 +170,7 @@ async def account_logins(bot, subjectid, chatid):
                     958: f"polity (RPF रक्षक बैच )में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                     1050: f"Chemistry (RPF रक्षक बैच)में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                     # Add more subject IDs and their messages as needed
-                }
+               }
                 # Send the message if the subjectid is in the messages dictionary
                 if subjectid in messages:
                     await bot.send_message(chatid, text=messages[subjectid])
@@ -205,7 +205,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=17,
-    minute=38,
+    minute=57,
     second=0, 
     args=[Client]
 )
