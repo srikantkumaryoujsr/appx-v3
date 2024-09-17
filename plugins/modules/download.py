@@ -94,8 +94,8 @@ async def account_login(bot: Client, content, title, chatid):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[🏖️] 𝐕𝐢𝐝 𝐈𝐃 ➤ {name1}** {res} @ImTgHacker.mkv\n\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n\n🔅{backup}🔅\n\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n'
-                cc1 = f'**[📑]𝐏𝐝𝐟 𝐍𝐚𝐦𝐞:➤ {name1}** @ImTgHacker.pdf \n\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n\n🔅{backup}🔅\n\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n'
+                cc = f'**[🏖️] 𝐕𝐢𝐝 𝐈𝐃 ➤ {name1}** {res} @ImTgHacker.mkv\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n\n🔅{backup}🔅\n\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n💛𝕌𝕟𝕜𝕟𝕠𝕨𝕟 ℍ𝕖𝕝𝕡𝕖𝕣,  𝔾𝕚𝕗𝕥 𝕗𝕠𝕣 ℙ𝕠𝕠𝕣 𝕊𝕥𝕦𝕕𝕖𝕟𝕥𝕤💜'
+                cc1 = f'**[📑]𝐏𝐝𝐟 𝐍𝐚𝐦𝐞:➤ {name1}** @ImTgHacker.pdf \n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}**\n\n**[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}**\n\n🔅{backup}🔅\n\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n💛𝕌𝕟𝕜𝕟𝕠𝕨𝕟 ℍ𝕖𝕝𝕡𝕖𝕣,  𝔾𝕚𝕗𝕥 𝕗𝕠𝕣 ℙ𝕠𝕠𝕣 𝕊𝕥𝕦𝕕𝕖𝕟𝕥𝕤💜'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -118,7 +118,7 @@ async def account_login(bot: Client, content, title, chatid):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**📥𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠📥**\n\n**𝐍𝐚𝐦𝐞:-** `{name}\n𝐐𝐮𝐚𝐥𝐢𝐭𝐲 : - {raw_text2}`\n\n**𝐔𝐑𝐋:-** `{url}`\n𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 :- @ImTgHacker"
+                    Show = f"**📥𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠📥**\n\n**𝐍𝐚𝐦𝐞:-** `{name}\n𝐐𝐮𝐚𝐥𝐢𝐭𝐲 : - {raw_text2}`\n\n**𝐔𝐑𝐋:-**✡️𝐔𝐑𝐋 𝐇𝐢𝐝𝐞 𝐁𝐲 𝐘𝐨𝐮𝐫 𝐎𝐖𝐍𝐄𝐑✡️....\n𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 :- @ImTgHacker"
                     prog = await bot.send_message(chatid, text=Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
