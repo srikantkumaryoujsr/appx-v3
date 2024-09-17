@@ -173,7 +173,7 @@ async def account_logins(bot, subjectid, chatid):
                     await bot.send_message(chatid, text=messages[subjectid])
                 return
 
-            data = all_important.get(date, {})
+            date=get_current_date()
             title = data.get("title")
             
             video = data.get("download_link")
@@ -201,8 +201,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=7,
-    minute=56,
+    hour=8,
+    minute=2,
     second=0, 
     args=[Client]
 )
