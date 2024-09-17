@@ -155,7 +155,7 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception:
                     pass
                             
-            date = {get_current_date()}
+            date={get_current_date()}
             if date not in all_important:
                 # Customize the message based on subjectid
                 messages = {
@@ -204,8 +204,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=9,
-    minute=1,
+    hour=17,
+    minute=38,
     second=0, 
     args=[Client]
 )
