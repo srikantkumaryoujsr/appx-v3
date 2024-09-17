@@ -67,7 +67,7 @@ async def all_subject_send(bot):
     try:
         start_message = await bot.send_message(
             chat_id=-1002057819179,
-            text=f'**🔖{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**\n\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ RPF SI & CONSTABLE 2024( रेल रक्षक बैच )**\n\n 𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker'
+            text=f'**🔖{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**"""\n\n**[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ RPF SI & CONSTABLE 2024( रेल रक्षक बैच )**\n\n""" 𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker'
         )
         print(f"Message sent with ID: {start_message.id}")
         await asyncio.sleep(0.10)
@@ -204,8 +204,8 @@ async def account_logins(bot, subjectid, chatid):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=17,
-    minute=59,
+    hour=19,
+    minute=7,
     second=0, 
     args=[Client]
 )
