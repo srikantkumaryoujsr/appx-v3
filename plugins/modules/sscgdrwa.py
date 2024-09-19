@@ -61,8 +61,8 @@ def decrypt_link(link):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 @Client.on_message(filters.command("STARTGD") & filters.user(AUTH_USERS))
-async def start_subjects_command(bot, message):
-    await Message.reply_text(f"**😂𝐌𝐞𝐧𝐮𝐚𝐥𝐥𝐲 𝐁𝐨𝐭 𝐒𝐭𝐚𝐫𝐭𝐞𝐝 𝐅𝐨𝐫 𝐔𝐩𝐝𝐚𝐭𝐞 🛑🤡**\n\n**{get_current_date_vsp()}**")
+async def start_subjects_command(bot, m: Message):
+    await m.reply_text(f"**😂𝐌𝐞𝐧𝐮𝐚𝐥𝐥𝐲 𝐁𝐨𝐭 𝐒𝐭𝐚𝐫𝐭𝐞𝐝 𝐅𝐨𝐫 𝐔𝐩𝐝𝐚𝐭𝐞 🛑🤡**\n\n**{get_current_date_vsp()}**")
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
