@@ -5,7 +5,6 @@ import base64
 import pytz
 from pytz import utc
 from datetime import datetime, timedelta
-
 from pyrogram import filters
 from .. import bot as Client
 from .. import bot
@@ -61,10 +60,10 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-@Client.on_message(filters.command("START_RPF") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("STARTRPF") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
+    await Message.reply_text(f"**😂𝐌𝐞𝐧𝐮𝐚𝐥𝐥𝐲 𝐁𝐨𝐭 𝐒𝐭𝐚𝐫𝐭𝐞𝐝 𝐅𝐨𝐫 𝐔𝐩𝐝𝐚𝐭𝐞 🛑🤡**\n\n**{get_current_date_vsp()**")
     await all_subject_send(bot)
-    await m.reply_text("**🛑𝐒𝐢𝐫 𝐇𝐚𝐦𝐧𝐞 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐤𝐚𝐫𝐧𝐚 𝐬𝐭𝐚𝐫𝐭 𝐤𝐚𝐫 𝐝𝐢𝐲𝐚 𝐡𝐚𝐢 🤡❤️**", True)
 
 async def all_subject_send(bot):
     subject_and_channel = {828: -1002057819179, 829: -1002057819179, 830: -1002057819179, 831: -1002057819179, 832: -1002057819179, 833: -1002057819179, 917: -1002057819179, 935: -1002057819179, 958: -1002057819179, 1050: -1002057819179}
