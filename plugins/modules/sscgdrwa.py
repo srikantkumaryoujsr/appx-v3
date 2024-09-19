@@ -174,7 +174,6 @@ async def set_time(client, message):
     await message.reply("Kripya apna desired time (HH:MM:SS) format me dein.")
 
     # This function will handle the next message from the user
-    @Client.on_message(filters.text & filters.user(message.from_user.id))
     async def receive_time_response(response_message):
         time_str = response_message.text
 
@@ -195,5 +194,8 @@ async def set_time(client, message):
 
         # Unregister this handler after receiving the response
         Client.remove_handler(receive_time_response)
+
+    # Register the handler for the next message
+    Client.add_handler(filters.text & filters.user(message.from_user.id), receive_time_response)
 
 scheduler.start()
