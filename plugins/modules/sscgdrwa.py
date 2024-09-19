@@ -64,11 +64,11 @@ def decrypt_link(link):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 @bot.on_message(filters.command("start_subjects"))
-async def account_login(bot: Client, Message: Message):
-    await message.reply("Please provide a date in YYYY-MM-DD format.")
+async def account_login(bot: Client, m: Message):
+    await m.reply("Please provide a date in YYYY-MM-DD format.")
     
     # Listening for the first input (date)
-    input1 = await bot.listen(message.chat.id)
+    input1 = await bot.listen(m.chat.id)
     custom_date = input1.text.strip()
 
     if custom_date:
@@ -76,15 +76,15 @@ async def account_login(bot: Client, Message: Message):
             date_obj = datetime.strptime(custom_date, '%Y-%m-%d')
             date = date_obj.strftime('%Y-%m-%d')
         except ValueError:
-            await message.reply("Invalid date format. Using default date.")
+            await m.reply("Invalid date format. Using default date.")
             #date = get_current_date()  # Default date
     else:
         date = get_current_date()  # Default date
 
-    await message.reply("Please provide the VSP date (same format YYYY-MM-DD). Leave blank for default.")
+    await m.reply("Please provide the VSP date (same format YYYY-MM-DD). Leave blank for default.")
 
     # Listening for the second input (VSP date)
-    input2 = await bot.listen(message.chat.id)
+    input2 = await bot.listen(m.chat.id)
     vsp_date = input2.text.strip()
 
     if not vsp_date:
