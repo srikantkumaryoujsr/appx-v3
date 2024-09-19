@@ -173,22 +173,27 @@ async def account_logins(bot, subjectid, chatid):
 async def set_time(client, message):
     await message.reply("Kripya apna desired time (HH:MM:SS) format me dein.")
 
-    response_message = await client.listen(chat_id=message.chat.id)  # Use listen to capture user input
-    time_str = response_message.text
+    # This function will handle the next message from the user
+    @Client.on_message(filters.text & filters.user(message.from_user.id))
+    async def receive_time_response(response_message):
+        time_str = response_message.text
 
-    try:
-        hour, minute, second = map(int, time_str.split(':'))
-        
-        scheduler.reschedule_job(
-            'all_subject_send_job',
-            trigger='cron',
-            hour=hour,
-            minute=minute,
-            second=second
-        )
-        
-        await message.reply(f"Scheduler time update ho gaya hai: {time_str}.")
-    except Exception:
-        await message.reply("Koi galti hui, kripya sahi format me time dein (HH:MM:SS).")
+        try:
+            hour, minute, second = map(int, time_str.split(':'))
+
+            scheduler.reschedule_job(
+                'all_subject_send_job',
+                trigger='cron',
+                hour=hour,
+                minute=minute,
+                second=second
+            )
+
+            await message.reply(f"Scheduler time update ho gaya hai: {time_str}.")
+        except ValueError:
+            await message.reply("Koi galti hui, kripya sahi format me time dein (HH:MM:SS).")
+
+        # Unregister this handler after receiving the response
+        Client.remove_handler(receive_time_response)
 
 scheduler.start()
