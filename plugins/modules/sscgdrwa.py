@@ -31,7 +31,7 @@ def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
     return date_time.strftime('%Y-%m-%d')
 
-def vsp_date:
+def vsp_date():
     # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
@@ -90,7 +90,7 @@ async def handle_vsp_input(bot, message, date):
     vsp_date = message.text.strip()  # User ka input lena
 
     if not vsp_date:
-        vsp_date = vsp_date  # Default VSP date
+        vsp_date = vsp_date()  # Default VSP date
 
     await all_subject_send(bot, date, vsp_date)
 
