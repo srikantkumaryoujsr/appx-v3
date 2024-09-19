@@ -64,7 +64,7 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 @bot.on_message(filters.command("START_GD") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
     await message.reply("Please provide a date in YYYY-MM-DD format.")
-    await bot.listen(message.chat.id, handle_date_input)
+    await bot.send_message(message.chat.id, handle_date_input)
 
 async def handle_date_input(bot, message):
     custom_date = message.text
@@ -80,7 +80,7 @@ async def handle_date_input(bot, message):
         date = get_current_date()  # Default date
 
     await message.reply("Please provide the VSP date (same format YYYY-MM-DD). Leave blank for default.")
-    await bot.listen(message.chat.id, handle_vsp_input, date)
+    await bot.send_message(message.chat.id, handle_vsp_input, date)
 
 async def handle_vsp_input(bot, message, date):
     vsp_date = message.text.strip()  # User ka input lena
