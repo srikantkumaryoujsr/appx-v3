@@ -191,12 +191,4 @@ async def set_time(client, message):
     except Exception:
         await message.reply("Koi galti hui, kripya sahi format me time dein (HH:MM:SS).")
 
-scheduler.add_job(
-    func=all_subject_send,
-    trigger="cron",
-    hour=6,
-    minute=1,
-    second=0
-)
-
 scheduler.start()
