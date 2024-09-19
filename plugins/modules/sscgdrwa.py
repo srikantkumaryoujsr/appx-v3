@@ -5,6 +5,7 @@ import base64
 import pytz
 from pytz import utc
 from datetime import datetime, timedelta
+
 from pyrogram import filters
 from .. import bot as Client
 from .. import bot
@@ -12,27 +13,34 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
+AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
 
-AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
-
-scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-
 def get_current_date():
+    # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
     yesterday = now - timedelta(days=1)
-    return yesterday.strftime("%Y-%m-%d")
+    formatted_date = yesterday.strftime("%Y-%m-%d")
+    return formatted_date
 
 def convert_timestamp_to_datetime(timestamp: int) -> str:
-    return datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d')
+    date_time = datetime.utcfromtimestamp(timestamp)
+    return date_time.strftime('%Y-%m-%d')
 
 def get_current_date_vsp():
+    # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
     yesterday = now - timedelta(days=1)
-    return f"{yesterday.strftime('%d')}-{yesterday.strftime('%B').upper()}-{yesterday.strftime('%Y')}, {yesterday.strftime('%A').upper()}"
+    day_of_week = yesterday.strftime("%A").upper()  # Full weekday name
+    month_name = yesterday.strftime("%B").upper()  # Full month name
+    day = yesterday.strftime("%d").zfill(2)  # Day of the month
+    year = yesterday.strftime("%Y")  # Year
+    return f"{day}-{month_name}-{year}, {day_of_week}"
 
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
@@ -44,9 +52,18 @@ def decrypt_link(link):
         key = b'638udh3829162018'
         iv = b'fedcba9876543210'
         cipher = AES.new(key, AES.MODE_CBC, iv)
-        return unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
-    except Exception:
+        decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
+        return decrypted_link
+    except ValueError as ve:
         pass
+    except Exception as e:
+        pass
+    
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+
+@Client.on_message(filters.command("start_subjects") & filters.user(AUTH_USERS))
+async def start_subjects_command(client, message):
+    await all_subject_send(client)
 
 async def all_subject_send(bot):
     subject_and_channel = {138: -1001999613479, 1076: -1001999613479, 1077: -1001999613479, 1078: -1001999613479, 1079: -1001999613479, 1080: -1001999613479, 1081: -1001999613479, 1082: -1001999613479}
@@ -56,8 +73,14 @@ async def all_subject_send(bot):
             chat_id=-1001999613479,
             text=f'**☞{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**\n\n**☞𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 ( अवसर बैच 𝟐.𝟎 ) 𝐋𝐢𝐯𝐞 🛑**\n\n**☞𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker**'
         )
+        print(f"Message sent with ID: {start_message.id}")
         await asyncio.sleep(0.10)
-        await bot.pin_chat_message(chat_id=-1001999613479, message_id=start_message.id)
+
+        try:
+            await bot.pin_chat_message(chat_id=-1001999613479, message_id=start_message.id)
+            print("Message pinned successfully.")
+        except Exception as e:
+            print(f"Failed to pin message: {e}")
     
     except Exception as e:
         print(f"Failed to send start message: {e}")
@@ -93,29 +116,37 @@ async def account_logins(bot, subjectid, chatid):
             
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
+           
             bname = bdetail[0]["course_name"]
+            
             all_urls = ""
             couserid = []
             res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=188&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
+            
             topicids = [i["topicid"] for i in topic]
+            
             videos = []  
             all_important = {}  
-
+            all_urls = ""
             for t in topicids:
                 url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=188&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
                 
-                for i in videodata:
-                    couserid.append(i["id"])
-                    
+                try:
+                    for i in videodata:
+                        couserid.append(i["id"])
+                        
+                except Exception as e:
+                    print(e)
             for c in couserid:
                 url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=188&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
-
+              
             for i in videos:
                 try:
                     all_important[convert_timestamp_to_datetime(i["strtotime"])] = {
@@ -124,11 +155,13 @@ async def account_logins(bot, subjectid, chatid):
                         'pdf_link2': decrypt_link(i['pdf_link2'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link2") else "",
                         'download_link': decrypt_link(i['download_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]).replace("720p", "360p") if i.get("download_link") else ""
                     }
+                    
                 except Exception:
                     pass
-
-            date = get_current_date()
+                            
+            date=get_current_date()
             if date not in all_important:
+                # Customize the message based on subjectid
                 messages = {
                     138: f"Current Affairs में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                     1076: f"Maths (अवसर2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
@@ -139,63 +172,43 @@ async def account_logins(bot, subjectid, chatid):
                     1081: f"Polity (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                     1082: f"Physics(अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                 }
+                # Send the message if the subjectid is in the messages dictionary
                 if subjectid in messages:
                     await bot.send_message(chatid, text=messages[subjectid])
                 return
 
             data = all_important.get(date, {})
             title = data.get("title")
+            
             video = data.get("download_link")
+            
             pdf_1 = data.get("pdf_link")
+            
             pdf_2 = data.get("pdf_link2")
-
-            all_urls = ""
+            
             if video:
                 all_urls += f"{title}: {video}"
             if pdf_1:
                 all_urls += f"\n{title} : {pdf_1}"
             if pdf_2:
                 all_urls += f"\n{title} : {pdf_2}"
-
+            
             if all_urls:
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
+            print(all_urls)
             await account_login(bot, all_urls, bname, chatid)
         
         except Exception as e:
             print(f"An error occurred: {e}")
 
-#@scheduler.scheduled_job('cron', id='all_subject_send_job', hour=6, minute=1, second=0)
-#async def scheduled_task():
-    #await all_subject_send(Client)
-
-@Client.on_message(filters.command("set_time"))
-async def set_time(client, message):
-    await message.reply("Kripya apna desired time (HH:MM:SS) format me dein.")
-
-    # This function will handle the next message from the user
-    async def receive_time_response(response_message):
-        time_str = response_message.text
-
-        try:
-            hour, minute, second = map(int, time_str.split(':'))
-
-            scheduler.reschedule_job(
-                'all_subject_send_job',
-                trigger='cron',
-                hour=hour,
-                minute=minute,
-                second=second
-            )
-
-            await message.reply(f"Scheduler time update ho gaya hai: {time_str}.")
-        except ValueError:
-            await message.reply("Koi galti hui, kripya sahi format me time dein (HH:MM:SS).")
-
-        # Unregister this handler after receiving the response
-        Client.remove_handler(receive_time_response)
-
-    # Register the handler for the next message
-    Client.add_handler(filters.text & filters.user(message.from_user.id), receive_time_response)
+scheduler.add_job(
+    func=all_subject_send,
+    trigger="cron",
+    hour=6,
+    minute=1,
+    second=0, 
+    args=[Client]
+)
 
 scheduler.start()
