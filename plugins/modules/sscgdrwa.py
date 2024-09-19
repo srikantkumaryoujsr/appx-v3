@@ -5,17 +5,14 @@ import base64
 import pytz
 from pytz import utc
 from datetime import datetime, timedelta
-from pyrogram.types import Message
-from pyrogram import Client, filters
-
 from pyrogram import filters
-from .. import bot as bot
+from .. import bot as Client
 from .. import bot
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([6748451207, 6804421130, 6671207610, 6741261680])
+AUTH_USERS.extend([6748451207])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -33,7 +30,7 @@ def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
     return date_time.strftime('%Y-%m-%d')
 
-def vsp_date():
+def get_current_date_vsp():
     # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
@@ -63,34 +60,10 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-@bot.on_message(filters.command("start_subjects"))
-async def account_login(bot: Client, m: Message):
-    await m.reply("Please provide a date in YYYY-MM-DD format.")
-    
-    # mukeshing for the first input (date)
-    input1 = await bot.mukesh(m.chat.id)
-    custom_date = input1.text.strip()
-
-    if custom_date:
-        try:
-            date_obj = datetime.strptime(custom_date, '%Y-%m-%d')
-            date = date_obj.strftime('%Y-%m-%d')
-        except ValueError:
-            await m.reply("Invalid date format. Using default date.")
-            #date = get_current_date()  # Default date
-    else:
-        date = get_current_date()  # Default date
-
-    await m.reply("Please provide the VSP date (same format YYYY-MM-DD). Leave blank for default.")
-
-    # mukeshing for the second input (VSP date)
-    input2 = await bot.mukesh(m.chat.id)
-    vsp_date = input2.text.strip()
-
-    if not vsp_date:
-        vsp_date = vsp_date()  # Default VSP date
-
-    await all_subject_send(bot, date, vsp_date)
+@Client.on_message(filters.command("STARTGD") & filters.user(AUTH_USERS))
+async def start_subjects_command(bot, message):
+    await Message.reply_text(f"**😂𝐌𝐞𝐧𝐮𝐚𝐥𝐥𝐲 𝐁𝐨𝐭 𝐒𝐭𝐚𝐫𝐭𝐞𝐝 𝐅𝐨𝐫 𝐔𝐩𝐝𝐚𝐭𝐞 🛑🤡**\n\n**{get_current_date_vsp()**")
+    await all_subject_send(bot)
 
 async def all_subject_send(bot):
     subject_and_channel = {138: -1001999613479, 1076: -1001999613479, 1077: -1001999613479, 1078: -1001999613479, 1079: -1001999613479, 1080: -1001999613479, 1081: -1001999613479, 1082: -1001999613479}
@@ -98,7 +71,7 @@ async def all_subject_send(bot):
     try:
         start_message = await bot.send_message(
             chat_id=-1001999613479,
-            text=f'**☞{vsp_date}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**\n\n**☞𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 ( अवसर बैच 𝟐.𝟎 ) 𝐋𝐢𝐯𝐞 🛑**\n\n**☞𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker**'
+            text=f'**☞{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**\n\n**☞𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 ( अवसर बैच 𝟐.𝟎 ) 𝐋𝐢𝐯𝐞 🛑**\n\n**☞𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker**'
         )
         print(f"Message sent with ID: {start_message.id}")
         await asyncio.sleep(0.10)
@@ -124,14 +97,14 @@ async def all_subject_send(bot):
     try:
         await bot.send_message(
             chat_id=-1001999613479,
-            text=f"**🔆𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬{vsp_date}**\n**𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 🔆**\n\n**❤️𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
+            text=f"**🔆𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬{get_current_date_vsp()}**\n**𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 🔆**\n\n**❤️𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
 
 async def account_logins(bot, subjectid, chatid):
     userid = "3752241"
-    async with aiohttp.botSession() as session:
+    async with aiohttp.ClientSession() as session:
         try:
             token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjM3NTIyNDEiLCJlbWFpbCI6InNoYWtpdGt1bWFybndkODA1MTA0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxNTI0NTYwNH0.AcUSabkEnTY0kXzNaSovcHPeNPmQWh5LMltyUnJJfoU"
             hdr1 = {
@@ -186,17 +159,18 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception:
                     pass
                             
+            date=get_current_date()
             if date not in all_important:
                 # Customize the message based on subjectid
                 messages = {
-                    138: f"Current Affairs में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1076: f"Maths (अवसर2.O) में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1077: f"English (अवसर बैच 2.O) में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1078: f"Hindi (अवसर बैच 2.0) में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1079: f"Geography (अवसर बैच 2.0) में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1080: f"Reasoning (अवसर बैच 2.0) में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1081: f"Polity (अवसर बैच 2.0) में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1082: f"Physics(अवसर बैच 2.0) में {vsp_date}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    138: f"Current Affairs में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1076: f"Maths (अवसर2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1077: f"English (अवसर बैच 2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1078: f"Hindi (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1079: f"Geography (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1080: f"Reasoning (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1081: f"Polity (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
+                    1082: f"Physics(अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                 }
                 # Send the message if the subjectid is in the messages dictionary
                 if subjectid in messages:
@@ -234,7 +208,7 @@ scheduler.add_job(
     hour=6,
     minute=1,
     second=0, 
-    args=[bot]
+    args=[Client]
 )
 
 scheduler.start()
