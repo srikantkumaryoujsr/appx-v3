@@ -61,11 +61,7 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-async def all_subject_send(bot, date, vsp_date):
-    # Use 'date' and 'vsp_date' directly in your existing function where required
-    # Remaining code...
-
-@Client.on_message(filters.command("start_subjects") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("START_GD") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
     await message.reply("Please provide a date in YYYY-MM-DD format.")
     await client.listen(message.chat.id, handle_date_input)
