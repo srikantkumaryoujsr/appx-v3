@@ -165,31 +165,38 @@ async def account_logins(bot, subjectid, chatid):
         except Exception as e:
             print(f"An error occurred: {e}")
 
-@scheduler.scheduled_job('cron', id='all_subject_send_job', hour=6, minute=1, second=0)
-async def scheduled_task():
-    await all_subject_send(Client)
+#@scheduler.scheduled_job('cron', id='all_subject_send_job', hour=6, minute=1, second=0)
+#async def scheduled_task():
+    #await all_subject_send(Client)
 
-@Client.on_message(filters.command("settime"))
+@Client.on_message(filters.command("set_time"))
 async def set_time(client, message):
     await message.reply("Kripya apna desired time (HH:MM:SS) format me dein.")
-    user_response = await client.listen(message.chat.id)
+    
+    response_message = await client.get_next_message(chat_id=message.chat.id)
     
     try:
-        time_str = user_response.text
+        time_str = response_message.text
         hour, minute, second = map(int, time_str.split(':'))
         
-        # Scheduler ko update kare
         scheduler.reschedule_job(
             'all_subject_send_job',
             trigger='cron',
             hour=hour,
             minute=minute,
-            second=second,
-            args=[client]
+            second=second
         )
         
         await message.reply(f"Scheduler time update ho gaya hai: {time_str}.")
     except Exception:
         await message.reply("Koi galti hui, kripya sahi format me time dein (HH:MM:SS).")
+
+scheduler.add_job(
+    func=all_subject_send,
+    trigger="cron",
+    hour=6,
+    minute=1,
+    second=0
+)
 
 scheduler.start()
