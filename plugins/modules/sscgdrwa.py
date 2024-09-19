@@ -7,7 +7,7 @@ from pytz import utc
 from datetime import datetime, timedelta
 
 from pyrogram import filters
-from .. import bot as Client
+from .. import bot as bot
 from .. import bot
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
@@ -61,10 +61,10 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-@Client.on_message(filters.command("START_GD") & filters.user(AUTH_USERS))
+@bot.on_message(filters.command("START_GD") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
     await message.reply("Please provide a date in YYYY-MM-DD format.")
-    await client.listen(message.chat.id, handle_date_input)
+    await bot.listen(message.chat.id, handle_date_input)
 
 async def handle_date_input(bot, message):
     custom_date = message.text
@@ -80,7 +80,7 @@ async def handle_date_input(bot, message):
         date = get_current_date()  # Default date
 
     await message.reply("Please provide the VSP date (same format YYYY-MM-DD). Leave blank for default.")
-    await client.listen(message.chat.id, handle_vsp_input, date)
+    await bot.listen(message.chat.id, handle_vsp_input, date)
 
 async def handle_vsp_input(bot, message, date):
     vsp_date = message.text.strip()  # User ka input lena
@@ -129,7 +129,7 @@ async def all_subject_send(bot):
 
 async def account_logins(bot, subjectid, chatid):
     userid = "3752241"
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.botSession() as session:
         try:
             token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjM3NTIyNDEiLCJlbWFpbCI6InNoYWtpdGt1bWFybndkODA1MTA0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcxNTI0NTYwNH0.AcUSabkEnTY0kXzNaSovcHPeNPmQWh5LMltyUnJJfoU"
             hdr1 = {
@@ -232,7 +232,7 @@ scheduler.add_job(
     hour=6,
     minute=1,
     second=0, 
-    args=[Client]
+    args=[bot]
 )
 
 scheduler.start()
