@@ -26,7 +26,7 @@ async def _start():
         importlib.import_module("plugins.modules." + all_module)
 
     LOGGER.info(f"@{app.username} Started.")
-    await app.send_message(7513565186, "I am Alive")
+    await app.send_message(6748451207, "I am Alive")
     scheduler.start()  # Start the scheduler
     await idle()
 
