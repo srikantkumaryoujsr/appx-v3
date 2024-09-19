@@ -173,8 +173,6 @@ async def account_logins(bot, subjectid, chatid):
 async def set_time(client, message):
     await message.reply("Kripya apna desired time (HH:MM:SS) format me dein.")
     
-    response_message = await client.get_next_message(chat_id=message.chat.id)
-    
     try:
         time_str = response_message.text
         hour, minute, second = map(int, time_str.split(':'))
