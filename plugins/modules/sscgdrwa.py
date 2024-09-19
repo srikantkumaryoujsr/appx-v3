@@ -63,12 +63,13 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-@bot.on_message(filters.command("START_GD") & filters.user(AUTH_USERS))
-async def start_subjects_command(bot, message):
+@bot.on_message(filters.command("start_subjects"))
+async def handle_start_subjects(bot: Mukesh, message: Message):
+    await bot.start_subjects_command(message)
     await message.reply("Please provide a date in YYYY-MM-DD format.")
     
     # Listening for the first input (date)
-    input1 = await self.listen(message.chat.id)
+    input1 = await bot.listen(message.chat.id)
     custom_date = input1.text.strip()
 
     if custom_date:
@@ -84,7 +85,7 @@ async def start_subjects_command(bot, message):
     await message.reply("Please provide the VSP date (same format YYYY-MM-DD). Leave blank for default.")
 
     # Listening for the second input (VSP date)
-    input2 = await self.listen(message.chat.id)
+    input2 = await bot.listen(message.chat.id)
     vsp_date = input2.text.strip()
 
     if not vsp_date:
