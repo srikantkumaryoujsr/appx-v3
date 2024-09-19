@@ -55,9 +55,9 @@ def decrypt_link(link):
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
     except ValueError as ve:
-        pass
+        print(f"Padding error while decrypting link: {ve}")
     except Exception as e:
-        pass
+        print(f"Error decrypting link: {e}")
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
