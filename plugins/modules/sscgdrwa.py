@@ -67,8 +67,8 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def account_login(bot: Client, m: Message):
     await m.reply("Please provide a date in YYYY-MM-DD format.")
     
-    # Listening for the first input (date)
-    input1 = await bot.listen(m.chat.id)
+    # mukeshing for the first input (date)
+    input1 = await bot.mukesh(m.chat.id)
     custom_date = input1.text.strip()
 
     if custom_date:
@@ -83,8 +83,8 @@ async def account_login(bot: Client, m: Message):
 
     await m.reply("Please provide the VSP date (same format YYYY-MM-DD). Leave blank for default.")
 
-    # Listening for the second input (VSP date)
-    input2 = await bot.listen(m.chat.id)
+    # mukeshing for the second input (VSP date)
+    input2 = await bot.mukesh(m.chat.id)
     vsp_date = input2.text.strip()
 
     if not vsp_date:
