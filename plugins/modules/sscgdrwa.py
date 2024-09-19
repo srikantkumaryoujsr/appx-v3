@@ -172,9 +172,11 @@ async def account_logins(bot, subjectid, chatid):
 @Client.on_message(filters.command("set_time"))
 async def set_time(client, message):
     await message.reply("Kripya apna desired time (HH:MM:SS) format me dein.")
-    
+
+    response_message = await client.listen(chat_id=message.chat.id)  # Use listen to capture user input
+    time_str = response_message.text
+
     try:
-        time_str = response_message.text
         hour, minute, second = map(int, time_str.split(':'))
         
         scheduler.reschedule_job(
