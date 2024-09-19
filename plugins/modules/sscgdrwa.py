@@ -71,7 +71,7 @@ async def all_subject_send(bot):
     try:
         start_message = await bot.send_message(
             chat_id=-1001999613479,
-            text=f'**☞{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**\n\n> **☞𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 ( अवसर बैच 𝟐.𝟎 ) 𝐋𝐢𝐯𝐞 🛑**\n\n**☞𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker**'
+            text=f'**☞{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**```\n**☞𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 ( अवसर बैच 𝟐.𝟎 ) 𝐋𝐢𝐯𝐞 🛑**\n```**☞🤡𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker**'
         )
         print(f"Message sent with ID: {start_message.id}")
         await asyncio.sleep(0.10)
@@ -97,7 +97,7 @@ async def all_subject_send(bot):
     try:
         await bot.send_message(
             chat_id=-1001999613479,
-            text=f"**🔆𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬{get_current_date_vsp()}**\n**𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 🔆**\n\n**❤️𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
+            text=f"**🔆𝐒𝐭𝐮𝐝𝐞𝐧𝐭𝐬 𝐀𝐚𝐩𝐤𝐢 𝐂𝐥𝐚𝐬𝐬{get_current_date_vsp()}**\n**𝐔𝐩𝐝𝐚𝐭𝐞 𝐊𝐚𝐫 𝐃𝐢 𝐠𝐚𝐢 𝐇𝐚𝐢 🔆**```\n**𝟏𝟎𝟎 ❤️𝐃𝐚𝐢𝐥𝐲 𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧 𝐌𝐞 𝐦𝐢𝐥𝐧𝐞 𝐜𝐡𝐚𝐡𝐢𝐲𝐞 𝐠𝐮𝐲𝐬 🕊️**\n```**❤️𝐑𝐞𝐚𝐜𝐭𝐢𝐨𝐧𝐬 𝐝𝐨 𝐘𝐚𝐚𝐫❤️ **"
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
