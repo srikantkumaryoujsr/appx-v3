@@ -165,7 +165,7 @@ async def account_logins(bot, subjectid, chatid):
         except Exception as e:
             print(f"An error occurred: {e}")
 
-@scheduler.scheduled_job('cron', id='all_subject_send_job', hour=6, minute=1, second=0, args=[Client])
+@scheduler.scheduled_job('cron', id='all_subject_send_job', hour=6, minute=1, second=0)
 async def scheduled_task():
     await all_subject_send(Client)
 
