@@ -5,7 +5,7 @@ import base64
 import pytz
 from pytz import utc
 from datetime import datetime, timedelta
-rom pyrogram.types import Message
+from pyrogram.types import Message
 from pyrogram import Client, filters
 
 from pyrogram import filters
