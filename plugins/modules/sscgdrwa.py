@@ -64,7 +64,7 @@ def decrypt_link(link):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 @bot.on_message(filters.command("start_subjects"))
-async def account_login(bot: Client, m: Message):
+async def account_login(bot: Client, Message: Message):
     await message.reply("Please provide a date in YYYY-MM-DD format.")
     
     # Listening for the first input (date)
