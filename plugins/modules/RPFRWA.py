@@ -55,11 +55,16 @@ def decrypt_link(link):
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
     except ValueError as ve:
-        pass
+        print(f"Padding error while decrypting link: {ve}")
     except Exception as e:
-        pass
+        print(f"Error decrypting link: {e}")
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+
+@Client.on_message(filters.command("START_RPF") & filters.user(AUTH_USERS))
+async def start_subjects_command(bot, message):
+    await all_subject_send(bot)
+    await m.reply_text("**🛑𝐒𝐢𝐫 𝐇𝐚𝐦𝐧𝐞 𝐂𝐥𝐚𝐬𝐬 𝐔𝐩𝐝𝐚𝐭𝐞 𝐤𝐚𝐫𝐧𝐚 𝐬𝐭𝐚𝐫𝐭 𝐤𝐚𝐫 𝐝𝐢𝐲𝐚 𝐡𝐚𝐢 🤡❤️**", True)
 
 async def all_subject_send(bot):
     subject_and_channel = {828: -1002057819179, 829: -1002057819179, 830: -1002057819179, 831: -1002057819179, 832: -1002057819179, 833: -1002057819179, 917: -1002057819179, 935: -1002057819179, 958: -1002057819179, 1050: -1002057819179}
