@@ -81,6 +81,8 @@ async def all_subject_send(bot):
             print("Message pinned successfully.")
         except Exception as e:
             print(f"Failed to pin message: {e}")
+            await bot.delete_messages(chat_id=-1002272764580, message_ids=[start_message.id + 1])
+            print("Next message deleted successfully.")
     
     except Exception as e:
         print(f"Failed to send start message: {e}")
