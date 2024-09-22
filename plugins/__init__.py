@@ -15,7 +15,7 @@ logging.getLogger("pyrogram").setLevel(logging.ERROR)
 LOGGER = logging.getLogger(__name__)
 
 
-class Mukesh(Client):
+class bot(Client):
     def __init__(self):
         super().__init__(
             name="lecture-bot",
@@ -36,4 +36,4 @@ class Mukesh(Client):
         await super().stop()
 
 
-bot = Mukesh()
+bot = bot()
