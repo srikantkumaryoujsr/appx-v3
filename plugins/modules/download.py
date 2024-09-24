@@ -48,10 +48,10 @@ async def account_login(bot: Client, content, title, chatid):
         links.append(i.split("://", 1))
     raw_text = 1
     raw_text0 = title
-    raw_text2 = "720"
-    if raw_text2 == "720":
-        res = "[1280x720]"
-    raw_text3 = "[𝗠𝗥. 𝗛𝗔𝗖𝗞𝗘𝗥 ❤️](https://t.me/ImTgHacker)"
+    raw_text2 = "360"
+    if raw_text2 == "360":
+        res = "640x360"
+    raw_text3 = "[🤡ᴍʀ ʜᴀᴄᴋᴇʀ🤡](https://t.me/ImTgHacker)"
     backup = "[⛅𝐁𝐚𝐜𝐤𝐮𝐩 𝐂𝐡𝐚𝐧𝐧𝐞𝐥⛅](https://t.me/+YQPgMcccJmoyNjJl)"
     MR = raw_text3
     thumb = "no"
@@ -94,8 +94,8 @@ async def account_login(bot: Client, content, title, chatid):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[🏖️] 𝐕𝐢𝐝 𝐈𝐃 ➤ {name1}** {res} @ImTgHacker.mkv```\n[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}\n```[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}\n\n🔅{backup}🔅\n\n**🔅𝐐𝐮𝐚𝐥𝐢𝐭𝐲🔅:➤ 𝟕𝟐𝟎𝐩**\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n💛𝕌𝕟𝕜𝕟𝕠𝕨𝕟 ℍ𝕖𝕝𝕡𝕖𝕣,  𝔾𝕚𝕗𝕥 𝕗𝕠𝕣 ℙ𝕠𝕠𝕣 𝕊𝕥𝕦𝕕𝕖𝕟𝕥𝕤💜'
-                cc1 = f'**[📑]𝐏𝐝𝐟 𝐍𝐚𝐦𝐞:➤ {name1}** @ImTgHacker.pdf ```\n[📂]𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞➤ {raw_text0}\n```[📆] 𝐃𝐚𝐭𝐞 ➤ {get_current_date()}\n\n🔅{backup}🔅\n\n**🔅𝐐𝐮𝐚𝐥𝐢𝐭𝐲🔅:➤ 𝟕𝟐𝟎𝐩**\n**🔖𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 🔖:➤{raw_text3}**\n\n💛𝕌𝕟𝕜𝕟𝕠𝕨𝕟 ℍ𝕖𝕝𝕡𝕖𝕣,  𝔾𝕚𝕗𝕥 𝕗𝕠𝕣 ℙ𝕠𝕠𝕣 𝕊𝕥𝕦𝕕𝕖𝕟𝕥𝕤💜'
+                cc = f'**[🟈] ʟᴇᴄ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** {name1} {res} ᴍʀ_ʜᴀᴄᴋᴇʀ.mkv\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {raw_text0}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
+                cc1 = f'**[📚] ᴘᴅꜰ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ᴘᴅꜰ ᴛɪᴛʟᴇ : ➣** {name1} ᴍʀ_ʜᴀᴄᴋᴇʀ.pdf\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {raw_text0}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -118,7 +118,7 @@ async def account_login(bot: Client, content, title, chatid):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**📥𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠📥**\n\n**𝐍𝐚𝐦𝐞:-** `{name}\n𝐐𝐮𝐚𝐥𝐢𝐭𝐲 : - {raw_text2}`\n\n**𝐔𝐑𝐋:-**✡️𝐔𝐑𝐋 𝐇𝐢𝐝𝐞 𝐁𝐲 𝐘𝐨𝐮𝐫 𝐎𝐖𝐍𝐄𝐑✡️....\n𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 :- @ImTgHacker"
+                    Show = f"**📥ᴅᴏᴡʙʟᴏᴀᴅɪɴɢ📥**\n\n**[📚] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** `{name}\n[✤] Qᴜᴀʟɪᴛʏ : ➣ 720p\n\n**ॐ ᴜʀʟ :- ʜɪᴅᴇ ʙʏ ᴏᴡɴᴇʀ...❤️**\n**➥ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ  : ➣🤡ʀᴡᴀ ᴄᴏᴘʏʀɪɢʜ**"
                     prog = await bot.send_message(chatid, text=Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
