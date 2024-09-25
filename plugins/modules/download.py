@@ -41,7 +41,7 @@ async def restart_handler(_, m):
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
-async def account_login(bot: Client, content, title, chatid):
+async def account_login(bot: Client, content, title, chatid, message_thread_id):
     content = content.split("\n")
     links = []
     for i in content:
@@ -111,7 +111,7 @@ async def account_login(bot: Client, content, title, chatid):
                         cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
                         download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                         os.system(download_cmd)
-                        copy = await bot.send_document(chatid, document=f'{name}.pdf', caption=cc1)
+                        copy = await bot.send_document(chatid, document=f'{name}.pdf', caption=cc1, reply_to_message_id=message_thread_id)
                         count += 1
                         os.remove(f'{name}.pdf')
                     except FloodWait as e:
@@ -119,18 +119,18 @@ async def account_login(bot: Client, content, title, chatid):
                         continue
                 else:
                     Show = f"**📥ᴅᴏᴡʙʟᴏᴀᴅɪɴɢ📥**\n\n**[📚] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** `{name}\n[✤] Qᴜᴀʟɪᴛʏ : ➣ 720p\n\n**ॐ ᴜʀʟ :- ʜɪᴅᴇ ʙʏ ᴏᴡɴᴇʀ...❤️**\n**➥ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ  : ➣🤡ʀᴡᴀ ᴄᴏᴘʏʀɪɢʜ**"
-                    prog = await bot.send_message(chatid, text=Show)
+                    prog = await bot.send_message(chatid, text=Show, reply_to_message_id=message_thread_id)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
                     await prog.delete(True)
-                    await helper.send_vid(bot, cc, filename, thumb, name, prog, chatid)
+                    await helper.send_vid(bot, cc, filename, thumb, name, prog, chatid, reply_to_message_id=message_thread_id)
                     count += 1
                     time.sleep(1)
 
             except Exception as e:
-                await bot.send_message(chatid, text=f"**Name** - {name}\n**Link** - {url}")
+                await bot.send_message(chatid, text=f"**Name** - {name}\n**Link** - {url}", reply_to_message_id=message_thread_id)
                 continue
 
     except Exception as e:
-        await bot.send_message(chat_id=chatid, text=str(e))
+        await bot.send_message(chat_id=chatid, text=str(e), reply_to_message_id=message_thread_id)
         await m.reply_text("❤️𝘾𝙡𝙖𝙨𝙨 𝙐𝙥𝙙𝙖𝙩𝙚 𝙆𝙖𝙧 𝘿𝙞𝙮𝙖 𝙃𝙪𝙣 , 𝙍𝙚𝙖𝙘𝙩𝙞𝙤𝙣 𝘿𝙚𝙙𝙤 𝙙𝙤𝙨𝙩𝙤𝙣❤️")
