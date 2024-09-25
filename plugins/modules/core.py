@@ -225,9 +225,6 @@ async def send_vid(bot: Client, cc, filename, thumb, name, prog, chatid, message
     # Get the duration of the video
     dur = int(duration(filename))
     
-    # Start time for progress tracking
-    start_time = time.time()
-    
     try:
         # Send the video with streaming support
         await bot.send_video(chatid, video=filename, caption=cc, supports_streaming=True, height=720, width=1280, thumb=thumbnail, duration=dur, progress=progress_bar, progress_args=(reply, start_time), reply_to_message_id=message_thread_id)
