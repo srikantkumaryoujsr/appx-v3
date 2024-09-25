@@ -181,11 +181,11 @@ async def download_video(url,cmd, name):
 
 
 async def send_doc(bot: Client, cc, ka, cc1, prog, count, name, chatid):
-    reply = await bot.send_message(chatid, f"𝐔𝐏𝐋𝐎𝐀𝐃𝐈𝐍𝐆 ➤ {name}")
+    reply = await bot.send_message(chatid, f"𝐔𝐏𝐋𝐎𝐀𝐃𝐈𝐍𝐆 ➤ {name}", reply_to_message_id=message_thread_id)
     await asyncio.sleep(1)
     
     start_time = time.time()
-    await bot.send_document(chatid, document=ka, caption=cc1)  # Fixed document parameter
+    await bot.send_document(chatid, document=ka, caption=cc1, reply_to_message_id=message_thread_id)  # Fixed document parameter
     
     count += 1
 
@@ -204,14 +204,14 @@ async def send_doc(bot: Client, cc, ka, cc1, prog, count, name, chatid):
     await asyncio.sleep(3)
 
 
-async def send_vid(bot: Client, cc, filename, thumb, name, prog, chatid):
+async def send_vid(bot: Client, cc, filename, thumb, name, prog, chatid, reply_to_message_id=message_thread_id):
     # Capture a thumbnail from the video
     subprocess.run(f'ffmpeg -i "{filename}" -ss 00:01:00 -vframes 1 "{filename}.jpg"', shell=True)
     
     await prog.delete(True)
     
     # Display loading message
-    reply = await bot.send_message(chatid, text=f"𝐔𝐏𝐋𝐎𝐀𝐃𝐈𝐍𝐆 ➤ {name}")
+    reply = await bot.send_message(chatid, text=f"𝐔𝐏𝐋𝐎𝐀𝐃𝐈𝐍𝐆 ➤ {name}", reply_to_message_id=message_thread_id)
     
     try:
         # Check if thumbnail is provided
@@ -230,10 +230,10 @@ async def send_vid(bot: Client, cc, filename, thumb, name, prog, chatid):
     
     try:
         # Send the video with streaming support
-        await bot.send_video(chatid, video=filename, caption=cc, supports_streaming=True, height=720, width=1280, thumb=thumbnail, duration=dur, progress=progress_bar, progress_args=(reply, start_time))
+        await bot.send_video(chatid, video=filename, caption=cc, supports_streaming=True, height=720, width=1280, thumb=thumbnail, duration=dur, progress=progress_bar, progress_args=(reply, start_time), reply_to_message_id=message_thread_id)
     except Exception:
         # If sending as a video fails, send as a document
-        await bot.send_document(chatid, document=filename, caption=cc, progress=progress_bar, progress_args=(reply, start_time))
+        await bot.send_document(chatid, document=filename, caption=cc, progress=progress_bar, progress_args=(reply, start_time), reply_to_message_id=message_thread_id)
     
     # Clean up the files
     os.remove(filename)
