@@ -77,6 +77,14 @@ async def all_subject_send(bot):
         except Exception as e:
             print(f"Error processing subject {subjectid}: {e}")
 
+    try:
+        await bot.send_message(
+            chat_id=-1002272764580,
+            text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ इतना ज्यादा दो की ꜱᴇʟʟᴇʀ ʟᴏɢ की जल जाए बस 😁😁😁❤️💋**", message_thread_id = 1
+        )
+    except Exception as e:
+        print(f"Failed to send end message: {e}")
+
 async def account_logins(bot, subjectid, chatid, message_thread_id):
     userid = "3752241"
     async with aiohttp.ClientSession() as session:
