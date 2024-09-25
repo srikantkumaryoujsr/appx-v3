@@ -204,7 +204,7 @@ async def send_doc(bot: Client, cc, ka, cc1, prog, count, name, chatid, message_
     await asyncio.sleep(3)
 
 
-async def send_vid(bot: Client, cc, filename, thumb, name, prog, chatid, reply_to_message_id=message_thread_id):
+async def send_vid(bot: Client, cc, filename, thumb, name, prog, chatid, message_thread_id):
     # Capture a thumbnail from the video
     subprocess.run(f'ffmpeg -i "{filename}" -ss 00:01:00 -vframes 1 "{filename}.jpg"', shell=True)
     
