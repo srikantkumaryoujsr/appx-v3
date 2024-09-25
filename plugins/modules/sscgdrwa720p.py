@@ -61,53 +61,23 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-@Client.on_message(filters.command("STARTGDHD") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("GDTEST") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {138: -1002272764580, 1076: -1002272764580, 1077: -1002272764580, 1078: -1002272764580, 1079: -1002272764580, 1080: -1002272764580, 1081: -1002272764580, 1082: -1002272764580}
+    subject_and_channel = {1076: (-1002328122540, 2), 1077: (-1002328122540, 4)}
     
-    try:
-        start_message = await bot.send_message(
-            chat_id=-1002272764580,
-            text=f'**☞{get_current_date_vsp()}:𝐔𝐩𝐝𝐚𝐭𝐞🔖**```\n☞𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞 ➤ 𝐒𝐒𝐂 𝐆𝐃 𝟐𝟎𝟐𝟓 ( अवसर बैच 𝟐.𝟎 ) 𝐋𝐢𝐯𝐞 🛑\n```🔅𝐐𝐮𝐚𝐥𝐢𝐭𝐲🔅:➤ 𝟕𝟐𝟎𝐩\n**☞🤡𝐄𝐱𝐭𝐫𝐚𝐜𝐭𝐞𝐝 𝐛𝐲 :➤ @ImTgHacker**'
-        )
-        print(f"Message sent with ID: {start_message.id}")
-        await asyncio.sleep(0.10)
-
+    for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
-            await bot.pin_chat_message(chat_id=-1002272764580, message_id=start_message.id)
-            await bot.delete_messages(chat_id=-1002272764580, message_ids=[start_message.id + 1])
-            print("Message pinned successfully.")
-        except Exception as e:
-            print(f"Failed to pin message: {e}")
-    
-    except Exception as e:
-        print(f"Failed to send start message: {e}")
-    
-    for subjectid, chatid in subject_and_channel.items():
-        try:
-            await account_logins(bot, subjectid, chatid)
+            await account_logins(bot, subjectid, chatid, message_thread_id)
         except FloodWait as e:
             await asyncio.sleep(e.x)
-            await account_logins(bot, subjectid, chatid)
+            await account_logins(bot, subjectid, chatid, message_thread_id)
         except Exception as e:
             print(f"Error processing subject {subjectid}: {e}")
 
-    try:
-        await bot.send_message(
-            chat_id=-1002272764580,
-            text=f"**️जिन बच्चों के पास इंटरनेट का अभाव या फिर वह मोबाइल इंटरनेट का उपयोग करते हैं तो आप काम क्वालिटी वाले चैनल से जुड़ सकते हैं 𝗤𝘂𝗮𝗹𝗶𝘁𝘆:- 𝟯𝟲𝟬𝗽😋@RWA_AVSAR_2_0_BATCH_SSC_GD **"
-        )
-        await bot.send_message(
-            chat_id=-1002272764580,
-            text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ इतना ज्यादा दो की ꜱᴇʟʟᴇʀ ʟᴏɢ की जल जाए बस 😁😁😁❤️💋**"
-        )
-    except Exception as e:
-        print(f"Failed to send end message: {e}")
-
-async def account_logins(bot, subjectid, chatid):
+async def account_logins(bot, subjectid, chatid, message_thread_id):
     userid = "3752241"
     async with aiohttp.ClientSession() as session:
         try:
@@ -164,22 +134,14 @@ async def account_logins(bot, subjectid, chatid):
                 except Exception:
                     pass
                             
-            date=get_current_date()
+            date = get_current_date()
             if date not in all_important:
-                # Customize the message based on subjectid
                 messages = {
-                    138: f"Current Affairs में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                     1076: f"Maths (अवसर2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                     1077: f"English (अवसर बैच 2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1078: f"Hindi (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1079: f"Geography (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1080: f"Reasoning (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1081: f"Polity (अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1082: f"Physics(अवसर बैच 2.0) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
                 }
-                # Send the message if the subjectid is in the messages dictionary
                 if subjectid in messages:
-                    await bot.send_message(chatid, text=messages[subjectid])
+                    await bot.send_message(chatid, text=messages[subjectid], message_thread_id=message_thread_id)
                 return
 
             data = all_important.get(date, {})
@@ -202,7 +164,7 @@ async def account_logins(bot, subjectid, chatid):
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, bname, chatid)
+            await account_login(bot, all_urls, bname, chatid, message_thread_id)
         
         except Exception as e:
             print(f"An error occurred: {e}")
