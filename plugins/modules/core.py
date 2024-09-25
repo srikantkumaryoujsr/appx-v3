@@ -180,7 +180,7 @@ async def download_video(url,cmd, name):
         return os.path.isfile.splitext[0] + "." + "mp4"
 
 
-async def send_doc(bot: Client, cc, ka, cc1, prog, count, name, chatid):
+async def send_doc(bot: Client, cc, ka, cc1, prog, count, name, chatid, reply_to_message_id=message_thread_id):
     reply = await bot.send_message(chatid, f"𝐔𝐏𝐋𝐎𝐀𝐃𝐈𝐍𝐆 ➤ {name}", reply_to_message_id=message_thread_id)
     await asyncio.sleep(1)
     
