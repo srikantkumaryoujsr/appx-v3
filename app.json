@@ -15,12 +15,12 @@
         },
         "API_HASH": {
             "description": "Your API_HASH from https://my.telegram.org/apps #fgf",       
-            "value": "4490358fa3f47ba78643e02d14018083",
+            "value": "4490358fa3f47b2d14018083",
             "required": true
         },
         "BOT_TOKEN": {
             "description": "Your Bot token from @Botfather #jhggj",
-            "value": "7323888833:AAFJz-UpbqKLLcIn7h-lEklSBatdnmaBftE",
+            "value": "7323888833:AAFJz-UpbqKklSBatdnmaBftE",
             "required": true
         }
     },
