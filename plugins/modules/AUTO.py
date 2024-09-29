@@ -142,7 +142,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 except Exception:
                     pass
                             
-            date = "2024-09-29"
+            date = get_current_date()
             if date not in all_important:
                 messages = {
                     1076: f"Maths (अवसर2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
@@ -181,7 +181,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=4,
-    minute=45,
+    minute=59,
     second=0, 
     args=[Client]
 )
