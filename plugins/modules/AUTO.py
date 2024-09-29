@@ -12,12 +12,12 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([6881758615])
+AUTH_USERS.extend([6804641253])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
-LOG_CHANNEL_ID = -1001801766701
+LOG_CHANNEL_ID = -1002004338182
 
 def get_current_date():
     # Get the current time in IST
@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {138: (-1002302866407, 7), 1088: (-1002302866407, 8), 1090: (-1002302866407, 9), 1091: (-1002302866407, 10), 1092: (-1002302866407, 19), 1093: (-1002302866407, 11), 1094: (-1002302866407, 12)}
+    subject_and_channel = {138: (-1002283434683, 15), 1088: (-1002283434683, 7), 1090: (-1002283434683, 9), 1091: (-1002283434683, 10), 1092: (-1002283434683, 13), 1093: (-1002283434683, 11), 1094: (-1002283434683, 12)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -79,7 +79,7 @@ async def all_subject_send(bot):
 
     try:
         await bot.send_message(
-            chat_id=-1002366896611,
+            chat_id=-1002283434683,
             text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ इतना ज्यादा दो की ꜱᴇʟʟᴇʀ ʟᴏɢ की जल जाए बस 😁😁😁❤️💋**", message_thread_id = 1
         )
     except Exception as e:
@@ -181,7 +181,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=4,
-    minute=1,
+    minute=45,
     second=0, 
     args=[Client]
 )
