@@ -12,7 +12,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([5578588558])
+AUTH_USERS.extend([6881758615])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {138: (-1002366896611, 2), 1088: (-1002366896611, 3), 1090: (-1002366896611, 6), 1091: (-1002366896611, 5), 1092: (-1002366896611, 8), 1093: (-1002366896611, 4), 1094: (-1002366896611, 19)}
+    subject_and_channel = {138: (-1002302866407, 7), 1088: (-1002302866407, 8), 1090: (-1002302866407, 9), 1091: (-1002302866407, 10), 1092: (-1002302866407, 19), 1093: (-1002302866407, 11), 1094: (-1002302866407, 12)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -86,7 +86,7 @@ async def all_subject_send(bot):
         print(f"Failed to send end message: {e}")
 
 async def account_logins(bot, subjectid, chatid, message_thread_id):
-    userid = "3752241"
+    userid = "189678"
     async with aiohttp.ClientSession() as session:
         try:
             token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjMxNDQ4ODIiLCJlbWFpbCI6Im5lbWlqYWF0MjAxMDE5OTlAZ21haWwuY29tIiwidGltZXN0YW1wIjoxNzI2NDU2NDgwfQ.L-jxBh-yGLL-rVX5oWxrComewbgMLp-lmBLjrA-VaZQ"
