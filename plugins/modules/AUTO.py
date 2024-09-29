@@ -12,7 +12,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([6748451207])
+AUTH_USERS.extend([5578588558])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {1076: (-1002328122540, 2), 1077: (-1002328122540, 4)}
+    subject_and_channel = {138: (-1002366896611, 2), 1088: (-1002366896611, 3), 1090: (-1002366896611, 6), 1091: (-1002366896611, 5), 1092: (-1002366896611, 8), 1093: (-1002366896611, 4), 1094: (-1002366896611, 19)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -79,7 +79,7 @@ async def all_subject_send(bot):
 
     try:
         await bot.send_message(
-            chat_id=-1002328122540,
+            chat_id=-1002366896611,
             text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ इतना ज्यादा दो की ꜱᴇʟʟᴇʀ ʟᴏɢ की जल जाए बस 😁😁😁❤️💋**", message_thread_id = 1
         )
     except Exception as e:
@@ -89,7 +89,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
     userid = "3752241"
     async with aiohttp.ClientSession() as session:
         try:
-            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUxNzA3NyIsImVtYWlsIjoidml2ZWtrGHfghgf565b566b677vbsInRpbWVzdGFtcCI6MTcyNjkzNzA4OX0.NM1SbOjDFZCLinFi66jKxwRQPgLWFN-_SAMgcPWvfk4"
+            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjMxNDQ4ODIiLCJlbWFpbCI6Im5lbWlqYWF0MjAxMDE5OTlAZ21haWwuY29tIiwidGltZXN0YW1wIjoxNzI2NDU2NDgwfQ.L-jxBh-yGLL-rVX5oWxrComewbgMLp-lmBLjrA-VaZQ"
             hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
@@ -104,7 +104,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=188&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=192&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -113,7 +113,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=188&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=192&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -125,7 +125,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=188&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=192&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
