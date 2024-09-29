@@ -180,8 +180,8 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=4,
-    minute=59,
+    hour=5,
+    minute=2,
     second=0, 
     args=[Client]
 )
