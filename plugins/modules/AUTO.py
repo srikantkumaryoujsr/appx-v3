@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {138: (-1002283434683, 15), 1088: (-1002283434683, 7), 1090: (-1002283434683, 9), 1091: (-1002283434683, 10), 1092: (-1002283434683, 13), 1093: (-1002283434683, 11), 1094: (-1002283434683, 12)}
+    subject_and_channel = {1099: (-1002498445091, 12), 1101: (-1002498445091, 30), 1102: (-1002498445091, 42), 1103: (-1002498445091, 17), 1105: (-1002498445091, 132), 1106: (-1002498445091, 3)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -80,7 +80,7 @@ async def all_subject_send(bot):
     try:
         await bot.send_message(
             chat_id=-1002283434683,
-            text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ इतना ज्यादा दो की ꜱᴇʟʟᴇʀ ʟᴏɢ की जल जाए बस 😁😁😁❤️💋**", message_thread_id = 1
+            text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", message_thread_id = 1
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
@@ -89,7 +89,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
     userid = "189678"
     async with aiohttp.ClientSession() as session:
         try:
-            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjMxNDQ4ODIiLCJlbWFpbCI6Im5lbWlqYWF0MjAxMDE5OTlAZ21haWwuY29tIiwidGltZXN0YW1wIjoxNzI2NDU2NDgwfQ.L-jxBh-yGLL-rVX5oWxrComewbgMLp-lmBLjrA-VaZQ"
+            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjQzMDIyMzEiLCJlbWFpbCI6InNhdXJhYmhrYXVzaGlrc2hhcm1hc0BnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3MTUxNDg3ODl9.YHQvtTXSjEsaytQI1p2TVzb0faIm5R3e96LVKtCsZQU"
             hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
@@ -104,7 +104,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=192&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=196&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -113,7 +113,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=192&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=196&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -125,7 +125,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=192&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=196&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
@@ -181,7 +181,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=5,
-    minute=2,
+    minute=45,
     second=0, 
     args=[Client]
 )
