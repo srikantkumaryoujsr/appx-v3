@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {138: (-1002359706969, 7), 1088: (-1002359706969, 8), 1090: (-1002359706969, 9), 1091: (-1002359706969, 10), 1092: (-1002359706969, 11), 1093: (-1002359706969, 12), 1094: (-1002359706969, 13)}
+    subject_and_channel = {960: (-1002352708012, 3), 961: (-1002352708012, 4), 962: (-1002352708012, 5), 963: (-1002352708012, 6), 964: (-1002352708012, 7)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -79,7 +79,7 @@ async def all_subject_send(bot):
 
     try:
         await bot.send_message(
-            chat_id=-1002359706969,
+            chat_id=-1002352708012,
             text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", message_thread_id = 1
         )
     except Exception as e:
@@ -104,7 +104,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=192&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=172&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -113,7 +113,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=192&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=172&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -125,7 +125,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=192&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=172&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
@@ -144,10 +144,8 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                             
             date = get_current_date()
             if date not in all_important:
-                messages = {
-                    1076: f"Maths (अवसर2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                    1077: f"English (अवसर बैच 2.O) में {get_current_date_vsp()}```\nको या तो इस सब्जेक्ट में कल क्लास नहीं हुई थी या तो यह सब्जेक्ट में क्लासेस कंप्लीट हो गई है\n```",
-                }
+                messages = {f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ\n"}
+                
                 if subjectid in messages:
                     await bot.send_message(chatid, text=messages[subjectid], message_thread_id=message_thread_id)
                 return
@@ -180,8 +178,8 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=14,
-    minute=35,
+    hour=3,
+    minute=55,
     second=0, 
     args=[Client]
 )
