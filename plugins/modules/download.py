@@ -52,7 +52,7 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
     if raw_text2 == "360":
         res = "640x360"
     raw_text3 = "[Jᴀɪ Hɪɴᴅ](https://telegram.me/TgX_JaiHind)"
-    vspbatch = "RWA - RRB NTPC 2024 गतिमान बैच"
+    vspbatch = "RWA - CAPF BSF HCM भर्ती अग्नि बैच"
     MR = raw_text3
     thumb = "no"
     if len(links) == 1:
@@ -94,8 +94,8 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[🎥] ʟᴇᴄ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** {name1} {res} 𝐓ɢ𝐗_𝐉ᴀɪ𝐇ɪɴᴅ.mkv\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {vspbatch}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
-                cc1 = f'**[📚] ᴘᴅꜰ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ᴘᴅꜰ ᴛɪᴛʟᴇ : ➣** {name1} 𝐓ɢ𝐗_𝐉ᴀɪ𝐇ɪɴᴅ.pdf\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {vspbatch}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
+                cc = f'**[🎥] ʟᴇᴄ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** {name1} {res} 𝐓ɢ𝐗_𝐉ᴀɪ𝐇ɪɴᴅ.mkv\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {vspbatch}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
+                cc1 = f'**[📚] ᴘᴅꜰ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ᴘᴅꜰ ᴛɪᴛʟᴇ : ➣** {name1} 𝐓ɢ𝐗_𝐉ᴀɪ𝐇ɪɴᴅ.pdf\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {vspbatch}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
