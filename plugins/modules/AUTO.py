@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {1099: (-1002498445091, 12), 1101: (-1002498445091, 30), 1102: (-1002498445091, 42), 1103: (-1002498445091, 17), 1105: (-1002498445091, 132), 1106: (-1002498445091, 3)}
+    subject_and_channel = {138: (-1002313770549, 2), 1076: (-1002313770549, 3), 1077: (-1002313770549, 4), 1078: (-1002313770549, 5), 1079: (-1002313770549, 6), 1080: (-1002313770549, 7), 1081: (-1002313770549, 8), 1082: (-1002313770549, 9)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -79,7 +79,7 @@ async def all_subject_send(bot):
 
     try:
         await bot.send_message(
-            chat_id=-1002283434683,
+            chat_id=-1002313770549,
             text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", message_thread_id = 1
         )
     except Exception as e:
@@ -104,7 +104,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=196&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=188&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -113,7 +113,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=196&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=188&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -125,7 +125,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=196&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=188&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
@@ -180,8 +180,8 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=5,
-    minute=52,
+    hour=13,
+    minute=2,
     second=0, 
     args=[Client]
 )
