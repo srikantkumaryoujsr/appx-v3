@@ -181,7 +181,7 @@ scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
     hour=13,
-    minute=15,
+    minute=28,
     second=0, 
     args=[Client]
 )
