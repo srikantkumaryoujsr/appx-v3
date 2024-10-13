@@ -52,7 +52,7 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
     if raw_text2 == "360":
         res = "640x360"
     raw_text3 = "[Jᴀɪ Hɪɴᴅ](https://telegram.me/TgX_JaiHind)"
-    vspbatch = "RWA - CAPF BSF HCM भर्ती अग्नि बैच"
+    vspbatch = "इलाहाबाद High Court भर्ती Group C & D भर्ती"
     MR = raw_text3
     thumb = "no"
     if len(links) == 1:
