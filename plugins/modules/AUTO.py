@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {960: (-1002352708012, 3), 961: (-1002352708012, 4), 962: (-1002352708012, 5), 963: (-1002352708012, 6), 964: (-1002352708012, 7)}
+    subject_and_channel = {1142: (-1002477903134, 2), 1143: (-1002477903134, 3), 1144: (-1002477903134, 4), 1145: (-1002477903134, 5), 1146: (-1002477903134, 6), 1147: (-1002477903134, 7)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -104,7 +104,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=172&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid=204&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -113,7 +113,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=172&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid=204&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -125,7 +125,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=172&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id=204&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
@@ -178,7 +178,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 scheduler.add_job(
     func=all_subject_send,
     trigger="cron",
-    hour=11,
+    hour=22,
     minute=50,
     second=0, 
     args=[Client]
