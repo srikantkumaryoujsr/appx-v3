@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {1142: (-1002477903134, 2), 1143: (-1002477903134, 3), 1144: (-1002477903134, 4), 1145: (-1002477903134, 5), 1146: (-1002477903134, 6), 1147: (-1002477903134, 7)}
+    subject_and_channel = {1142: (-1002477903134, 2), 1143: (-1002477903134, 3), 1144: (-1002477903134, 4), 1145: (-1002477903134, 5), 1146: (-1002477903134, 6), 1147: (-1002477903134, 7), 1151: (-1002477903134, 304)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
