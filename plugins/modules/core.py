@@ -230,7 +230,7 @@ async def send_vid(bot: Client, cc, filename, thumb, name, prog, chatid, message
         await bot.send_video(chatid, video=filename, caption=cc, supports_streaming=True, height=720, width=1280, thumb=thumbnail, duration=dur, reply_to_message_id=message_thread_id)
     except Exception:
         # If sending as a video fails, send as a document
-        await bot.send_document(chatid, document=filename, caption=cc, progress=progress_bar, progress_args=(reply, start_time), reply_to_message_id=message_thread_id)
+        await bot.send_document(chatid, document=filename, caption=cc, reply_to_message_id=message_thread_id)
     
     # Clean up the files
     os.remove(filename)
