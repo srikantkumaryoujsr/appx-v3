@@ -3,6 +3,7 @@ import requests
 import aiohttp
 import base64
 import pytz
+import logging
 from datetime import datetime, timedelta
 from pyrogram import filters
 from pymongo import MongoClient
@@ -16,6 +17,10 @@ from main import AUTH_USERS
 from .download import account_login
 from pyrogram.errors import FloodWait
 
+# लॉगिंग सेटअप
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 # MongoDB सेटअप (अपने अनुसार URL और credentials अपडेट करें)
 client = MongoClient("mongodb+srv://sarkari226:Nzp4hfYpAdoo2dYH@cluster0.lavidof.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["course_database"]
@@ -26,15 +31,15 @@ AUTH_USERS.extend([7224758848])
 LOG_CHANNEL_ID = -1002004338182
 
 # समय क्षेत्र की सेटिंग
+IST = pytz.timezone('Asia/Kolkata')
+
 def get_current_date():
-    ist = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist)
+    now = datetime.now(IST)
     yesterday = now - timedelta(days=1)
     return yesterday.strftime("%Y-%m-%d")
 
 def get_current_date_vsp():
-    ist = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist)
+    now = datetime.now(IST)
     yesterday = now - timedelta(days=1)
     day_of_week = yesterday.strftime("%A").upper()
     month_name = yesterday.strftime("%B").upper()
@@ -59,7 +64,8 @@ def decrypt_link(link):
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
     except Exception as e:
-        print(f"Error decrypting link: {e}")
+        logger.error(f"Error decrypting link: {e}")
+        return None
 
 # नया कोर्स जोड़ने के लिए `/add_course` कमांड
 @Client.on_message(filters.command("add_course") & filters.user(AUTH_USERS))
@@ -94,9 +100,11 @@ async def add_course_command(bot, message):
         }
         course_collection.insert_one(course_data)
         
+        logger.info("नया कोर्स सफलतापूर्वक जोड़ा गया: %s", course_data)
         await message.reply("नया कोर्स सफलतापूर्वक जोड़ा गया और सेव हो गया!")
     
     except Exception as e:
+        logger.error(f"कोर्स जोड़ने में त्रुटि: {e}")
         await message.reply(f"कोर्स जोड़ने में त्रुटि: {e}")
 
 # सभी कोर्स के लिए शेड्यूलर सेटअप
@@ -106,9 +114,10 @@ def schedule_all_courses():
     for course in courses:
         scheduler.add_job(
             func=all_subject_send,
-            trigger=CronTrigger(hour=course['scheduler_time']['hour'], minute=course['scheduler_time']['minute'], second=0, timezone="Asia/Kolkata"),
+            trigger=CronTrigger(hour=course['scheduler_time']['hour'], minute=course['scheduler_time']['minute'], second=0, timezone=IST),
             args=[course["subject_and_channel"], course["chat_id"], course["courseids"]]
         )
+        logger.info("कोर्स शेड्यूल किया गया: %s", course)
 
 # सभी कोर्स को भेजने के लिए मुख्य फंक्शन
 async def all_subject_send(subject_and_channel, chat_id, courseids):
@@ -119,7 +128,7 @@ async def all_subject_send(subject_and_channel, chat_id, courseids):
             await asyncio.sleep(e.x)
             await account_logins(subjectid, chatid, message_thread_id, courseids)
         except Exception as e:
-            print(f"Error processing subject {subjectid}: {e}")
+            logger.error(f"Error processing subject {subjectid}: {e}")
 
     try:
         await bot.send_message(
@@ -127,8 +136,9 @@ async def all_subject_send(subject_and_channel, chat_id, courseids):
             text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", 
             message_thread_id=1
         )
+        logger.info("समाचार सफलतापूर्वक भेजा गया chat_id: %s", chat_id)
     except Exception as e:
-        print(f"Failed to send end message: {e}")
+        logger.error(f"Failed to send end message: {e}")
 
 # account_logins फंक्शन को अपडेट करें
 async def account_logins(subjectid, chatid, message_thread_id, courseids):
@@ -178,11 +188,12 @@ async def account_logins(subjectid, chatid, message_thread_id, courseids):
                         'download_link': decrypt_link(i['download_link']).replace("720p", "720p") if i.get("download_link") else ""
                     }
                 except Exception:
-                    pass
-            
+                    logger.error("Error while decrypting links")
+
             date = get_current_date()
             if date not in all_important:
                 await bot.send_message(chatid, text=f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ", message_thread_id=message_thread_id)
+                logger.info("कोई कक्षा नहीं थी Subject: %s", subjectid)
                 return
             
             data = all_important.get(date, {})
@@ -193,11 +204,12 @@ async def account_logins(subjectid, chatid, message_thread_id, courseids):
             
             all_urls = f"{title}: {video}\n{'[1]' + pdf_1 if pdf_1 else ''} | {'[2]' + pdf_2 if pdf_2 else ''}\n"
             await bot.send_message(chatid, text=all_urls, message_thread_id=message_thread_id)
+            logger.info("संदेश सफलतापूर्वक भेजा गया Subject: %s", subjectid)
         
         except Exception as e:
-            print(f"Failed to process course data: {e}")
+            logger.error(f"Failed to process course data: {e}")
 
-# शेड्यूलर शुरू करें और सभी कोर्स शेड्यूल करें
+# एपीएस शेड्यूलर सेटअप
 scheduler = AsyncIOScheduler()
-scheduler.start()
 schedule_all_courses()
+scheduler.start()
