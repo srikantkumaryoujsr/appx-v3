@@ -3,48 +3,68 @@ import requests
 import aiohttp
 import base64
 import pytz
+from pytz import utc
 from datetime import datetime, timedelta
 from pyrogram import filters
-from pymongo import MongoClient
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
 from .. import bot as Client
 from .. import bot
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-from pyrogram.errors import FloodWait
-
-# MongoDB सेटअप (अपने अनुसार URL और credentials अपडेट करें)
-client = MongoClient("mongodb+srv://sarkari226:Nzp4hfYpAdoo2dYH@cluster0.lavidof.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-db = client["course_database"]
-course_collection = db["courses"]
-
-# कॉन्फ़िगरेशन
 AUTH_USERS.extend([7224758848])
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+from pyrogram.errors import FloodWait
 LOG_CHANNEL_ID = -1002004338182
+import json
+import os
 
-# समय क्षेत्र की सेटिंग
+# File to store configuration
+CONFIG_FILE = "config.json"
+
+# Load configuration from file
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as file:
+            return json.load(file)
+    return {}
+
+# Save configuration to file
+def save_config(config):
+    with open(CONFIG_FILE, "w") as file:
+        json.dump(config, file)
+
+# Initialize configuration
+config = load_config()
+subject_and_channel = config.get("subject_and_channel", {})
+chat_id = config.get("chat_id", -1002289423851)
+courseids = config.get("courseids", 204)
+scheduler_time = config.get("scheduler_time", {"hour": 0, "minute": 0})
+
 def get_current_date():
+    # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
     yesterday = now - timedelta(days=1)
-    return yesterday.strftime("%Y-%m-%d")
-
-def get_current_date_vsp():
-    ist = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist)
-    yesterday = now - timedelta(days=1)
-    day_of_week = yesterday.strftime("%A").upper()
-    month_name = yesterday.strftime("%B").upper()
-    day = yesterday.strftime("%d").zfill(2)
-    year = yesterday.strftime("%Y")
-    return f"{day}-{month_name}-{year}, {day_of_week}"
+    formatted_date = yesterday.strftime("%Y-%m-%d")
+    return formatted_date
 
 def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
     return date_time.strftime('%Y-%m-%d')
+
+def get_current_date_vsp():
+    # Get the current time in IST
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    yesterday = now - timedelta(days=1)
+    day_of_week = yesterday.strftime("%A").upper()  # Full weekday name
+    month_name = yesterday.strftime("%B").upper()  # Full month name
+    day = yesterday.strftime("%d").zfill(2)  # Day of the month
+    year = yesterday.strftime("%Y")  # Year
+    return f"{day}-{month_name}-{year}, {day_of_week}"
 
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
@@ -58,86 +78,36 @@ def decrypt_link(link):
         cipher = AES.new(key, AES.MODE_CBC, iv)
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
+    except ValueError as ve:
+        print(f"Padding error while decrypting link: {ve}")
     except Exception as e:
         print(f"Error decrypting link: {e}")
-
-# नया कोर्स जोड़ने के लिए `/add_course` कमांड
-@Client.on_message(filters.command("add_course") & filters.user(AUTH_USERS))
-async def add_course_command(bot, message):
-    try:
-        await message.reply("कृपया subject_and_channel (उदाहरण: {1142: (-1002289423851, 2), ...}) इनपुट करें:")
-        response = await bot.listen(message.chat.id)
-        subject_and_channel = eval(response.text)
-        
-        await message.reply("कृपया chat_id इनपुट करें:")
-        response = await bot.listen(message.chat.id)
-        chat_id = int(response.text)
-        
-        await message.reply("कृपया courseids इनपुट करें:")
-        response = await bot.listen(message.chat.id)
-        courseids = response.text
-        
-        await message.reply("कृपया scheduler hour इनपुट करें:")
-        response = await bot.listen(message.chat.id)
-        hour = int(response.text)
-        
-        await message.reply("कृपया scheduler minute इनपुट करें:")
-        response = await bot.listen(message.chat.id)
-        minute = int(response.text)
-        
-        # MongoDB में कोर्स डेटा सेव करें
-        course_data = {
-            "subject_and_channel": subject_and_channel,
-            "chat_id": chat_id,
-            "courseids": courseids,
-            "scheduler_time": {"hour": hour, "minute": minute}
-        }
-        course_collection.insert_one(course_data)
-        
-        await message.reply("नया कोर्स सफलतापूर्वक जोड़ा गया और सेव हो गया!")
     
-    except Exception as e:
-        await message.reply(f"कोर्स जोड़ने में त्रुटि: {e}")
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-# सभी कोर्स के लिए शेड्यूलर सेटअप
-def schedule_all_courses():
-    scheduler.remove_all_jobs()
-    courses = course_collection.find()
-    for course in courses:
-        scheduler.add_job(
-            func=all_subject_send,
-            trigger=CronTrigger(
-                hour=course['scheduler_time'].get('hour', 0),    # Default to 0 if not provided
-                minute=course['scheduler_time'].get('minute', 0),  # Default to 0 if not provided
-                second=course['scheduler_time'].get('second', 0),  # Default to 0 if not provided
-                timezone="Asia/Kolkata"
-            ),
-            args=[course["subject_and_channel"], course["chat_id"], course["courseids"]]
-        )
-        logger.info("कोर्स शेड्यूल किया गया: %s", course)
+@Client.on_message(filters.command("GDTEST") & filters.user(AUTH_USERS))
+async def start_subjects_command(bot, message):
+    await all_subject_send(bot)
 
-# सभी कोर्स को भेजने के लिए मुख्य फंक्शन
-async def all_subject_send(subject_and_channel, chat_id, courseids):
+async def all_subject_send(bot):
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
-            await account_logins(subjectid, chatid, message_thread_id, courseids)
+            await account_logins(bot, subjectid, chatid, message_thread_id)
         except FloodWait as e:
             await asyncio.sleep(e.x)
-            await account_logins(subjectid, chatid, message_thread_id, courseids)
+            await account_logins(bot, subjectid, chatid, message_thread_id)
         except Exception as e:
             print(f"Error processing subject {subjectid}: {e}")
 
     try:
         await bot.send_message(
             chat_id=chat_id,
-            text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", 
-            message_thread_id=1
+            text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", message_thread_id = 1
         )
     except Exception as e:
         print(f"Failed to send end message: {e}")
 
-# account_logins फंक्शन को अपडेट करें
-async def account_logins(subjectid, chatid, message_thread_id, courseids):
+async def account_logins(bot, subjectid, chatid, message_thread_id):
     userid = "189678"
     async with aiohttp.ClientSession() as session:
         try:
@@ -151,59 +121,128 @@ async def account_logins(subjectid, chatid, message_thread_id, courseids):
             
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
-            bname = bdetail[0]["course_name"] if bdetail else "No Course"
+           
+            bname = bdetail[0]["course_name"]
             
             all_urls = ""
             couserid = []
             res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={courseids}&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
-            topicids = [i["topicid"] for i in topic]
-            videos = []
-            all_important = {}
             
+            topicids = [i["topicid"] for i in topic]
+            
+            videos = []  
+            all_important = {}  
+            all_urls = ""
             for t in topicids:
                 url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid={courseids}&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
                 
-                for i in videodata:
-                    couserid.append(i["id"])
-            
+                try:
+                    for i in videodata:
+                        couserid.append(i["id"])
+                        
+                except Exception as e:
+                    print(e)
             for c in couserid:
                 url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id={courseids}&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
-            
+              
             for i in videos:
                 try:
                     all_important[convert_timestamp_to_datetime(i["strtotime"])] = {
                         "title": i["Title"],
-                        'pdf_link': decrypt_link(i['pdf_link']) if i.get("pdf_link") else "",
-                        'pdf_link2': decrypt_link(i['pdf_link2']) if i.get("pdf_link2") else "",
-                        'download_link': decrypt_link(i['download_link']).replace("720p", "720p") if i.get("download_link") else ""
+                        'pdf_link': decrypt_link(i['pdf_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link") else "",
+                        'pdf_link2': decrypt_link(i['pdf_link2'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link2") else "",
+                        'download_link': decrypt_link(i['download_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]).replace("720p", "720p") if i.get("download_link") else ""
                     }
+                    
                 except Exception:
                     pass
-            
+                            
             date = get_current_date()
             if date not in all_important:
-                await bot.send_message(chatid, text=f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ", message_thread_id=message_thread_id)
+                messages = {f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ\n"}
+                
+                if subjectid in messages:
+                    await bot.send_message(chatid, text=messages[subjectid], message_thread_id=message_thread_id)
                 return
-            
+
             data = all_important.get(date, {})
             title = data.get("title")
+            
             video = data.get("download_link")
+            
             pdf_1 = data.get("pdf_link")
+            
             pdf_2 = data.get("pdf_link2")
             
-            all_urls = f"{title}: {video}\n{'[1]' + pdf_1 if pdf_1 else ''} | {'[2]' + pdf_2 if pdf_2 else ''}\n"
-            await bot.send_message(chatid, text=all_urls, message_thread_id=message_thread_id)
+            if video:
+                all_urls += f"{title}: {video}"
+            if pdf_1:
+                all_urls += f"\n{title} : {pdf_1}"
+            if pdf_2:
+                all_urls += f"\n{title} : {pdf_2}"
+            
+            if all_urls:
+                with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
+                    f.write(all_urls)
+            print(all_urls)
+            await account_login(bot, all_urls, bname, chatid, message_thread_id)
         
         except Exception as e:
-            print(f"Failed to process course data: {e}")
+            print(f"An error occurred: {e}")
 
-# शेड्यूलर शुरू करें और सभी कोर्स शेड्यूल करें
-scheduler = AsyncIOScheduler()
+# Scheduler setup
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+
+# Command to set configuration
+@Client.on_message(filters.command("setconfig") & filters.user(AUTH_USERS))
+async def set_config(bot, message):
+    try:
+        # Expecting the message format: /setconfig {subject_and_channel} {chat_id} {courseids} {hour} {minute}
+        parts = message.text.split(maxsplit=5)
+        if len(parts) < 6:
+            await message.reply("Please provide all the necessary fields in the format: `/setconfig {subject_and_channel} {chat_id} {courseids} {hour} {minute}`")
+            return
+        
+        new_subject_and_channel = eval(parts[1])  # Convert string to dictionary
+        new_chat_id = int(parts[2])
+        new_courseids = int(parts[3])
+        new_hour = int(parts[4])
+        new_minute = int(parts[5])
+
+        # Update and save configuration
+        global subject_and_channel, chat_id, courseids, scheduler_time
+        subject_and_channel = new_subject_and_channel
+        chat_id = new_chat_id
+        courseids = new_courseids
+        scheduler_time = {"hour": new_hour, "minute": new_minute}
+
+        # Save new configuration
+        save_config({
+            "subject_and_channel": subject_and_channel,
+            "chat_id": chat_id,
+            "courseids": courseids,
+            "scheduler_time": scheduler_time
+        })
+
+        # Reschedule the job
+        scheduler.remove_all_jobs()
+        scheduler.add_job(
+            func=all_subject_send,
+            trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
+            args=[bot]
+        )
+
+        await message.reply("Configuration updated successfully!")
+
+    except Exception as e:
+        await message.reply(f"Error updating configuration: {e}")
+
+# Start scheduler
 scheduler.start()
-schedule_all_courses()
