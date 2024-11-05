@@ -66,7 +66,7 @@ async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
 async def all_subject_send(bot):
-    subject_and_channel = {1142: (-1002477903134, 2), 1143: (-1002477903134, 3), 1144: (-1002477903134, 4), 1145: (-1002477903134, 5), 1146: (-1002477903134, 6), 1147: (-1002477903134, 7), 1151: (-1002477903134, 304)}
+    subject_and_channel = {1142: (-1002289423851, 2), 1143: (-1002289423851, 3), 1144: (-1002289423851, 4), 1145: (-1002289423851, 5), 1146: (-1002289423851, 6), 1147: (-1002289423851, 7), 1151: (-1002289423851, 304)}
     
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -79,7 +79,7 @@ async def all_subject_send(bot):
 
     try:
         await bot.send_message(
-            chat_id=-1002477903134,
+            chat_id=-1002289423851,
             text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", message_thread_id = 1
         )
     except Exception as e:
