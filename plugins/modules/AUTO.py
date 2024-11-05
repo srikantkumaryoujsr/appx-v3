@@ -12,7 +12,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([6804641253])
+AUTH_USERS.extend([7224758848])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -175,13 +175,28 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
         except Exception as e:
             print(f"An error occurred: {e}")
 
-scheduler.add_job(
-    func=all_subject_send,
-    trigger="cron",
-    hour=14,
-    minute=13,
-    second=0, 
-    args=[Client]
-)
+# Scheduler setup
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
+# Schedule setting command
+@Client.on_message(filters.command("setschedule") & filters.user(AUTH_USERS))
+async def set_schedule(bot, message):
+    try:
+        _, hour, minute = message.text.split()
+        hour, minute = int(hour), int(minute)
+
+        # Remove existing job and set a new one
+        scheduler.remove_all_jobs()
+        scheduler.add_job(
+            func=all_subject_send,
+            trigger=CronTrigger(hour=hour, minute=minute, second=0, timezone="Asia/Kolkata"),
+            args=[bot]
+        )
+
+        await message.reply(f"Schedule set to {hour}:{minute} IST successfully.")
+        
+    except Exception as e:
+        await message.reply(f"Error setting schedule: {e}")
+
+# Start scheduler
 scheduler.start()
