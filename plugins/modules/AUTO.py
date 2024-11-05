@@ -204,34 +204,40 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 @Client.on_message(filters.command("setconfig") & filters.user(AUTH_USERS))
 async def set_config(bot, message):
     try:
-        # Expecting the message format: /setconfig {subject_and_channel} {chat_id} {courseids} {hour} {minute}
-        parts = message.text.split(maxsplit=5)
-        if len(parts) < 6:
-            await message.reply("Please provide all the necessary fields in the format: `/setconfig {subject_and_channel} {chat_id} {courseids} {hour} {minute}`")
-            return
+        # Split the command into parts
+        parts = message.text.split(" ", 4)
         
-        new_subject_and_channel = eval(parts[1])  # Convert string to dictionary
+        # Parse the subject_and_channel part
+        new_subject_and_channel = {}
+        subject_channel_pairs = parts[1].split(",")  # Split by commas for each subject-channel pair
+        
+        for pair in subject_channel_pairs:
+            subject_id, chat_id, thread_id = map(int, pair.split(":"))  # Split each pair by colon and convert to int
+            new_subject_and_channel[subject_id] = (chat_id, thread_id)  # Add to dictionary as (chat_id, thread_id)
+        
+        # Parse remaining parts
         new_chat_id = int(parts[2])
-        new_courseids = int(parts[3])
+        new_courseid = int(parts[3])
         new_hour = int(parts[4])
         new_minute = int(parts[5])
 
-        # Update and save configuration
-        global subject_and_channel, chat_id, courseids, scheduler_time
+        # Update the global variables
+        global subject_and_channel, chat_id, courseid
         subject_and_channel = new_subject_and_channel
         chat_id = new_chat_id
-        courseids = new_courseids
-        scheduler_time = {"hour": new_hour, "minute": new_minute}
+        courseid = new_courseid
 
-        # Save new configuration
-        save_config({
+        # Save configuration for persistence
+        config_data = {
             "subject_and_channel": subject_and_channel,
             "chat_id": chat_id,
-            "courseids": courseids,
-            "scheduler_time": scheduler_time
-        })
+            "courseid": courseid,
+            "scheduler_time": {"hour": new_hour, "minute": new_minute}
+        }
+        with open("config.json", "w") as config_file:
+            json.dump(config_data, config_file, indent=4)
 
-        # Reschedule the job
+        # Reschedule the job with updated time
         scheduler.remove_all_jobs()
         scheduler.add_job(
             func=all_subject_send,
@@ -239,7 +245,11 @@ async def set_config(bot, message):
             args=[bot]
         )
 
-        await message.reply("Configuration updated successfully!")
+        await message.reply(f"Configuration updated successfully:\n\n"
+                            f"**Subjects and Channels**: {subject_and_channel}\n"
+                            f"**Chat ID**: {chat_id}\n"
+                            f"**Course ID**: {courseid}\n"
+                            f"**Scheduled Time**: {new_hour}:{new_minute} IST")
 
     except Exception as e:
         await message.reply(f"Error updating configuration: {e}")
