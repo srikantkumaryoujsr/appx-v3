@@ -7,7 +7,7 @@ from plugins.modules import ALL_MODULES
 from pymongo import MongoClient
 
 # MongoDB सेटअप
-mongo_client = MongoClient("mongodb+srv://fiona534455:bHGrFDYbEN7iOhPz@cluster0.6cwrvig.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongo_client = MongoClient("mongodb+srv://sarkari226:Nzp4hfYpAdoo2dYH@cluster0.lavidof.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = mongo_client['course_database']  # MongoDB डेटाबेस नाम
 courses_collection = db['courses']  # MongoDB कलेक्शन नाम
 
