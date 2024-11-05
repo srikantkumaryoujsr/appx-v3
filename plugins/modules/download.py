@@ -128,7 +128,7 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
                     time.sleep(1)
 
             except Exception as e:
-                await bot.send_message(chatid, text=f"**Name** - {name}\n**Link** - {url}", reply_to_message_id=message_thread_id)
+                await bot.send_message(chatid, text=f"**Name** - {name}\n**Error :-** {e}\n**Link** - {url}", reply_to_message_id=message_thread_id)
                 continue
 
     except Exception as e:
