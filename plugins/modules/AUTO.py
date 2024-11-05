@@ -212,5 +212,7 @@ async def account_logins(subjectid, chatid, message_thread_id, courseids):
         
         except Exception as e:
             logger.error(f"Failed to process course data: {e}")
-            
+# एपीएस शेड्यूलर सेटअप
+scheduler = AsyncIOScheduler()
+schedule_all_courses()
 scheduler.start()
