@@ -158,7 +158,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                         "title": i["Title"],
                         'pdf_link': decrypt_link(i['pdf_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link") else "",
                         'pdf_link2': decrypt_link(i['pdf_link2'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]) if i.get("pdf_link2") else "",
-                        'download_link': decrypt_link(i['download_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]).replace("720p", "720p") if i.get("download_link") else ""
+                        'download_link': decrypt_link(i['download_link'].replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0]).replace("720p", "360p") if i.get("download_link") else ""
                     }
                     
                 except Exception:
@@ -254,11 +254,11 @@ async def set_config(bot, message):
             args=[bot]
         )
 
-        await message.reply(f"Configuration updated successfully:\n\n"
-                            f"**Subjects and Channels**: {subject_and_channel}\n"
-                            f"**Chat ID**: {chat_id}\n"
-                            f"**Course ID**: {courseid}\n"
-                            f"**Scheduled Time**: {new_hour}:{new_minute} IST")
+        await message.reply(f"**𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧🦋🎉🎊 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲**:\n\n"
+                            f"**🟢ꜱᴜʙᴊᴇᴄᴛꜱ ᴀɴᴅ ᴄʜᴀɴɴᴇʟꜱ🟡**: {subject_and_channel}\n"
+                            f"**🟢ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪᴅ🟡**: {chat_id}\n"
+                            f"**🟢ᴄᴏᴜʀꜱᴇ ɪᴅ🟡**: {courseid}\n"
+                            f"**🟢ꜱᴄʜᴇᴅᴜʟᴇᴅ ᴛɪᴍᴇ🟡**: {new_hour}:{new_minute} IST")
 
     except ValueError as e:
         await message.reply(f"Error updating configuration: Invalid format or type: {e}")
