@@ -110,7 +110,7 @@ def schedule_all_courses():
                 hour=course['scheduler_time'].get('hour', 0),    # Default to 0 if not provided
                 minute=course['scheduler_time'].get('minute', 0),  # Default to 0 if not provided
                 second=course['scheduler_time'].get('second', 0),  # Default to 0 if not provided
-                timezone=IST
+                timezone="Asia/Kolkata"
             ),
             args=[course["subject_and_channel"], course["chat_id"], course["courseids"]]
         )
