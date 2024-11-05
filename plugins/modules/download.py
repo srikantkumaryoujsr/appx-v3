@@ -51,8 +51,8 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
     raw_text2 = "360"
     if raw_text2 == "360":
         res = "640x360"
-    raw_text3 = "[Jᴀɪ Hɪɴᴅ](https://telegram.me/TgX_JaiHind)"
-    vspbatch = "इलाहाबाद High Court भर्ती Group C & D भर्ती"
+    raw_text3 = "[🤡ᴍʀ ʜᴀᴄᴋᴇʀ🤡](https://t.me/ImTgHacker)"
+    backup = "[⛅𝐁𝐚𝐜𝐤𝐮𝐩 𝐂𝐡𝐚𝐧𝐧𝐞𝐥⛅](https://t.me/+YQPgMcccJmoyNjJl)"
     MR = raw_text3
     thumb = "no"
     if len(links) == 1:
@@ -94,8 +94,8 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[🎥] ʟᴇᴄ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** {name1} {res} 𝐓ɢ𝐗_𝐉ᴀɪ𝐇ɪɴᴅ.mkv\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {vspbatch}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
-                cc1 = f'**[📚] ᴘᴅꜰ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ᴘᴅꜰ ᴛɪᴛʟᴇ : ➣** {name1} 𝐓ɢ𝐗_𝐉ᴀɪ𝐇ɪɴᴅ.pdf\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {vspbatch}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
+                cc = f'**[🟈] ʟᴇᴄ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** {name1} {res} ᴍʀ_ʜᴀᴄᴋᴇʀ.mkv\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {raw_text0}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
+                cc1 = f'**[📚] ᴘᴅꜰ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ᴘᴅꜰ ᴛɪᴛʟᴇ : ➣** {name1} ᴍʀ_ʜᴀᴄᴋᴇʀ.pdf\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {raw_text0}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -118,7 +118,7 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**📥ᴅᴏᴡʙʟᴏᴀᴅɪɴɢ📥**\n\n**[📚] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** `{name}\n[✤] Qᴜᴀʟɪᴛʏ : ➣ 720p\n\n**ॐ ᴜʀʟ :- ʜɪᴅᴇ ʙʏ ᴏᴡɴᴇʀ...❤️**\n**➥ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ  : ➣𝐓ɢ𝐗_𝐉ᴀɪ𝐇ɪɴᴅ🇮🇳**"
+                    Show = f"**📥ᴅᴏᴡʙʟᴏᴀᴅɪɴɢ📥**\n\n**[📚] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** `{name}\n[✤] Qᴜᴀʟɪᴛʏ : ➣ 720p\n\n**ॐ ᴜʀʟ :- ʜɪᴅᴇ ʙʏ ᴏᴡɴᴇʀ...❤️**\n**➥ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ  : ➣🤡ʀᴡᴀ ᴄᴏᴘʏʀɪɢʜ**"
                     prog = await bot.send_message(chatid, text=Show, reply_to_message_id=message_thread_id)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
