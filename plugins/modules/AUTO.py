@@ -193,7 +193,7 @@ async def set_schedule(bot, message):
             args=[bot]
         )
 
-        await message.reply(f"Schedule set to {hour}:{minute} IST successfully.")
+        await message.reply(f"ʜᴇʟʟᴏ ᴍʀ ᴠꜱᴘ ʏᴏᴜʀ ꜱᴄʜᴇᴅᴜʟᴇᴅ ᴛɪᴍᴇ ɪꜱ :- {hour}:{minute} IST successfully🟢🟡🔵.")
         
     except Exception as e:
         await message.reply(f"Error setting schedule: {e}")
