@@ -123,7 +123,7 @@ async def account_login(bot: Client, content, title, chatid, message_thread_id):
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
                     await prog.delete(True)
-                    await helper.send_vid(bot, cc, filename, name, chatid, message_thread_id)
+                    await helper.send_vid(bot, cc, filename, thumb, name, prog, chatid, message_thread_id)
                     count += 1
                     time.sleep(1)
 
