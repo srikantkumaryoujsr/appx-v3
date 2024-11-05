@@ -255,10 +255,10 @@ async def set_config(bot, message):
         )
 
         await message.reply(f"**𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧🦋🎉🎊 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲**:\n\n"
-                            f"**🟢ꜱᴜʙᴊᴇᴄᴛꜱ ᴀɴᴅ ᴄʜᴀɴɴᴇʟꜱ🟡**: {subject_and_channel}\n"
-                            f"**🟢ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪᴅ🟡**: {chat_id}\n"
-                            f"**🟢ᴄᴏᴜʀꜱᴇ ɪᴅ🟡**: {courseid}\n"
-                            f"**🟢ꜱᴄʜᴇᴅᴜʟᴇᴅ ᴛɪᴍᴇ🟡**: {new_hour}:{new_minute} IST")
+                            f"**🟢ꜱᴜʙᴊᴇᴄᴛꜱ ᴀɴᴅ ᴄʜᴀɴɴᴇʟꜱ🟡**: `{subject_and_channel}`\n"
+                            f"**🟢ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪᴅ🟡**: `{chat_id}`\n"
+                            f"**🟢ᴄᴏᴜʀꜱᴇ ɪᴅ🟡**: `{courseid}`\n"
+                            f"**🟢ꜱᴄʜᴇᴅᴜʟᴇᴅ ᴛɪᴍᴇ🟡**: `{new_hour}`:`{new_minute}` IST")
 
     except ValueError as e:
         await message.reply(f"Error updating configuration: Invalid format or type: {e}")
