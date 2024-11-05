@@ -213,3 +213,10 @@ async def account_logins(subjectid, chatid, message_thread_id, courseids):
 scheduler = AsyncIOScheduler()
 schedule_all_courses()
 scheduler.start()
+
+async def main():
+    await bot.start()
+    await bot.idle()
+
+if __name__ == "__main__":
+    asyncio.run(main())
