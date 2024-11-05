@@ -33,25 +33,25 @@ async def _start():
         LOGGER.error(f"Error starting bot: {ex}")
         quit(1)
 
-async def add_course(subject_and_channel, chat_id, course_ids, hour, minute):
+async def add_course(subject_and_channel, chat_id, course_ids, hour, minute, second):
     course_data = {
         "subject_and_channel": subject_and_channel,
         "chat_id": chat_id,
         "course_ids": course_ids,
-        "schedule": {"hour": hour, "minute": minute}
+        "schedule": {"hour": hour, "minute": minute, "second": second}  # सेकंड को भी जोड़ा गया
     }
     courses_collection.insert_one(course_data)  # MongoDB में डेटा जोड़ें
     LOGGER.info("Course added successfully.")
-    schedule_course(subject_and_channel, chat_id, hour, minute)
+    schedule_course(subject_and_channel, chat_id, hour, minute, second)  # सेकंड के साथ शेड्यूल करें
 
-def schedule_course(subject_and_channel, chat_id, hour, minute):
+def schedule_course(subject_and_channel, chat_id, hour, minute, second):
     """शेड्यूलर में कोर्स जोड़ें"""
     scheduler.add_job(
         func=all_subject_send,
-        trigger=CronTrigger(hour=hour, minute=minute, second=0, timezone="Asia/Kolkata"),
+        trigger=CronTrigger(hour=hour, minute=minute, second=second, timezone=pytz.timezone("Asia/Kolkata")),
         args=[subject_and_channel, chat_id]
     )
-    LOGGER.info(f"Scheduled course for chat_id {chat_id} at {hour}:{minute}")
+    LOGGER.info(f"Scheduled course for chat_id {chat_id} at {hour}:{minute}:{second}")
 
 async def all_subject_send(subject_and_channel, chat_id):
     # यहाँ पर सभी सब्जेक्ट्स को भेजने का लॉजिक जोड़ा जाएगा
@@ -64,7 +64,8 @@ async def schedule_all_courses():
         chat_id = course['chat_id']
         hour = course['schedule']['hour']
         minute = course['schedule']['minute']
-        schedule_course(subject_and_channel, chat_id, hour, minute)
+        second = course['schedule']['second']  # सेकंड को भी शामिल किया गया
+        schedule_course(subject_and_channel, chat_id, hour, minute, second)
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
