@@ -17,7 +17,7 @@ from .download import account_login
 from pyrogram.errors import FloodWait
 
 # MongoDB सेटअप (अपने अनुसार URL और credentials अपडेट करें)
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb+srv://fiona534455:bHGrFDYbEN7iOhPz@cluster0.6cwrvig.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["course_database"]
 course_collection = db["courses"]
 
