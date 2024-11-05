@@ -206,12 +206,20 @@ async def set_config(bot, message):
     global subject_and_channel, chat_id, courseid  # Declare global variables at the beginning
     
     try:
-        # Split the command into parts
-        parts = message.text.split(" ", 4)
+        # Split the command into parts, expecting 6 parts after the command
+        parts = message.text.split(" ", 5)  
+        print("Split parts:", parts)  # Debug log
+        
+        # Check if we have the expected number of parts
+        if len(parts) != 6:
+            await message.reply("Error: Invalid command format. Expected format is:\n"
+                                "`/setconfig subject_and_channel chat_id courseid hour minute`")
+            return
         
         # Parse the subject_and_channel part
         new_subject_and_channel = {}
         subject_channel_pairs = parts[1].split(",")  # Split by commas for each subject-channel pair
+        print("Subject and Channel Pairs:", subject_channel_pairs)  # Debug log
         
         for pair in subject_channel_pairs:
             subject_id, chat_id, thread_id = map(int, pair.split(":"))  # Split each pair by colon and convert to int
@@ -252,6 +260,8 @@ async def set_config(bot, message):
                             f"**Course ID**: {courseid}\n"
                             f"**Scheduled Time**: {new_hour}:{new_minute} IST")
 
+    except ValueError as e:
+        await message.reply(f"Error updating configuration: Invalid format or type: {e}")
     except Exception as e:
         await message.reply(f"Error updating configuration: {e}")
 
