@@ -203,6 +203,8 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 # Command to set configuration
 @Client.on_message(filters.command("setconfig") & filters.user(AUTH_USERS))
 async def set_config(bot, message):
+    global subject_and_channel, chat_id, courseid  # Declare global variables at the beginning
+    
     try:
         # Split the command into parts
         parts = message.text.split(" ", 4)
@@ -222,7 +224,6 @@ async def set_config(bot, message):
         new_minute = int(parts[5])
 
         # Update the global variables
-        global subject_and_channel, chat_id, courseid
         subject_and_channel = new_subject_and_channel
         chat_id = new_chat_id
         courseid = new_courseid
