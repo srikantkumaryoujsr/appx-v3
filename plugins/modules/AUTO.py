@@ -91,12 +91,16 @@ async def add_course_command(bot, message):
         response = await bot.listen(message.chat.id)
         minute = int(response.text)
         
+        await message.reply("कृपया scheduler second इनपुट करें:")
+        response = await bot.listen(message.chat.id)
+        second = int(response.text)
+        
         # MongoDB में कोर्स डेटा सेव करें
         course_data = {
             "subject_and_channel": subject_and_channel,
             "chat_id": chat_id,
             "courseids": courseids,
-            "scheduler_time": {"hour": hour, "minute": minute}
+            "scheduler_time": {"hour": hour, "minute": minute, "second": second}
         }
         course_collection.insert_one(course_data)
         
@@ -114,7 +118,7 @@ def schedule_all_courses():
     for course in courses:
         scheduler.add_job(
             func=all_subject_send,
-            trigger=CronTrigger(hour=course['scheduler_time']['hour'], minute=course['scheduler_time']['minute'], second=0, timezone=IST),
+            trigger=CronTrigger(hour=course['scheduler_time']['hour'], minute=course['scheduler_time']['minute'], second=course['scheduler_time']['second'], timezone=IST),
             args=[course["subject_and_channel"], course["chat_id"], course["courseids"]]
         )
         logger.info("कोर्स शेड्यूल किया गया: %s", course)
