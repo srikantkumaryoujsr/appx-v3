@@ -295,5 +295,24 @@ async def view_config(bot, message):
     except Exception as e:
         await message.reply(f"Error retrieving configuration: {e}")
 
+@Client.on_message(filters.command("start"))
+async def start_message(bot, message):
+    try:
+        # Customize your welcome message here
+        welcome_message = (
+            "Hello! 👋 Welcome to the bot.\n\n"
+            "**Available Commands:**\n"
+            "/start - Show this message\n"
+            "/GDTEST - Run the scheduled task immediately\n"
+            "/setconfig1 - Configure bot settings\n"
+            "/viewconfig - View current configuration\n\n"
+            "Feel free to use any of the commands above to interact with the bot."
+        )
+        
+        # Send the welcome message to the user
+        await message.reply(welcome_message)
+    except Exception as e:
+        print(f"Failed to send start message: {e}")
+
 # Start scheduler
 scheduler.start()
