@@ -85,7 +85,7 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-@Client.on_message(filters.command("GDTEST") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("startnow1") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
@@ -255,7 +255,7 @@ async def set_config(bot, message):
             args=[bot]
         )
 
-        await message.reply(f"**𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧🦋🎉🎊vsp1 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲**:\n\n"
+        await message.reply(f"**𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧🦋🎉🎊Course1 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲**:\n\n"
                             f"**🟢ꜱᴜʙᴊᴇᴄᴛꜱ ᴀɴᴅ ᴄʜᴀɴɴᴇʟꜱ🟡**: `{subject_and_channel}`\n"
                             f"**🟢ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪᴅ🟡**: `{chat_id}`\n"
                             f"**🟢ᴄᴏᴜʀꜱᴇ ɪᴅ🟡**: `{courseid}`\n"
@@ -267,7 +267,7 @@ async def set_config(bot, message):
     except Exception as e:
         await message.reply(f"Error updating configuration: {e}")
 
-@Client.on_message(filters.command("viewconfig") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("viewconfig1") & filters.user(AUTH_USERS))
 async def view_config(bot, message):
     try:
         # Load the current configuration from the file for display
@@ -301,12 +301,27 @@ async def start_message(bot, message):
         # Customize your welcome message here
         welcome_message = (
             "Hello! 👋 Welcome to the bot.\n\n"
-            "**Available Commands:**\n"
-            "/start - Show this message\n"
-            "/GDTEST - Run the scheduled task immediately\n"
+            "**Available Commands For Course1:**\n"
+            "/startnow1 - Run the scheduled task immediately\n"
             "/setconfig1 - Configure bot settings\n"
-            "/viewconfig - View current configuration\n\n"
-            "Feel free to use any of the commands above to interact with the bot."
+            "/viewconfig1 - View current configuration\n\n"
+            "**Available Commands For Course2:**\n"
+            "/startnow2 - Run the scheduled task immediately\n"
+            "/setconfig2 - Configure bot settings\n"
+            "/viewconfig2 - View current configuration\n\n"
+            "**Available Commands For Course3:**\n"
+            "/startnow3 - Run the scheduled task immediately\n"
+            "/setconfig3 - Configure bot settings\n"
+            "/viewconfig3 - View current configuration\n\n"
+            "**Available Commands For Course4:**\n"
+            "/startnow4 - Run the scheduled task immediately\n"
+            "/setconfig4 - Configure bot settings\n"
+            "/viewconfig4 - View current configuration\n\n"
+            "**Available Commands For Course5:**\n"
+            "/startnow5 - Run the scheduled task immediately\n"
+            "/setconfig5 - Configure bot settings\n"
+            "/viewconfig5 - View current configuration\n\n"
+            "Feel free to use any of the commands above to interact with the bot. 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 :- @rojgaarwithankit"
         )
         
         # Send the welcome message to the user
