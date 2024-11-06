@@ -20,10 +20,6 @@
             "description": "Your Bot token from @Botfather",
             "required": true
         }
-        "AUTH_USERS": {
-            "description": "Auth User",
-            "required": true
-        }
     },
     "addons": [],
     "buildpacks": [
