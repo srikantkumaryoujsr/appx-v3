@@ -2,7 +2,7 @@
 {
     "name": "@sarkari_student",
     "description": "@sarkari_student",
-    "repository": "https://github.com",
+    "repository": "https://github.com/vspteam/RWAGROUPBOT",
     "stack": "heroku-22",
     "keywords": [
         "telegram bot",
