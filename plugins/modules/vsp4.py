@@ -85,7 +85,7 @@ def decrypt_link(link):
     
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
-@Client.on_message(filters.command("GDTEST") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("startnow4") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
     await all_subject_send(bot)
 
@@ -266,6 +266,34 @@ async def set_config(bot, message):
         await message.reply(f"Error updating configuration: Invalid format or type: {e}")
     except Exception as e:
         await message.reply(f"Error updating configuration: {e}")
+
+@Client.on_message(filters.command("viewconfig4") & filters.user(AUTH_USERS))
+async def view_config(bot, message):
+    try:
+        # Load the current configuration from the file for display
+        config = load_config()
+        
+        # Extract configuration details
+        subject_and_channel = config.get("subject_and_channel", {})
+        chat_id = config.get("chat_id", -1002289423851)
+        courseid = config.get("courseid", 204)
+        bname = config.get("bname", "N/A")  # Provide a default in case it's not set
+        scheduler_time = config.get("scheduler_time", {"hour": 0, "minute": 0})
+        
+        # Prepare the configuration message
+        config_message = (
+            f"**Current Configuration**:\n\n"
+            f"**🟢 Subjects and Channels**: `{subject_and_channel}`\n"
+            f"**🟢 Group Chat ID**: `{chat_id}`\n"
+            f"**🟢 Course ID**: `{courseid}`\n"
+            f"**🟢 Course Name**: `{bname}`\n"
+            f"**🟢 Scheduled Time**: `{scheduler_time['hour']}`:`{scheduler_time['minute']}` IST"
+        )
+        
+        # Send the configuration details to the user
+        await message.reply(config_message)
+    except Exception as e:
+        await message.reply(f"Error retrieving configuration: {e}")
 
 # Start scheduler
 scheduler.start()
