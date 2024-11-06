@@ -22,7 +22,7 @@ import json
 import os
 
 # File to store configuration
-CONFIG_FILE = "config.json"
+CONFIG_FILE = "config2.json"
 
 # Load configuration from file
 def load_config():
