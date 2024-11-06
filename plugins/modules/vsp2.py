@@ -200,7 +200,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@Client.on_message(filters.command("setconfig") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("setconfig2") & filters.user(AUTH_USERS))
 async def set_config(bot, message):
     global subject_and_channel, chat_id, courseid, bname  # Declare global variables at the beginning
     
