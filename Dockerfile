@@ -1,4 +1,4 @@
-FROM python:3.9.6-alpine3.14
+FROM python:3.10-alpine3.16
 WORKDIR /app
 COPY . .
 RUN apk add --no-cache gcc libffi-dev musl-dev ffmpeg aria2 \
