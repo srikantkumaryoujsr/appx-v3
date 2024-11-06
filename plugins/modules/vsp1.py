@@ -200,7 +200,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@Client.on_message(filters.command("setconfig") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("setconfig1") & filters.user(AUTH_USERS))
 async def set_config(bot, message):
     global subject_and_channel, chat_id, courseid, bname  # Declare global variables at the beginning
     
@@ -212,7 +212,7 @@ async def set_config(bot, message):
         # Check if we have the expected number of parts
         if len(parts) != 7:
             await message.reply("Error: Invalid command format. Expected format is:\n"
-                                "`/setconfig subject_and_channel chat_id courseid bname hour minute`")
+                                "`/setconfig1 subject_and_channel chat_id courseid bname hour minute`")
             return
         
         # Parse the subject_and_channel part
@@ -255,7 +255,7 @@ async def set_config(bot, message):
             args=[bot]
         )
 
-        await message.reply(f"**𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧🦋🎉🎊 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲**:\n\n"
+        await message.reply(f"**𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧🦋🎉🎊vsp1 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲**:\n\n"
                             f"**🟢ꜱᴜʙᴊᴇᴄᴛꜱ ᴀɴᴅ ᴄʜᴀɴɴᴇʟꜱ🟡**: `{subject_and_channel}`\n"
                             f"**🟢ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪᴅ🟡**: `{chat_id}`\n"
                             f"**🟢ᴄᴏᴜʀꜱᴇ ɪᴅ🟡**: `{courseid}`\n"
