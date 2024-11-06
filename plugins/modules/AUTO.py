@@ -122,7 +122,6 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
            
-            bname = bdetail[0]["course_name"]
             
             all_urls = ""
             couserid = []
