@@ -203,17 +203,17 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 # Command to set configuration
 @Client.on_message(filters.command("setconfig") & filters.user(AUTH_USERS))
 async def set_config(bot, message):
-    global subject_and_channel, chat_id, courseid  # Declare global variables at the beginning
+    global subject_and_channel, chat_id, courseid, bname  # Declare global variables at the beginning
     
     try:
-        # Split the command into parts, expecting 6 parts after the command
-        parts = message.text.split(" ", 5)  
+        # Split the command into parts, expecting 7 parts after the command
+        parts = message.text.split(" ", 6)  # Allow 7 parts: command + 6 params (updated)
         print("Split parts:", parts)  # Debug log
         
         # Check if we have the expected number of parts
-        if len(parts) != 6:
+        if len(parts) != 7:
             await message.reply("Error: Invalid command format. Expected format is:\n"
-                                "`/setconfig subject_and_channel chat_id courseid hour minute`")
+                                "`/setconfig subject_and_channel chat_id courseid bname hour minute`")
             return
         
         # Parse the subject_and_channel part
@@ -228,23 +228,25 @@ async def set_config(bot, message):
         # Parse remaining parts
         new_chat_id = int(parts[2])
         new_courseid = int(parts[3])
-        new_hour = int(parts[4])
-        new_minute = int(parts[5])
+        new_bname = parts[4]  # New bname (course name) input
+        new_hour = int(parts[5])
+        new_minute = int(parts[6])
 
         # Update the global variables
         subject_and_channel = new_subject_and_channel
         chat_id = new_chat_id
         courseid = new_courseid
+        bname = new_bname  # Update bname
 
         # Save configuration for persistence
         config_data = {
             "subject_and_channel": subject_and_channel,
             "chat_id": chat_id,
             "courseid": courseid,
+            "bname": bname,  # Save bname
             "scheduler_time": {"hour": new_hour, "minute": new_minute}
         }
-        with open("config.json", "w") as config_file:
-            json.dump(config_data, config_file, indent=4)
+        save_config(config_data)
 
         # Reschedule the job with updated time
         scheduler.remove_all_jobs()
@@ -258,6 +260,7 @@ async def set_config(bot, message):
                             f"**🟢ꜱᴜʙᴊᴇᴄᴛꜱ ᴀɴᴅ ᴄʜᴀɴɴᴇʟꜱ🟡**: `{subject_and_channel}`\n"
                             f"**🟢ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪᴅ🟡**: `{chat_id}`\n"
                             f"**🟢ᴄᴏᴜʀꜱᴇ ɪᴅ🟡**: `{courseid}`\n"
+                            f"**🟢ᴄᴏᴜʀꜱᴇ ɴᴀᴍᴇ🟡**: `{bname}`\n"  # Display bname
                             f"**🟢ꜱᴄʜᴇᴅᴜʟᴇᴅ ᴛɪᴍᴇ🟡**: `{new_hour}`:`{new_minute}` IST")
 
     except ValueError as e:
