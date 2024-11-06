@@ -192,7 +192,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, new_bname, chatid, message_thread_id)
+            await account_login(bot, all_urls, bname, chatid, message_thread_id)
         
         except Exception as e:
             print(f"An error occurred: {e}")
