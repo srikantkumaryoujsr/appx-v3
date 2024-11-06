@@ -118,7 +118,7 @@ async def account_login(bot: Client, content, bname, chatid, message_thread_id):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**📥ᴅᴏᴡʙʟᴏᴀᴅɪɴɢ📥**\n\n**[📚] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** `{name}\n[✤] Qᴜᴀʟɪᴛʏ : ➣ 720p\n\n**ॐ ᴜʀʟ :- ʜɪᴅᴇ ʙʏ ᴏᴡɴᴇʀ...❤️**\n**➥ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ  : ➣🤡ʀᴡᴀ ᴄᴏᴘʏʀɪɢʜ**"
+                    Show = f"**📥ᴅᴏᴡʙʟᴏᴀᴅɪɴɢ📥**\n\n**[📚] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** `{name}\n**[✤] Qᴜᴀʟɪᴛʏ : ➣ 720p**\n\n**ॐ ᴜʀʟ :- ʜɪᴅᴇ ʙʏ ᴏᴡɴᴇʀ...❤️**\n**➥ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ  : ➣🤡ʀᴡᴀ ᴄᴏᴘʏʀɪɢʜ**"
                     prog = await bot.send_message(chatid, text=Show, reply_to_message_id=message_thread_id)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
