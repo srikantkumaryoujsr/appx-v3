@@ -1,4 +1,3 @@
-
 {
     "name": "@sarkari_student",
     "description": "@sarkari_student",
@@ -9,19 +8,16 @@
         "pyrogram"
     ],
     "env": {
-            "API_ID": {
-            "description": "Your API_ID from https://my.telegram.org/apps #fgf",
-            "value": "22924674",
+        "API_ID": {
+            "description": "Your API_ID from https://my.telegram.org/apps",
             "required": true
         },
         "API_HASH": {
-            "description": "Your API_HASH from https://my.telegram.org/apps #fgf",       
-            "value": "4490358fa3f47b2d14018083",
+            "description": "Your API_HASH from https://my.telegram.org/apps",
             "required": true
         },
         "BOT_TOKEN": {
-            "description": "Your Bot token from @Botfather #jhggj",
-            "value": "7323888833:AAFJz-UpbqKklSBatdnmaBftE",
+            "description": "Your Bot token from @Botfather",
             "required": true
         }
     },
@@ -32,10 +28,9 @@
         },
         {
             "url": "heroku/python"
-        },       
+        },
         {
             "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
         }
     ]
-
 }
