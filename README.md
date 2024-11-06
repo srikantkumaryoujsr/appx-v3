@@ -4,4 +4,4 @@
 
 # Deploy Your App to Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vspteam/RWAGROUPBOT)
+[![Deploy to heroku chacha](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/vspteam/RWAGROUPBOT)
