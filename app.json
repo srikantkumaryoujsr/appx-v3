@@ -19,6 +19,10 @@
         "BOT_TOKEN": {
             "description": "Your Bot token from @Botfather",
             "required": true
+        },
+        "AUTH_USERS": {
+            "description": "auth users",
+            "required": true
         }
     },
     "addons": [],
