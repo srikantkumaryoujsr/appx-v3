@@ -15,7 +15,7 @@ async def start_message(bot, message):
         ])
         
         # Photo URL or path (replace with your image path or URL)
-        photo_url = "https://via.placeholder.com/800x400.png?text=Welcome+to+Vsp+Bot"
+        photo_url = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvVXWRt7tfs0Y-PIpNOQlk8UbsT9DKyB8yNu7hHS2TGXeUKPnWPjaUF0Q-D4TUugqCFczMJOOpg89kapL8eGOG0FzjdjTZXym-1_xqKuqjaFUMQDTycUJfxNxjh6wWr0tTA_P5TgKvC9SVICeA3ksc8bHQlEpm7IhK5Cpzk4u6YV9xePnb2yB22hht/s1600/rojgar-with-ankit-app-installation.PNG"
 
         # Customize the message
         caption = (
