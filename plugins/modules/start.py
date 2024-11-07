@@ -7,8 +7,8 @@ async def start_message(bot, message):
     try:
         # Prepare buttons for multiple courses
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton(f"🟢​𝐒𝐄𝐓 𝐑𝐖𝐀 𝐂𝐎𝐔𝐑𝐒𝐄 {i}​🔴", callback_data=f"setconfig{i}"),
-             InlineKeyboardButton(f"🟢​𝐕𝐈𝐄𝐖 𝐑𝐖𝐀 𝐂𝐎𝐔𝐑𝐒𝐄​ {i}🔴", callback_data=f"viewconfig{i}")]
+            [InlineKeyboardButton(f"🟢​𝐒𝐄𝐓_𝐂𝐎𝐔𝐑𝐒𝐄 {i}​🔴", callback_data=f"setconfig{i}"),
+             InlineKeyboardButton(f"🟢​𝐕𝐈𝐄𝐖_𝐂𝐎𝐔𝐑𝐒𝐄​ {i}🔴", callback_data=f"viewconfig{i}")]
             for i in range(1, 6)
         ])
         
