@@ -1,6 +1,9 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
+import aiohttp
+from pyrogram import Client, filters
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 
 AUTH_USERSS = "7224758848" # List of primary authorized user IDs
 AUTH_USERS = set()  # Start with primary users
