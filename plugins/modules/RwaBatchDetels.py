@@ -15,7 +15,7 @@ async def fetch_data(session, url, headers=None):
         return await response.json()
 
 @Client.on_callback_query(filters.regex("get_all_courses"))
-async def get_all_courses_info(bot: Client, m: Message, callback_query):
+async def get_all_courses_info(bot: Client, callback_query, m: Message):
     """Fetch all course and subject details using predefined token."""
     await m.reply_text("𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐚𝐥𝐥 𝐜𝐨𝐮𝐫𝐬𝐞 𝐝𝐞𝐭𝐚𝐢𝐥𝐬...𝟐,𝟑 𝐌𝐢𝐧𝐮𝐭𝐞𝐬 𝐖𝐚𝐢𝐭 😂")
 
