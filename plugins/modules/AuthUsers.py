@@ -2,8 +2,8 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
 
-from main import AUTH_USERSS  # List of primary authorized user IDs
-AUTH_USERS = set(AUTH_USERSS)  # Start with primary users
+AUTH_USERSS = "7224758848" # List of primary authorized user IDs
+AUTH_USERS = set()  # Start with primary users
 
 @Client.on_message(filters.command("manage_auth") & filters.user(AUTH_USERSS))
 async def manage_auth(bot, message):
