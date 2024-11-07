@@ -1,5 +1,4 @@
 #Code write by @sarkari_student
-from bot.handlers.start import *  # Import start and callback query handlers
 import os
 from config import Config
 from pyrogram import Client, idle
