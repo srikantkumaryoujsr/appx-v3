@@ -1,15 +1,15 @@
-from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from .. import bot as Client
 import aiohttp
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-AUTH_USERSS = [7224758848]
-AUTH_USERS = set(AUTH_USERSS)  # Start with primary users
+from .. import bot as Client
 
-@Client.on_message(filters.command("manage_auth"))
-async def manage_auth(bot, message: Message):
-    """Manage authorized users."""
+
+# AUTH_USERS को इन-मैमोरी स्टोरेज के रूप में सेट करें
+AUTH_USERS = set()
+
+@Client.on_message(filters.command("manage_auth") & filters.user(AUTH_USERS))
+async def manage_auth(bot, message):
+    """Manage authorized users via buttons."""
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton("➕ Add User", callback_data="add_user"),
          InlineKeyboardButton("➖ Remove User", callback_data="remove_user")],
@@ -23,11 +23,10 @@ async def manage_auth(bot, message: Message):
 
 @Client.on_callback_query(filters.regex("add_user"))
 async def add_user(bot, query: CallbackQuery):
+    """Prompt for user ID to add."""
     await query.message.reply_text("Send the User ID you want to authorize:")
-
-    # Wait for next message (user ID input).
-    user_response = await bot.listen(query.message.chat.id)
     
+    user_response = await bot.listen(query.message.chat.id)
     try:
         user_id = int(user_response.text)
         if user_id in AUTH_USERS:
@@ -42,15 +41,14 @@ async def add_user(bot, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("remove_user"))
 async def remove_user(bot, query: CallbackQuery):
+    """Prompt for user ID to remove."""
     if not AUTH_USERS:
         await query.message.reply_text("No users to remove.")
         return
 
     await query.message.reply_text("Send the User ID you want to remove:")
     
-    # Wait for next message (user ID input).
     user_response = await bot.listen(query.message.chat.id)
-    
     try:
         user_id = int(user_response.text)
         if user_id in AUTH_USERS:
@@ -65,8 +63,15 @@ async def remove_user(bot, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("view_users"))
 async def view_users(bot, query: CallbackQuery):
+    """View all authorized users."""
     if not AUTH_USERS:
         await query.message.reply_text("No authorized users found.")
     else:
         users_list = "\n".join([f"- `{user}`" for user in AUTH_USERS])
         await query.message.reply_text(f"**Authorized Users:**\n\n{users_list}")
+
+@Client.on_message(filters.command("AUTH"))
+async def start(bot, message):
+    await message.reply_text(
+        "Hello! Use /manage_auth to manage authorized users (Admin only)."
+    )
