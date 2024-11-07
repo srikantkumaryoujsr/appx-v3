@@ -7,8 +7,8 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 AUTH_USERSS = [7224758848]
 AUTH_USERS = set(AUTH_USERSS)  # Start with primary users
 
-@Client.on_message(filters.command("manage_auth") & filters.user(AUTH_USERSS))
-async def manage_auth(bot, message):
+@Client.on_message(filters.command("manage_auth"))
+async def manage_auth(bot, message: Message):
     """Manage authorized users."""
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton("➕ Add User", callback_data="add_user"),
