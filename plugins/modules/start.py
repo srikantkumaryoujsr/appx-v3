@@ -11,6 +11,8 @@ async def start_message(bot, message):
              InlineKeyboardButton(f"🟢​𝐕𝐈𝐄𝐖_𝐂𝐎𝐔𝐑𝐒𝐄​ {i}🔴", callback_data=f"viewconfig{i}")]
             for i in range(1, 6)
         ] + [
+            [InlineKeyboardButton("📚𝐆𝐞𝐭 𝐀𝐥𝐥 𝐑𝐰𝐚 𝐁𝐚𝐭𝐜𝐡 𝐈𝐧𝐟𝐨📚", callback_data="get_all_courses")]
+        ] + [
             [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/rojgaarwithankit")]
         ])
         
