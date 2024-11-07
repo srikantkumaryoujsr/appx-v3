@@ -1,4 +1,5 @@
 #@sarkari_student
+from bot.handlers.start import *  # Import start and callback query handlers
 import asyncio
 import importlib
 from pyrogram import idle
