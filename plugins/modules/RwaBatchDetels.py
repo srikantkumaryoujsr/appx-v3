@@ -15,9 +15,9 @@ async def fetch_data(session, url, headers=None):
         return await response.json()
 
 @Client.on_callback_query(filters.regex("get_all_courses"))
-async def get_all_courses_info(bot: Client, callback_query):
+async def get_all_courses_info(bot: Client, m: Message, callback_query):
     """Fetch all course and subject details using predefined token."""
-    await query.message.reply_text("𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐚𝐥𝐥 𝐜𝐨𝐮𝐫𝐬𝐞 𝐝𝐞𝐭𝐚𝐢𝐥𝐬...𝟐,𝟑 𝐌𝐢𝐧𝐮𝐭𝐞𝐬 𝐖𝐚𝐢𝐭 😂")
+    await m.reply_text("𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐚𝐥𝐥 𝐜𝐨𝐮𝐫𝐬𝐞 𝐝𝐞𝐭𝐚𝐢𝐥𝐬...𝟐,𝟑 𝐌𝐢𝐧𝐮𝐭𝐞𝐬 𝐖𝐚𝐢𝐭 😂")
 
     headers = {
         'auth-key': 'appxapi',
@@ -33,7 +33,7 @@ async def get_all_courses_info(bot: Client, callback_query):
             courses = courses_response.get("data", [])
             
             if not courses:
-                return await query.message.reply_text("No courses found for this account.")
+                return await m.reply_text("No courses found for this account.")
             
             # Prepare course and subject details
             course_details = []
@@ -57,8 +57,8 @@ async def get_all_courses_info(bot: Client, callback_query):
             # Split messages if content exceeds Telegram limits
             result = "\n\n".join(course_details)
             for chunk in [result[i:i+4000] for i in range(0, len(result), 4000)]:
-                await query.message.reply_text(chunk)
+                await m.reply_text(chunk)
         
         except Exception as e:
             print(f"Error: {e}")
-            await query.message.reply_text("An error occurred during the process. Please try again.")
+            await m.reply_text("An error occurred during the process. Please try again.")
