@@ -10,6 +10,8 @@ async def start_message(bot, message):
             [InlineKeyboardButton(f"🟢​𝐒𝐄𝐓_𝐂𝐎𝐔𝐑𝐒𝐄 {i}​🔴", callback_data=f"setconfig{i}"),
              InlineKeyboardButton(f"🟢​𝐕𝐈𝐄𝐖_𝐂𝐎𝐔𝐑𝐒𝐄​ {i}🔴", callback_data=f"viewconfig{i}")]
             for i in range(1, 6)
+        ] + [
+            [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/rojgaarwithankit")]
         ])
         
         # Photo URL or path (replace with your image path or URL)
