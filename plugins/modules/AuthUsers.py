@@ -1,5 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from .. import bot as Client
 
 # AUTH_USERS को इन-मैमोरी स्टोरेज के रूप में सेट करें।
 AUTH_USERS = set()
