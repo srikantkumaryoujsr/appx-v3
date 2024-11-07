@@ -1,26 +1,30 @@
-import logging
 from pyrogram import filters
 from pyrogram import Client as bot
-from pyrogram.types import Message as msg
-from pyrogram.errors import ChatWriteForbidden
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-LOGGER = logging.getLogger(__name__)
+from pyrogram.types import InlineKeyboardButton as key, InlineKeyboardMarkup as m, Message as msg, CallbackQuery
+import os
+import asyncio
+import random
+import sys
+from main import LOGGER, prefixes, Config
+from pyrogram.errors import ChatAdminRequired, UserNotParticipant, ChatWriteForbidden
 
 # Handle the /start command
 @bot.on_message(filters.command("start") & filters.private)
-async def start_msg(client: bot, message: msg):
-    LOGGER.info(f"Received /start command from user {message.from_user.id}")
-    
-    try:
-        await message.reply(
-            "❤️ Welcome to the bot! ❤️\n\nChoose an option:\n\nFor Rojgar With Ankit Course link extractor [TXT Format]"
-        )
-        LOGGER.info("Sent start message successfully.")
-    except ChatWriteForbidden:
-        LOGGER.warning("Bot lacks write permission in the chat.")
-        await message.reply("Sorry, I don't have permission to write in this chat.")
-    except Exception as e:
-        LOGGER.error(f"Failed to send start message: {e}")
-        await message.reply("An error occurred. Please try again later.")
+async def start_msg(bot, message):
+    # If the user is a participant, continue with sending the photo and other actions       
+    reply_mark = gen_start_kb()
+    await bot.send_photo(
+        message.chat.id,
+        photo="https://te.legra.ph/file/509795aa19e893839762d.jpg",
+        caption="❤️𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡𝐞 𝐛𝐨𝐭! 𝐂𝐡𝐨𝐨𝐬𝐞 𝐚𝐧 𝐨𝐩𝐭𝐢𝐨𝐧❤️:\n\n𝐟𝐨𝐫 𝐑𝐨𝐣𝐠𝐚𝐫 𝐖𝐢𝐭𝐡𝐠 𝐀𝐧𝐤𝐢𝐭 𝐂𝐨𝐮𝐫𝐬𝐞 𝐥𝐢𝐧𝐤 𝐞𝐱𝐭𝐫𝐚𝐜𝐭𝐨𝐫 [𝐓𝐗𝐓 𝐅𝐨𝐫𝐦𝐚𝐭𝐞]",
+        reply_markup=reply_mark
+    )
+
+def gen_start_kb():
+    keyboard = [
+        [key("🤦‍♂️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫🤦‍♂️", url="https://t.me/rojgaarwithankit")],           
+        
+    ]
+    keyboard = [[key("❤️𝐑𝐨𝐣𝐠𝐚𝐫 𝐖𝐢𝐭𝐡 𝐀𝐧𝐤𝐢𝐭❤️", callback_data='start_rwa')],
+                [key("🤦‍♂️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫🤦‍♂️", url="https://t.me/rojgaarwithankit")]]
+    return m(keyboard)
