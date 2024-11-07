@@ -7,17 +7,18 @@ async def start_message(bot, message):
     try:
         # Prepare buttons for multiple courses
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton(f"🟢​🇸​​🇪​​🇹​ ​🇷​​🇼​​🇦​ ​🇨​​🇴​​🇺​​🇷​​🇸​​🇪​ {i}​🔴", callback_data=f"setconfig{i}"),
-             InlineKeyboardButton(f"🟢​🇻​​🇮​​🇪​​🇼​ ​🇨​​🇴​​🇳​​🇫​​🇮​​🇬​ ​🇨​​🇴​​🇺​​🇷​​🇸​​🇪​ {i}🔴", callback_data=f"viewconfig{i}")]
+            [InlineKeyboardButton(f"🟢​𝐒𝐄𝐓 𝐑𝐖𝐀 𝐂𝐎𝐔𝐑𝐒𝐄 {i}​🔴", callback_data=f"setconfig{i}"),
+             InlineKeyboardButton(f"🟢​𝐕𝐈𝐄𝐖 𝐑𝐖𝐀 𝐂𝐎𝐔𝐑𝐒𝐄​ {i}🔴", callback_data=f"viewconfig{i}")]
             for i in range(1, 6)
         ])
         
         # Photo URL or path (replace with your image path or URL)
-        photo_url = "https://via.placeholder.com/800x400.png?text=Welcome+to+Vsp+Rwa+Bot"
+        photo_url = "https://via.placeholder.com/800x400.png?text=Welcome+to+Vsp+Bot"
 
         # Customize the message
         caption = (
             "**Hello! 👋 Welcome to the bot.**\n\n"
+            "**RWA DAILY AUTO UPDATE BOT**\n\n"
             "**Use the buttons below to configure or view settings for each course. 😊**\n\n"
             "𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 :- @rojgaarwithankit"
         )
