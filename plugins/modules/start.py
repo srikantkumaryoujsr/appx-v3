@@ -79,40 +79,23 @@ async def handle_callback(bot, query: CallbackQuery):
                 if not courses:
                     return await query.message.edit_text("No courses found for this account.")
 
-                # Prepare course and subject details with batch information
+                # Prepare course and subject details
                 course_details = []
                 for course in courses:
                     course_id = course.get("id")
                     course_name = course.get("course_name")
 
-                    # Fetch subjects and batch details under each course
+                    # Fetch subjects under each course
                     subjects_response = await fetch_data(
                         session, 
                         f"https://rozgarapinew.teachx.in/get/allsubjectfrmlivecourseclass?courseid={course_id}&start=-1", 
                         headers=headers
                     )
-                    subjects = subjects_response.get("data", [])
-                    
-                    # Fetch batch details for each course
-                    batch_response = await fetch_data(
-                        session, 
-                        f"https://rozgarapinew.teachx.in/get/allbatch?courseid={course_id}", 
-                        headers=headers
-                    )
-                    batches = batch_response.get("data", [])
 
+                    subjects = subjects_response.get("data", [])
                     subjects_info = "\n".join([f"   - {subj['subjectid']}: {subj['subject_name']}" for subj in subjects])
 
-                    # Prepare batch info
-                    batch_info = "\n".join([
-                        f"   - Batch Name: {batch['batch_name']}\n"
-                        f"     Start Date: {batch['start_date']}\n"
-                        f"     End Date: {batch['end_date']}\n"
-                        f"     Subscription Status: {'Active' if batch['is_active'] else 'Inactive'}"
-                        for batch in batches
-                    ])
-
-                    course_info = f"**Course ID**: `{course_id}`\n**Course Name**: {course_name}\n**Subjects**:\n{subjects_info}\n**Batches**:\n{batch_info}\n"
+                    course_info = f"**Course ID**: `{course_id}`\n**Course Name**: {course_name}\n**Subjects**:\n{subjects_info}\n"
                     course_details.append(course_info)
 
                 # Send results in chunks
