@@ -61,6 +61,10 @@ async def handle_callback(bot, query: CallbackQuery):
             f"Fetching configuration for Course {course_num}... Use `/viewconfig{course_num}` for details."
         )
     elif data == "get_all_courses":
+        if query.from_user.id not in AUTH_USERS:
+            await query.answer("You are not authorized to use this feature.", show_alert=True)
+            return
+            
         await query.message.edit_text("Fetching all course details...")
 
         headers = {
