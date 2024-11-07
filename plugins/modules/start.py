@@ -60,12 +60,8 @@ async def handle_callback(bot, query: CallbackQuery):
         await query.message.reply(
             f"Fetching configuration for Course {course_num}... Use `/viewconfig{course_num}` for details."
         )
-    elif data == "get_all_courses":
-        if query.from_user.id not in AUTH_USERS:
-            await query.answer("You are not authorized to use this feature.", show_alert=True)
-            return
-            
-        await query.message.edit_text("Fetching all course details...")
+    elif data == "get_all_courses":    
+        await query.message.edit_text("सेवा में श्रीमान or श्रीमती हमको बैच डीटेल्स देने में थोड़ा समय लगेगा एक-दो मिनट का तब तक आप इंतजार करिए..... धन्यवाद 😜")
 
         headers = {
             'auth-key': 'appxapi',
