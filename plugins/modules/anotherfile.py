@@ -1,30 +1,50 @@
 from pyrogram import filters
-from pyrogram import Client as bot
-from pyrogram.types import InlineKeyboardButton as key, InlineKeyboardMarkup as m, Message as msg, CallbackQuery
-import os
-import asyncio
-import random
-import sys
-from main import LOGGER, prefixes, Config
-from pyrogram.errors import ChatAdminRequired, UserNotParticipant, ChatWriteForbidden
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, InputMediaPhoto
+from .. import bot as Client
 
-# Handle the /start command
-@bot.on_message(filters.command("start") & filters.private)
-async def start_msg(bot, message):
-    # If the user is a participant, continue with sending the photo and other actions       
-    reply_mark = gen_start_kb()
-    await bot.send_photo(
-        message.chat.id,
-        photo="https://te.legra.ph/file/509795aa19e893839762d.jpg",
-        caption="❤️𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡𝐞 𝐛𝐨𝐭! 𝐂𝐡𝐨𝐨𝐬𝐞 𝐚𝐧 𝐨𝐩𝐭𝐢𝐨𝐧❤️:\n\n𝐟𝐨𝐫 𝐑𝐨𝐣𝐠𝐚𝐫 𝐖𝐢𝐭𝐡𝐠 𝐀𝐧𝐤𝐢𝐭 𝐂𝐨𝐮𝐫𝐬𝐞 𝐥𝐢𝐧𝐤 𝐞𝐱𝐭𝐫𝐚𝐜𝐭𝐨𝐫 [𝐓𝐗𝐓 𝐅𝐨𝐫𝐦𝐚𝐭𝐞]",
-        reply_markup=reply_mark
-    )
-
-def gen_start_kb():
-    keyboard = [
-        [key("🤦‍♂️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫🤦‍♂️", url="https://t.me/rojgaarwithankit")],           
+@Client.on_message(filters.command("start"))
+async def start_message(bot, message):
+    try:
+        # Prepare buttons for multiple courses
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton(f"Set Config (Course {i})", callback_data=f"setconfig{i}"),
+             InlineKeyboardButton(f"View Config (Course {i})", callback_data=f"viewconfig{i}")]
+            for i in range(1, 6)
+        ])
         
-    ]
-    keyboard = [[key("❤️𝐑𝐨𝐣𝐠𝐚𝐫 𝐖𝐢𝐭𝐡 𝐀𝐧𝐤𝐢𝐭❤️", callback_data='start_rwa')],
-                [key("🤦‍♂️𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫🤦‍♂️", url="https://t.me/rojgaarwithankit")]]
-    return m(keyboard)
+        # Photo URL or path (replace with your image path or URL)
+        photo_url = "https://via.placeholder.com/800x400.png?text=Welcome+to+Bot"
+
+        # Customize the message
+        caption = (
+            "Hello! 👋 Welcome to the bot.\n\n"
+            "Use the buttons below to configure or view settings for each course. 😊\n\n"
+            "𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 :- @rojgaarwithankit"
+        )
+        
+        # Send the photo with the inline buttons
+        await bot.send_photo(
+            chat_id=message.chat.id,
+            photo=photo_url,
+            caption=caption,
+            reply_markup=keyboard
+        )
+    except Exception as e:
+        print(f"Failed to send start message: {e}")
+
+@Client.on_callback_query()
+async def handle_callback(bot, query: CallbackQuery):
+    data = query.data
+
+    if data.startswith("setconfig"):
+        course_num = data.replace("setconfig", "")
+        await query.message.reply(
+            f"Use the command `/setconfig{course_num}` in the following format:\n"
+            f"`/setconfig{course_num} subjectid:chatid:threadid,... chat_id courseid bname hour minute`"
+        )
+    elif data.startswith("viewconfig"):
+        course_num = data.replace("viewconfig", "")
+        await query.message.reply(
+            f"Fetching configuration for Course {course_num}... Use `/viewconfig{course_num}` for details."
+        )
+    await query.answer()
