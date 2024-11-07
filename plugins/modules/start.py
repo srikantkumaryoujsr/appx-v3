@@ -31,6 +31,7 @@ async def start_message(bot, message: Message):
         caption = (
             "**Hello! 👋 Welcome to the bot.**\n\n"
             "**RWA DAILY AUTO UPDATE BOT**\n\n"
+            "**/manage_auth - Only OWNER Use This Command**\n\n"
             "**Use the buttons below to configure or view settings for each course. 😊**\n\n"
             "𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 :- @rojgaarwithankit"
         )
