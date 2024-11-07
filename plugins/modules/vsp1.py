@@ -295,7 +295,7 @@ async def view_config(bot, message):
     except Exception as e:
         await message.reply(f"Error retrieving configuration: {e}")
 
-@Client.on_message(filters.command("start"))
+@Client.on_message(filters.command("startstop"))
 async def start_message(bot, message):
     try:
         # Customize your welcome message here
