@@ -198,6 +198,8 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 
 @Client.on_message(filters.command("processallclasses") & filters.user(AUTH_USERS))
 async def process_all_classes_command(bot, message):
+    global all_important, subject_and_channel
+    
     try:
         # Ensure that all_important data is available
         all_important = {}  # Initialize an empty dictionary in case it's not defined
