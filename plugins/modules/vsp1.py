@@ -217,13 +217,13 @@ async def process_all_dates(bot, message):
                         await bot.send_message(chat_id, text=message_text, message_thread_id=thread_id)
                         continue
 
-            title = data.get("title")
+            title = subject_data.get("title")
             
-            video = data.get("download_link")
+            video = subject_data.get("download_link")
             
-            pdf_1 = data.get("pdf_link")
+            pdf_1 = subject_data.get("pdf_link")
             
-            pdf_2 = data.get("pdf_link2")
+            pdf_2 = subject_data.get("pdf_link2")
             
             if video:
                 all_urls += f"{title}: {video}"
