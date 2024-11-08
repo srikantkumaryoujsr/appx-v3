@@ -199,17 +199,22 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 @Client.on_message(filters.command("processallclasses") & filters.user(AUTH_USERS))
 async def process_all_classes_command(bot, message):
     try:
-        # Process all dates in all_important
-        all_important = get_all_important_data()  # Assuming this function fetches all_important data
+        # Ensure that all_important data is available
+        all_important = {}  # Initialize an empty dictionary in case it's not defined
+        # You can either fetch it from where it's stored or assume it's being populated in other functions
+        all_important = await fetch_all_important_data()  # This would be a function to retrieve all_important data
+
+        if not all_important:
+            await message.reply("No important classes found.")
+            return
 
         # Iterate through all dates in all_important
         for date, data in all_important.items():
-            # Check if the class data exists for the date
             title = data.get("title")
             video = data.get("download_link")
             pdf_1 = data.get("pdf_link")
             pdf_2 = data.get("pdf_link2")
-            
+
             all_urls = ""
             if video:
                 all_urls += f"{title}: {video}"
@@ -229,9 +234,11 @@ async def process_all_classes_command(bot, message):
     except Exception as e:
         await message.reply(f"Error processing classes: {e}")
 
-# Helper function to retrieve all_important data, assuming it exists in the current structure
-def get_all_important_data():
-    return all_important  # This would be the data you've already gathered in your existing code
+# Helper function to retrieve all_important data (if needed)
+async def fetch_all_important_data():
+    # This function should fetch the all_important data as per your existing logic
+    # Here, we'll return the all_important dictionary directly if it's available in the current scope
+    return all_important  # Or you could fetch it from a database or file if needed
 
 # Scheduler setup
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
