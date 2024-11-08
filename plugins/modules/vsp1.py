@@ -70,34 +70,6 @@ async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
 
-def get_all_dates_for_subject(subjectid):
-    # Function to fetch all available dates for a subject
-    ist = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist)
-    # For the sake of simplicity, we assume dates are fetched from an API, this can be modified.
-    # In the real scenario, you will need to fetch these from the API or database.
-    # For example: api_data = fetch_all_dates_from_api(subjectid)
-    
-    available_dates = []  # List of dates we get for a subject
-    # Simulate fetching available dates
-    available_dates.append(now.strftime("%Y-%m-%d"))  # Today's date
-    available_dates.append((now - timedelta(days=1)).strftime("%Y-%m-%d"))  # Yesterday
-    available_dates.append((now - timedelta(days=2)).strftime("%Y-%m-%d"))  # Day before yesterday
-    # Add more logic if needed based on your data source
-    return available_dates
-
-async def process_all_dates_for_subjects(bot, subjectid, chatid, message_thread_id):
-    try:
-        # Get all available dates for this subject
-        all_dates = get_all_dates_for_subject(subjectid)
-        
-        # Process each date and fetch videos, PDFs for that date
-        for date in all_dates:
-            await account_logins(bot, subjectid, chatid, message_thread_id, date)
-            
-    except Exception as e:
-        print(f"Error processing all dates for subject {subjectid}: {e}")
-
 def decrypt_link(link):
     try:
         decoded_link = base64.b64decode(link)
@@ -120,10 +92,10 @@ async def start_subjects_command(bot, message):
 async def all_subject_send(bot):
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
-            await account_logins(bot, subjectid, chatid, message_thread_id, date)
+            await account_logins(bot, subjectid, chatid, message_thread_id)
         except FloodWait as e:
             await asyncio.sleep(e.x)
-            await account_logins(bot, subjectid, chatid, message_thread_id, date)
+            await account_logins(bot, subjectid, chatid, message_thread_id)
         except Exception as e:
             print(f"Error processing subject {subjectid}: {e}")
 
@@ -135,7 +107,7 @@ async def all_subject_send(bot):
     except Exception as e:
         print(f"Failed to send end message: {e}")
 
-async def account_logins(bot, subjectid, chatid, message_thread_id, date):
+async def account_logins(bot, subjectid, chatid, message_thread_id):
     userid = "189678"
     async with aiohttp.ClientSession() as session:
         try:
@@ -150,6 +122,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, date):
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
            
+            
             all_urls = ""
             couserid = []
             res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={courseids}&subjectid={subjectid}&start=-1", headers=hdr1)
@@ -189,9 +162,10 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, date):
                     
                 except Exception:
                     pass
-
+                            
+            date = get_current_date()
             if date not in all_important:
-                messages = {f"{date}\n कल इस Subject की कोई Class नहीं हुआ\n"}
+                messages = {f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ\n"}
                 
                 if subjectid in messages:
                     await bot.send_message(chatid, text=messages[subjectid], message_thread_id=message_thread_id)
@@ -199,8 +173,11 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, date):
 
             data = all_important.get(date, {})
             title = data.get("title")
+            
             video = data.get("download_link")
+            
             pdf_1 = data.get("pdf_link")
+            
             pdf_2 = data.get("pdf_link2")
             
             if video:
@@ -214,7 +191,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, date):
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, title, chatid, message_thread_id)
+            await account_login(bot, all_urls, bname, chatid, message_thread_id)
         
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -297,20 +274,20 @@ async def view_config(bot, message):
         config = load_config()
         
         # Extract configuration details
-        subject_and_channel = config.get("subject_and_channel", {})
-        chat_id = config.get("chat_id", -1002289423851)
-        courseid = config.get("courseid", 204)
+        subject_and_channel = config.get("subject_and_channel", "N/A")
+        chat_id = config.get("chat_id", "N/A")
+        courseid = config.get("courseid", "N/A")
         bname = config.get("bname", "N/A")  # Provide a default in case it's not set
         scheduler_time = config.get("scheduler_time", {"hour": 0, "minute": 0})
         
         # Prepare the configuration message
         config_message = (
             f"**Current Configuration**:\n\n"
-            f"**🟢 Subjects and Channels**: `{subject_and_channel}`\n"
-            f"**🟢 Group Chat ID**: `{chat_id}`\n"
-            f"**🟢 Course ID**: `{courseid}`\n"
-            f"**🟢 Course Name**: `{bname}`\n"
-            f"**🟢 Scheduled Time**: `{scheduler_time['hour']}`:`{scheduler_time['minute']}` IST"
+            f"**🟢 Subjects and Channels🔴**: `{subject_and_channel}`\n"
+            f"**🟢 Group Chat ID🔴**: `{chat_id}`\n"
+            f"**🟢 Course ID🔴**: `{courseid}`\n"
+            f"**🟢 Course Name🔴**: `{bname}`\n"
+            f"**🟢 Scheduled Time🔴**: `{scheduler_time['hour']}`:`{scheduler_time['minute']}` IST"
         )
         
         # Send the configuration details to the user
