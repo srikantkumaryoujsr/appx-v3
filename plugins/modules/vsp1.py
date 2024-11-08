@@ -163,7 +163,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 except Exception:
                     pass
                             
-            date = get_current_date()
+            date = all_important.get(date, {})
             if date not in all_important:
                 messages = {f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ\n"}
                 
