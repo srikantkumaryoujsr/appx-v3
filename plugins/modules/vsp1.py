@@ -196,51 +196,42 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
         except Exception as e:
             print(f"An error occurred: {e}")
 
-@Client.on_message(filters.command("processalldates") & filters.user(AUTH_USERS))
-async def process_all_dates(bot, message):
-    global all_important, subject_and_channel
-
+@Client.on_message(filters.command("processallclasses") & filters.user(AUTH_USERS))
+async def process_all_classes_command(bot, message):
     try:
-        if not all_important:
-            await message.reply("❌ कोई डेटा उपलब्ध नहीं है। `all_important` खाली है।")
-            return
-        
-        for date, data in all_important.items():  # Loop over all dates in all_important
-            for subject_id, (chat_id, thread_id) in subject_and_channel.items():  # Loop over all subjects
-                try:
-                    subject_data = all_important.get(date, {})
-                    
-                    if not subject_data:
-                        # If no data is found for a particular date and subject
-                        message_text = f"**📅 Date**: {date}\n" \
-                                       f"❌ {subject_id} के लिए कोई क्लास उपलब्ध नहीं है।"
-                        await bot.send_message(chat_id, text=message_text, message_thread_id=thread_id)
-                        continue
+        # Process all dates in all_important
+        all_important = get_all_important_data()  # Assuming this function fetches all_important data
 
-            data = all_important.get(date, {})
+        # Iterate through all dates in all_important
+        for date, data in all_important.items():
+            # Check if the class data exists for the date
             title = data.get("title")
-            
             video = data.get("download_link")
-            
             pdf_1 = data.get("pdf_link")
-            
             pdf_2 = data.get("pdf_link2")
             
+            all_urls = ""
             if video:
                 all_urls += f"{title}: {video}"
             if pdf_1:
                 all_urls += f"\n{title} : {pdf_1}"
             if pdf_2:
                 all_urls += f"\n{title} : {pdf_2}"
-            
+
             if all_urls:
-                with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
+                with open(f"{title[:15]}_{date}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
-            print(all_urls)
-            await account_login(bot, all_urls, bname, chatid, message_thread_id)
-        
-        except Exception as e:
-            print(f"An error occurred: {e}")
+                
+                # Send the message to the appropriate chat_id and message_thread_id
+                await account_login(bot, all_urls, bname, chat_id, message_thread_id)
+
+        await message.reply("**All classes have been processed successfully for all available dates.**")
+    except Exception as e:
+        await message.reply(f"Error processing classes: {e}")
+
+# Helper function to retrieve all_important data, assuming it exists in the current structure
+def get_all_important_data():
+    return all_important  # This would be the data you've already gathered in your existing code
 
 # Scheduler setup
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
