@@ -217,6 +217,7 @@ async def process_all_dates(bot, message):
                         await bot.send_message(chat_id, text=message_text, message_thread_id=thread_id)
                         continue
 
+            subject_data = all_important.get(date, {})
             title = subject_data.get("title")
             
             video = subject_data.get("download_link")
