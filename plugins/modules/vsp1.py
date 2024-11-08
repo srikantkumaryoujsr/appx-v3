@@ -70,6 +70,34 @@ async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
 
+def get_all_dates_for_subject(subjectid):
+    # Function to fetch all available dates for a subject
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    # For the sake of simplicity, we assume dates are fetched from an API, this can be modified.
+    # In the real scenario, you will need to fetch these from the API or database.
+    # For example: api_data = fetch_all_dates_from_api(subjectid)
+    
+    available_dates = []  # List of dates we get for a subject
+    # Simulate fetching available dates
+    available_dates.append(now.strftime("%Y-%m-%d"))  # Today's date
+    available_dates.append((now - timedelta(days=1)).strftime("%Y-%m-%d"))  # Yesterday
+    available_dates.append((now - timedelta(days=2)).strftime("%Y-%m-%d"))  # Day before yesterday
+    # Add more logic if needed based on your data source
+    return available_dates
+
+async def process_all_dates_for_subjects(bot, subjectid, chatid, message_thread_id):
+    try:
+        # Get all available dates for this subject
+        all_dates = get_all_dates_for_subject(subjectid)
+        
+        # Process each date and fetch videos, PDFs for that date
+        for date in all_dates:
+            await account_logins(bot, subjectid, chatid, message_thread_id, date)
+            
+    except Exception as e:
+        print(f"Error processing all dates for subject {subjectid}: {e}")
+
 def decrypt_link(link):
     try:
         decoded_link = base64.b64decode(link)
@@ -107,7 +135,7 @@ async def all_subject_send(bot):
     except Exception as e:
         print(f"Failed to send end message: {e}")
 
-async def account_logins(bot, subjectid, chatid, message_thread_id):
+async def account_logins(bot, subjectid, chatid, message_thread_id, date):
     userid = "189678"
     async with aiohttp.ClientSession() as session:
         try:
@@ -122,7 +150,6 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
            
-            
             all_urls = ""
             couserid = []
             res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={courseids}&subjectid={subjectid}&start=-1", headers=hdr1)
@@ -162,11 +189,9 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                     
                 except Exception:
                     pass
-                            
-            for date in all_important.keys():
-                date = all_important[date]
+
             if date not in all_important:
-                messages = {f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ\n"}
+                messages = {f"{date}\n कल इस Subject की कोई Class नहीं हुआ\n"}
                 
                 if subjectid in messages:
                     await bot.send_message(chatid, text=messages[subjectid], message_thread_id=message_thread_id)
@@ -174,11 +199,8 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
 
             data = all_important.get(date, {})
             title = data.get("title")
-            
             video = data.get("download_link")
-            
             pdf_1 = data.get("pdf_link")
-            
             pdf_2 = data.get("pdf_link2")
             
             if video:
@@ -192,56 +214,10 @@ async def account_logins(bot, subjectid, chatid, message_thread_id):
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, bname, chatid, message_thread_id)
+            await account_login(bot, all_urls, title, chatid, message_thread_id)
         
         except Exception as e:
             print(f"An error occurred: {e}")
-
-@Client.on_message(filters.command("processallclasses") & filters.user(AUTH_USERS))
-async def process_all_classes_command(bot, message):
-    global all_important, subject_and_channel
-    
-    try:
-        # Ensure that all_important data is available
-        all_important = {}  # Initialize an empty dictionary in case it's not defined
-        # You can either fetch it from where it's stored or assume it's being populated in other functions
-        all_important = await fetch_all_important_data()  # This would be a function to retrieve all_important data
-
-        if not all_important:
-            await message.reply("No important classes found.")
-            return
-
-        # Iterate through all dates in all_important
-        for date, data in all_important.items():
-            title = data.get("title")
-            video = data.get("download_link")
-            pdf_1 = data.get("pdf_link")
-            pdf_2 = data.get("pdf_link2")
-
-            all_urls = ""
-            if video:
-                all_urls += f"{title}: {video}"
-            if pdf_1:
-                all_urls += f"\n{title} : {pdf_1}"
-            if pdf_2:
-                all_urls += f"\n{title} : {pdf_2}"
-
-            if all_urls:
-                with open(f"{title[:15]}_{date}.txt", 'w', encoding='utf-8') as f:
-                    f.write(all_urls)
-                
-                # Send the message to the appropriate chat_id and message_thread_id
-                await account_login(bot, all_urls, bname, chat_id, message_thread_id)
-
-        await message.reply("**All classes have been processed successfully for all available dates.**")
-    except Exception as e:
-        await message.reply(f"Error processing classes: {e}")
-
-# Helper function to retrieve all_important data (if needed)
-async def fetch_all_important_data():
-    # This function should fetch the all_important data as per your existing logic
-    # Here, we'll return the all_important dictionary directly if it's available in the current scope
-    return all_important  # Or you could fetch it from a database or file if needed
 
 # Scheduler setup
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
