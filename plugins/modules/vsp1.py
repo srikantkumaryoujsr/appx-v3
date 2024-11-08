@@ -295,39 +295,5 @@ async def view_config(bot, message):
     except Exception as e:
         await message.reply(f"Error retrieving configuration: {e}")
 
-@Client.on_message(filters.command("startstop"))
-async def start_message(bot, message):
-    try:
-        # Customize your welcome message here
-        welcome_message = (
-            "Hello! 👋 Welcome to the bot.\n\n"
-            "**Available Commands For Course1:**\n"
-            "/startnow1 - Run the scheduled task immediately\n"
-            "/setconfig1 - Configure bot settings\n"
-            "/viewconfig1 - View current configuration\n\n"
-            "**Available Commands For Course2:**\n"
-            "/startnow2 - Run the scheduled task immediately\n"
-            "/setconfig2 - Configure bot settings\n"
-            "/viewconfig2 - View current configuration\n\n"
-            "**Available Commands For Course3:**\n"
-            "/startnow3 - Run the scheduled task immediately\n"
-            "/setconfig3 - Configure bot settings\n"
-            "/viewconfig3 - View current configuration\n\n"
-            "**Available Commands For Course4:**\n"
-            "/startnow4 - Run the scheduled task immediately\n"
-            "/setconfig4 - Configure bot settings\n"
-            "/viewconfig4 - View current configuration\n\n"
-            "**Available Commands For Course5:**\n"
-            "/startnow5 - Run the scheduled task immediately\n"
-            "/setconfig5 - Configure bot settings\n"
-            "/viewconfig5 - View current configuration\n\n"
-            "Feel free to use any of the commands above to interact with the bot. 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 :- @rojgaarwithankit"
-        )
-        
-        # Send the welcome message to the user
-        await message.reply(welcome_message)
-    except Exception as e:
-        print(f"Failed to send start message: {e}")
-
 # Start scheduler
 scheduler.start()
