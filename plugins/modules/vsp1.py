@@ -120,10 +120,10 @@ async def start_subjects_command(bot, message):
 async def all_subject_send(bot):
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
-            await account_logins(bot, subjectid, chatid, message_thread_id)
+            await account_logins(bot, subjectid, chatid, message_thread_id, date)
         except FloodWait as e:
             await asyncio.sleep(e.x)
-            await account_logins(bot, subjectid, chatid, message_thread_id)
+            await account_logins(bot, subjectid, chatid, message_thread_id, date)
         except Exception as e:
             print(f"Error processing subject {subjectid}: {e}")
 
