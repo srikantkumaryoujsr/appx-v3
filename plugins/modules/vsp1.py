@@ -125,7 +125,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={courseids}&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={courseid}&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -134,7 +134,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid={courseids}&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid={courseid}&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -146,7 +146,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id={courseids}&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id={courseid}&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
