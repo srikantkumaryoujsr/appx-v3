@@ -82,11 +82,11 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 @Client.on_message(filters.command("startnow1") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
-    for batch_name in batch_configs:
-        await all_subject_send(bot, batch_name)
+    for bname in batch_configs:
+        await all_subject_send(bot, bname)
 
-async def all_subject_send(bot, batch_name):
-    batch_config = batch_configs[batch_name]
+async def all_subject_send(bot, bname):
+    batch_config = batch_configs[bname]
     subject_and_channel = batch_config["subject_and_channel"]
     chat_id = batch_config["chat_id"]
     courseid = batch_config["courseid"]
@@ -97,7 +97,7 @@ async def all_subject_send(bot, batch_name):
         except FloodWait as e:
             await asyncio.sleep(e.x)
         except Exception as e:
-            print(f"Error processing subject {subjectid} in batch {batch_name}: {e}")
+            print(f"Error processing subject {subjectid} in batch {bname}: {e}")
 
     await bot.send_message(
         chat_id=chat_id,
@@ -191,7 +191,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, batch_name, chatid, message_thread_id)
+            await account_login(bot, all_urls, bname, chatid, message_thread_id)
         
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -206,10 +206,10 @@ async def add_batch(bot, message):
         parts = message.text.split(" ", 6)
         if len(parts) != 7:
             await message.reply("Error: Invalid format. Use:\n"
-                                "`/addbatch batch_name subject_and_channel chat_id courseid hour minute`")
+                                "`/addbatch bname subject_and_channel chat_id courseid hour minute`")
             return
 
-        batch_name = parts[1]
+        bname = parts[1]
         new_subject_and_channel = {}
         for pair in parts[2].split(","):
             subject_id, chat_id, thread_id = map(int, pair.split(":"))
@@ -221,7 +221,7 @@ async def add_batch(bot, message):
         new_minute = int(parts[6])
 
         # Add new batch to configuration
-        batch_configs[batch_name] = {
+        batch_configs[bname] = {
             "subject_and_channel": new_subject_and_channel,
             "chat_id": new_chat_id,
             "courseid": new_courseid,
@@ -234,11 +234,11 @@ async def add_batch(bot, message):
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
-            args=[bot, batch_name],
-            id=batch_name  # Assign unique ID for each batch
+            args=[bot, bname],
+            id=bname  # Assign unique ID for each batch
         )
 
-        await message.reply(f"New batch added: {batch_name}")
+        await message.reply(f"New batch added: {bname}")
 
     except Exception as e:
         await message.reply(f"Error adding batch: {e}")
@@ -260,23 +260,23 @@ async def remove_batch(bot, message):
         parts = message.text.split(" ", 1)
         if len(parts) != 2:
             await message.reply("Error: Invalid format. Use:\n"
-                                "`/removebatch batch_name`")
+                                "`/removebatch bname`")
             return
 
-        batch_name = parts[1]
+        bname = parts[1]
 
-        if batch_name not in batch_configs:
-            await message.reply(f"Batch '{batch_name}' not found.")
+        if bname not in batch_configs:
+            await message.reply(f"Batch '{bname}' not found.")
             return
 
         # Remove batch from configuration
-        del batch_configs[batch_name]
+        del batch_configs[bname]
         save_config({"batches": batch_configs})
 
         # Remove scheduled job if exists
-        scheduler.remove_job(batch_name)
+        scheduler.remove_job(bname)
 
-        await message.reply(f"Batch '{batch_name}' removed successfully.")
+        await message.reply(f"Batch '{bname}' removed successfully.")
 
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
