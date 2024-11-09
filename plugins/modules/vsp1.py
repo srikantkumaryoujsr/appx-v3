@@ -203,8 +203,8 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 @Client.on_message(filters.command("addbatch") & filters.user(AUTH_USERS))
 async def add_batch(bot, message):
     try:
-        parts = message.text.split(" ", 7)
-        if len(parts) != 8:
+        parts = message.text.split(" ", 6)
+        if len(parts) != 7:
             await message.reply("Error: Invalid format. Use:\n"
                                 "`/addbatch batch_name subject_and_channel chat_id courseid hour minute`")
             return
