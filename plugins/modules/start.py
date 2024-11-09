@@ -17,21 +17,22 @@ async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🟢​ADD_𝐂𝐎𝐔𝐑𝐒𝐄​🔴", callback_data="addbatch"),
-             InlineKeyboardButton("🟢​Remove_𝐂𝐎𝐔𝐑𝐒𝐄​🔴", callback_data="removebatch")]
+            [InlineKeyboardButton("🟢𝗔𝗗𝗗 𝗕𝗔𝗧𝗖𝗛➕", callback_data="addbatch"),
+             InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖", callback_data="removebatch")]
         ] + [
-            [InlineKeyboardButton("📚view batches📚", callback_data="viewbatches")]
+            [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️", callback_data="viewbatches")]
         ] + [
-            [InlineKeyboardButton("📚𝐆𝐞𝐭 𝐀𝐥𝐥 𝐑𝐰𝐚 𝐁𝐚𝐭𝐜𝐡 𝐈𝐧𝐟𝐨📚", callback_data="get_all_courses")]
+            [InlineKeyboardButton("🟢𝗚𝗘𝗧 𝗔𝗟𝗟 𝗥𝗪𝗔 𝗕𝗔𝗧𝗖𝗛 𝗜𝗡𝗙𝗢.🦋", callback_data="get_all_courses")]
         ] + [
             [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/rojgaarwithankit")]
         ])
 
-        photo_url = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvVXWRt7tfs0Y-PIpNOQlk8UbsT9DKyB8yNu7hHS2TGXeUKPnWPjaUF0Q-D4TUugqCFczMJOOpg89kapL8eGOG0FzjdjTZXym-1_xqKuqjaFUMQDTycUJfxNxjh6wWr0tTA_P5TgKvC9SVICeA3ksc8bHQlEpm7IhK5Cpzk4u6YV9xePnb2yB22hht/s1600/rojgar-with-ankit-app-installation.PNG"
+        photo_url = "https://te.legra.ph/file/509795aa19e893839762d.jpg"
 
         caption = (
             "**Hello! 👋 Welcome to the bot.**\n\n"
             "**RWA DAILY AUTO UPDATE BOT**\n\n"
+            "**/RWA - For Rwa Full Txt **\n\n"
             "**/manage_auth - Only OWNER Use This Command**\n\n"
             "**Use the buttons below to configure or view settings for each course. 😊**\n\n"
             "𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 :- @rojgaarwithankit"
