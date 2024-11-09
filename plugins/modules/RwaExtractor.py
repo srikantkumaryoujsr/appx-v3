@@ -95,20 +95,29 @@ async def account_login(bot: Client, m: Message):
             courseid=[]
             cool = ""
             FFF = "**BATCH-ID -      BATCH NAME **"
+
+            # Start collecting batch details
             for item in bdetail:
                 id = item.get("id")
                 batch = item.get("course_name")
                 aa = f" {id}      - *{batch}*\n\n"
-                # Check if adding the current batch will exceed the character limit
                 if len(f'{cool}{aa}') > 4096:
-                    # If it exceeds, send the current batch info and reset `cool`
-                    await editable.edit(f'{"*You have these batches :-*"}\n\n`{FFF}`\n\n{cool}')
-                    cool = ""  # Reset cool to start the next batch message
-                cool += aa
+                    # If the message exceeds 4096 characters, save to a file and send it
+                    with open("batch_details.txt", "w", encoding="utf-8") as f:
+                        f.write(f'{FFF}\n\n{cool}')
+                    await m.reply_document(document="batch_details.txt", caption="Batch details (file format due to large message size)")
+                    os.remove("batch_details.txt")  # Remove the file after sending
+                    cool = aa  # Reset 'cool' to start fresh with the new batch
+                else:
+                    cool += aa
 
-            # If there are remaining batches to be sent, send them
-            if cool:
-                await editable.edit(f'{"*You have these batches :-*"}\n\n`{FFF}`\n\n{cool}')
+            # If content fits within the limit, send it as a message
+            if len(cool) <= 4096:
+                await editable.edit(f'{"*You have these batches :-*"}\n\n{FFF}\n\n{cool}')
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            await m.reply(f"An error occurred. Please try again. Error: {e}")
 
             editable1 = await m.reply_text("*Now send the Batch ID to Download*")
             print("User ID:", m.from_user.id)
