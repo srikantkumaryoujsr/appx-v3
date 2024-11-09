@@ -206,8 +206,9 @@ async def set_config(bot, message):
         parts = message.text.split(" ", 7)
         if len(parts) != 8:
             await message.reply("Error: Invalid format. Use:\n"
-                                "`/setconfig1 batch_name subject_and_channel chat_id courseid hour minute`")
+                                 "`/setconfig1 batch_name subject_and_channel chat_id courseid hour minute`")
             return
+
         batch_name = parts[1]
         new_subject_and_channel = {}
         for pair in parts[2].split(","):
@@ -219,6 +220,7 @@ async def set_config(bot, message):
         new_hour = int(parts[5])
         new_minute = int(parts[6])
 
+        # Saving configuration
         batch_configs[batch_name] = {
             "subject_and_channel": new_subject_and_channel,
             "chat_id": new_chat_id,
@@ -228,6 +230,7 @@ async def set_config(bot, message):
 
         save_config({"batches": batch_configs})
 
+        # Re-schedule jobs
         scheduler.remove_all_jobs()
         for batch_name, batch_config in batch_configs.items():
             time = batch_config["scheduler_time"]
