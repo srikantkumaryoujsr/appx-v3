@@ -249,9 +249,17 @@ async def view_batches(bot, message):
     if not batch_configs:
         await message.reply("No batches configured.")
         return
-    
-    config_data = json.dumps(batch_configs, indent=4)
-    await message.reply(f"**Current Batches:**\n\n```{config_data}```")
+
+    # Collecting batch names and scheduler times
+    response = "**Current Set Batches:**\n\n"
+    for bname, details in batch_configs.items():
+        schedule_time = details.get("scheduler_time", {})
+        hour = schedule_time.get("hour", "Not Set")
+        minute = schedule_time.get("minute", "Not Set")
+        response += f"**Batch Name:** `{bname}`\n"
+        response += f"**Scheduled Time:** {hour:02d}:{minute:02d} IST\n\n"
+
+    await message.reply(response)
 
 # Command to remove a batch configuration
 @Client.on_message(filters.command("removebatch") & filters.user(AUTH_USERS))
