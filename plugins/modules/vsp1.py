@@ -21,8 +21,8 @@ LOG_CHANNEL_ID = -1002004338182
 import json
 import os
 
-# File to store configuration
-CONFIG_FILE = "config1.json"
+# Configuration file path
+CONFIG_FILE = "multi_config.json"
 
 # Load configuration from file
 def load_config():
@@ -34,22 +34,17 @@ def load_config():
 # Save configuration to file
 def save_config(config):
     with open(CONFIG_FILE, "w") as file:
-        json.dump(config, file)
+        json.dump(config, file, indent=4)
 
 # Initialize configuration
 config = load_config()
-subject_and_channel = config.get("subject_and_channel", {})
-chat_id = config.get("chat_id", -1002289423851)
-courseids = config.get("courseids", 204)
-scheduler_time = config.get("scheduler_time", {"hour": 0, "minute": 0})
+batch_configs = config.get("batches", {})
 
 def get_current_date():
-    # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
     yesterday = now - timedelta(days=1)
-    formatted_date = yesterday.strftime("%Y-%m-%d")
-    return formatted_date
+    return yesterday.strftime("%Y-%m-%d")
 
 def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
@@ -87,27 +82,34 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 @Client.on_message(filters.command("startnow1") & filters.user(AUTH_USERS))
 async def start_subjects_command(bot, message):
-    await all_subject_send(bot)
+    for batch_name in batch_configs:
+        await all_subject_send(bot, batch_name)
 
-async def all_subject_send(bot):
+async def all_subject_send(bot, batch_name):
+    batch_config = batch_configs[batch_name]
+    subject_and_channel = batch_config["subject_and_channel"]
+    chat_id = batch_config["chat_id"]
+    courseid = batch_config["courseid"]
+
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
-            await account_logins(bot, subjectid, chatid, message_thread_id)
+            await account_logins(bot, subjectid, chatid, message_thread_id, courseid)
         except FloodWait as e:
             await asyncio.sleep(e.x)
-            await account_logins(bot, subjectid, chatid, message_thread_id)
         except Exception as e:
-            print(f"Error processing subject {subjectid}: {e}")
+            print(f"Error processing subject {subjectid} in batch {batch_name}: {e}")
 
-    try:
-        await bot.send_message(
-            chat_id=chat_id,
-            text=f"**❤️ᴅᴇᴀʀ ꜱᴛᴜᴅᴇɴᴛ ᴀᴀᴘᴋɪ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇ ʜᴏ ɢɪ ʜᴀɪ ❤️**\n\n**[ॐ] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣ {get_current_date_vsp()}**\n\n**ʀᴇᴀᴄᴛɪᴏɴ❤️**", message_thread_id = 1
-        )
+    await bot.send_message(
+        chat_id=chat_id,
+        text=f"**❤️ क्लास अपडेट हो गई है ❤️**\n\n**[ॐ] Date & Day: ➣ {get_current_date_vsp()}**",
+        message_thread_id=1
+    )
     except Exception as e:
         print(f"Failed to send end message: {e}")
 
-async def account_logins(bot, subjectid, chatid, message_thread_id):
+async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
+    # Implement your account login logic here
+    pass
     userid = "189678"
     async with aiohttp.ClientSession() as session:
         try:
@@ -202,96 +204,51 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 # Command to set configuration
 @Client.on_message(filters.command("setconfig1") & filters.user(AUTH_USERS))
 async def set_config(bot, message):
-    global subject_and_channel, chat_id, courseid, bname  # Declare global variables at the beginning
-    
     try:
-        # Split the command into parts, expecting 7 parts after the command
-        parts = message.text.split(" ", 6)  # Allow 7 parts: command + 6 params (updated)
-        print("Split parts:", parts)  # Debug log
-        
-        # Check if we have the expected number of parts
-        if len(parts) != 7:
-            await message.reply("Error: Invalid command format. Expected format is:\n"
-                                "`/setconfig1 subject_and_channel chat_id courseid bname hour minute`")
+        parts = message.text.split(" ", 7)
+        if len(parts) != 8:
+            await message.reply("Error: Invalid format. Use:\n"
+                                "`/setconfig1 batch_name subject_and_channel chat_id courseid hour minute`")
             return
-        
-        # Parse the subject_and_channel part
+
+        batch_name = parts[1]
         new_subject_and_channel = {}
-        subject_channel_pairs = parts[1].split(",")  # Split by commas for each subject-channel pair
-        print("Subject and Channel Pairs:", subject_channel_pairs)  # Debug log
-        
-        for pair in subject_channel_pairs:
-            subject_id, chat_id, thread_id = map(int, pair.split(":"))  # Split each pair by colon and convert to int
-            new_subject_and_channel[subject_id] = (chat_id, thread_id)  # Add to dictionary as (chat_id, thread_id)
-        
-        # Parse remaining parts
-        new_chat_id = int(parts[2])
-        new_courseid = int(parts[3])
-        new_bname = parts[4]  # New bname (course name) input
+        for pair in parts[2].split(","):
+            subject_id, chat_id, thread_id = map(int, pair.split(":"))
+            new_subject_and_channel[subject_id] = (chat_id, thread_id)
+
+        new_chat_id = int(parts[3])
+        new_courseid = int(parts[4])
         new_hour = int(parts[5])
         new_minute = int(parts[6])
 
-        # Update the global variables
-        subject_and_channel = new_subject_and_channel
-        chat_id = new_chat_id
-        courseid = new_courseid
-        bname = new_bname  # Update bname
-
-        # Save configuration for persistence
-        config_data = {
-            "subject_and_channel": subject_and_channel,
-            "chat_id": chat_id,
-            "courseid": courseid,
-            "bname": bname,  # Save bname
+        batch_configs[batch_name] = {
+            "subject_and_channel": new_subject_and_channel,
+            "chat_id": new_chat_id,
+            "courseid": new_courseid,
             "scheduler_time": {"hour": new_hour, "minute": new_minute}
         }
-        save_config(config_data)
 
-        # Reschedule the job with updated time
+        save_config({"batches": batch_configs})
+
         scheduler.remove_all_jobs()
-        scheduler.add_job(
-            func=all_subject_send,
-            trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
-            args=[bot]
-        )
+        for batch_name, batch_config in batch_configs.items():
+            time = batch_config["scheduler_time"]
+            scheduler.add_job(
+                func=all_subject_send,
+                trigger=CronTrigger(hour=time["hour"], minute=time["minute"], second=0),
+                args=[bot, batch_name],
+            )
 
-        await message.reply(f"**𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧🦋🎉🎊Course1 𝐮𝐩𝐝𝐚𝐭𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲**:\n\n"
-                            f"**🟢ꜱᴜʙᴊᴇᴄᴛꜱ ᴀɴᴅ ᴄʜᴀɴɴᴇʟꜱ🟡**: `{subject_and_channel}`\n"
-                            f"**🟢ɢʀᴏᴜᴘ ᴄʜᴀᴛ ɪᴅ🟡**: `{chat_id}`\n"
-                            f"**🟢ᴄᴏᴜʀꜱᴇ ɪᴅ🟡**: `{courseid}`\n"
-                            f"**🟢ᴄᴏᴜʀꜱᴇ ɴᴀᴍᴇ🟡**: `{bname}`\n"  # Display bname
-                            f"**🟢ꜱᴄʜᴇᴅᴜʟᴇᴅ ᴛɪᴍᴇ🟡**: `{new_hour}`:`{new_minute}` IST")
+        await message.reply(f"Configuration updated for batch: {batch_name}")
 
-    except ValueError as e:
-        await message.reply(f"Error updating configuration: Invalid format or type: {e}")
     except Exception as e:
-        await message.reply(f"Error updating configuration: {e}")
+        await message.reply(f"Error setting config: {e}")
 
 @Client.on_message(filters.command("viewconfig1") & filters.user(AUTH_USERS))
 async def view_config(bot, message):
-    try:
-        # Load the current configuration from the file for display
-        config = load_config()
-        
-        # Extract configuration details
-        subject_and_channel = config.get("subject_and_channel", "N/A")
-        chat_id = config.get("chat_id", "N/A")
-        courseid = config.get("courseid", "N/A")
-        bname = config.get("bname", "N/A")  # Provide a default in case it's not set
-        scheduler_time = config.get("scheduler_time", {"hour": 0, "minute": 0})
-        
-        # Prepare the configuration message
-        config_message = (
-            f"**Current Configuration**:\n\n"
-            f"**🟢 Subjects and Channels🔴**: `{subject_and_channel}`\n"
-            f"**🟢 Group Chat ID🔴**: `{chat_id}`\n"
-            f"**🟢 Course ID🔴**: `{courseid}`\n"
-            f"**🟢 Course Name🔴**: `{bname}`\n"
-            f"**🟢 Scheduled Time🔴**: `{scheduler_time['hour']}`:`{scheduler_time['minute']}` IST"
-        )
-        
-        # Send the configuration details to the user
-        await message.reply(config_message)
+    config_data = json.dumps(batch_configs, indent=4)
+    await message.reply(f"**Current Configurations:**\n\n```{config_data}```")
     except Exception as e:
         await message.reply(f"Error retrieving configuration: {e}")
 
