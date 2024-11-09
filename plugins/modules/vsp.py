@@ -252,7 +252,7 @@ async def view_batches(bot, message):
         return
 
     # Collecting batch names and scheduler times
-    response = "**Current Batches:**\n\n"
+    response = "**🦋𝐂𝐮𝐫𝐫𝐞𝐧𝐭 𝐁𝐚𝐭𝐜𝐡𝐞𝐬🦋:**\n\n"
     for bname, details in batch_configs.items():
         schedule_time = details.get("scheduler_time", {})
         hour = schedule_time.get("hour")
@@ -265,7 +265,8 @@ async def view_batches(bot, message):
         
         response += f"**Batch Name:** {bname}\n"
         response += f"**Scheduled Time:** {schedule_display}\n"
-        response += "-------------------------\n"
+        response += "====================\n"
+        response += "====================\n\n"
 
     await message.reply(response)
 
@@ -294,7 +295,7 @@ async def remove_batch(bot, message):
         # Remove scheduled job if exists
         scheduler.remove_job(bname)
 
-        await message.reply(f"Batch '{bname}' removed successfully.")
+        await message.reply(f"Batch '{bname}' ➖removed successfully.➖")
 
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
