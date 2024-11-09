@@ -201,7 +201,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@Client.on_message(filters.command("addbatch") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("addbatch"))
 async def add_batch(bot, message):
     try:
         parts = message.text.split(" ", 6)
@@ -245,7 +245,7 @@ async def add_batch(bot, message):
         await message.reply(f"Error adding batch: {e}")
 
 # Command to view all batch configurations
-@Client.on_message(filters.command("viewbatches") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("viewbatches"))
 async def view_batches(bot, message):
     if not batch_configs:
         await message.reply("No batches configured.")
@@ -272,7 +272,7 @@ async def view_batches(bot, message):
     await callback_query.message.edit(response)
 
 # Command to remove a batch configuration
-@Client.on_message(filters.command("removebatch") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("removebatch"))
 async def remove_batch(bot, message):
     try:
         parts = message.text.split(" ", 1)
