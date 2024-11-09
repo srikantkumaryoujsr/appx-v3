@@ -191,7 +191,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, bname, chatid, message_thread_id)
+            await account_login(bot, all_urls, batch_name, chatid, message_thread_id)
         
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -233,7 +233,7 @@ async def add_batch(bot, message):
         # Schedule job for new batch
         scheduler.add_job(
             func=all_subject_send,
-            trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0),
+            trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
             args=[bot, batch_name],
             id=batch_name  # Assign unique ID for each batch
         )
