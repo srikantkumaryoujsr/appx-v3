@@ -93,7 +93,7 @@ async def all_subject_send(bot, bname):
 
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
-            await account_logins(bot, subjectid, chatid, message_thread_id, courseid)
+            await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname)
         except FloodWait as e:
             await asyncio.sleep(e.x)
         except Exception as e:
@@ -105,7 +105,7 @@ async def all_subject_send(bot, bname):
         message_thread_id=1
     )
 
-async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
+async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
     # Implement your account login logic here
     pass
     userid = "189678"
