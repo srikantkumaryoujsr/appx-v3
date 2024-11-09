@@ -15,6 +15,7 @@ from .download import account_login
 AUTH_USERS.extend([7224758848])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
 LOG_CHANNEL_ID = -1002004338182
@@ -244,22 +245,29 @@ async def add_batch(bot, message):
         await message.reply(f"Error adding batch: {e}")
 
 # Command to view all batch configurations
-@Client.on_message(filters.command("viewbatches") & filters.user(AUTH_USERS))
-async def view_batches(bot, message):
+@Client.on_callback_query(filters.regex("view_batches") & filters.user(AUTH_USERS))
+async def view_batches(bot, callback_query):
     if not batch_configs:
-        await message.reply("No batches configured.")
+        await callback_query.message.edit("No batches configured.")
         return
 
     # Collecting batch names and scheduler times
-    response = "**Current Set Batches:**\n\n"
+    response = "**Current Batches:**\n\n"
     for bname, details in batch_configs.items():
         schedule_time = details.get("scheduler_time", {})
-        hour = schedule_time.get("hour", "Not Set")
-        minute = schedule_time.get("minute", "Not Set")
+        hour = schedule_time.get("hour")
+        minute = schedule_time.get("minute")
+        
+        if hour is None or minute is None:
+            schedule_display = "Not Set"
+        else:
+            schedule_display = f"{hour:02d}:{minute:02d} IST"
+        
         response += f"**Batch Name:** `{bname}`\n"
-        response += f"**Scheduled Time:** {hour:02d}:{minute:02d} IST\n\n"
+        response += f"**Scheduled Time:** {schedule_display}\n"
+        response += "-------------------------\n\n"
 
-    await message.reply(response)
+    await callback_query.message.edit(response)
 
 # Command to remove a batch configuration
 @Client.on_message(filters.command("removebatch") & filters.user(AUTH_USERS))
