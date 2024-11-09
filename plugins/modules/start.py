@@ -20,7 +20,7 @@ async def start_message(bot, message: Message):
             [InlineKeyboardButton("🟢​ADD_𝐂𝐎𝐔𝐑𝐒𝐄​🔴", callback_data="addbatch"),
              InlineKeyboardButton("🟢​Remove_𝐂𝐎𝐔𝐑𝐒𝐄​🔴", callback_data="removebatch")]
         ] + [
-            [InlineKeyboardButton("📚view batches📚", callback_data="view_batches")]
+            [InlineKeyboardButton("📚view batches📚", callback_data="viewbatches")]
         ] + [
             [InlineKeyboardButton("📚𝐆𝐞𝐭 𝐀𝐥𝐥 𝐑𝐰𝐚 𝐁𝐚𝐭𝐜𝐡 𝐈𝐧𝐟𝐨📚", callback_data="get_all_courses")]
         ] + [
@@ -60,6 +60,12 @@ async def handle_callback(bot, query: CallbackQuery):
         course_num = data.replace("removebatch", "")
         await query.message.reply(
             f"Fetching configuration for Course ... Use `/removebatch batch-Name` for details."
+        )
+
+    elif data.startswith("viewbatches"):
+        course_num = data.replace("removebatch", "")
+        await query.message.reply(
+            f"Fetching configuration for Course ... Use `/viewbatches` for details."
         )
     elif data == "get_all_courses":    
         await query.message.edit_text("सेवा में श्रीमान or श्रीमती हमको बैच डीटेल्स देने में थोड़ा समय लगेगा एक-दो मिनट का तब तक आप इंतजार करिए..... धन्यवाद 😜")
@@ -111,27 +117,3 @@ async def handle_callback(bot, query: CallbackQuery):
                 await query.message.edit_text("An error occurred during the process. Please try again.")
 
     await query.answer()
-
-@Client.on_callback_query(filters.regex("view_batches") & filters.user(AUTH_USERS))
-async def view_batches(bot, callback_query):
-    if not batch_configs:
-        await callback_query.message.edit("No batches configured.")
-        return
-
-    # Collecting batch names and scheduler times
-    response = "**Current Batches:**\n\n"
-    for bname, details in batch_configs.items():
-        schedule_time = details.get("scheduler_time", {})
-        hour = schedule_time.get("hour")
-        minute = schedule_time.get("minute")
-        
-        if hour is None or minute is None:
-            schedule_display = "Not Set"
-        else:
-            schedule_display = f"{hour:02d}:{minute:02d} IST"
-        
-        response += f"**Batch Name:** `{bname}`\n"
-        response += f"**Scheduled Time:** {schedule_display}\n"
-        response += "-------------------------\n\n"
-
-    await callback_query.message.edit(response)
