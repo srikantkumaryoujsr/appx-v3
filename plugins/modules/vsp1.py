@@ -200,13 +200,13 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@Client.on_message(filters.command("setconfig1") & filters.user(AUTH_USERS))
-async def set_config(bot, message):
+@Client.on_message(filters.command("addbatch") & filters.user(AUTH_USERS))
+async def add_batch(bot, message):
     try:
         parts = message.text.split(" ", 7)
         if len(parts) != 8:
             await message.reply("Error: Invalid format. Use:\n"
-                                 "`/setconfig1 batch_name subject_and_channel chat_id courseid hour minute`")
+                                "`/addbatch batch_name subject_and_channel chat_id courseid hour minute`")
             return
 
         batch_name = parts[1]
@@ -220,7 +220,7 @@ async def set_config(bot, message):
         new_hour = int(parts[5])
         new_minute = int(parts[6])
 
-        # Saving configuration
+        # Add new batch to configuration
         batch_configs[batch_name] = {
             "subject_and_channel": new_subject_and_channel,
             "chat_id": new_chat_id,
@@ -230,25 +230,56 @@ async def set_config(bot, message):
 
         save_config({"batches": batch_configs})
 
-        # Re-schedule jobs
-        scheduler.remove_all_jobs()
-        for batch_name, batch_config in batch_configs.items():
-            time = batch_config["scheduler_time"]
-            scheduler.add_job(
-                func=all_subject_send,
-                trigger=CronTrigger(hour=time["hour"], minute=time["minute"], second=0),
-                args=[bot, batch_name],
-            )
+        # Schedule job for new batch
+        scheduler.add_job(
+            func=all_subject_send,
+            trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0),
+            args=[bot, batch_name],
+            id=batch_name  # Assign unique ID for each batch
+        )
 
-        await message.reply(f"Configuration updated for batch: {batch_name}")
+        await message.reply(f"New batch added: {batch_name}")
 
     except Exception as e:
-        await message.reply(f"Error setting config: {e}")
+        await message.reply(f"Error adding batch: {e}")
 
-@Client.on_message(filters.command("viewconfig1") & filters.user(AUTH_USERS))
-async def view_config(bot, message):
+# Command to view all batch configurations
+@Client.on_message(filters.command("viewbatches") & filters.user(AUTH_USERS))
+async def view_batches(bot, message):
+    if not batch_configs:
+        await message.reply("No batches configured.")
+        return
+    
     config_data = json.dumps(batch_configs, indent=4)
-    await message.reply(f"**Current Configurations:**\n\n```{config_data}```")
+    await message.reply(f"**Current Batches:**\n\n```{config_data}```")
+
+# Command to remove a batch configuration
+@Client.on_message(filters.command("removebatch") & filters.user(AUTH_USERS))
+async def remove_batch(bot, message):
+    try:
+        parts = message.text.split(" ", 1)
+        if len(parts) != 2:
+            await message.reply("Error: Invalid format. Use:\n"
+                                "`/removebatch batch_name`")
+            return
+
+        batch_name = parts[1]
+
+        if batch_name not in batch_configs:
+            await message.reply(f"Batch '{batch_name}' not found.")
+            return
+
+        # Remove batch from configuration
+        del batch_configs[batch_name]
+        save_config({"batches": batch_configs})
+
+        # Remove scheduled job if exists
+        scheduler.remove_job(batch_name)
+
+        await message.reply(f"Batch '{batch_name}' removed successfully.")
+
+    except Exception as e:
+        await message.reply(f"Error removing batch: {e}")
 
 # Start scheduler
 scheduler.start()
