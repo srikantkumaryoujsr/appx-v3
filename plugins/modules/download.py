@@ -41,13 +41,13 @@ async def restart_handler(_, m):
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
-async def account_login(bot: Client, content, bname, chatid, message_thread_id):
+async def account_login(bot: Client, content, batch_name, chatid, message_thread_id):
     content = content.split("\n")
     links = []
     for i in content:
         links.append(i.split("://", 1))
     raw_text = 1
-    raw_text0 = bname
+    raw_text0 = batch_name
     raw_text2 = "360"
     if raw_text2 == "360":
         res = "640x360"
