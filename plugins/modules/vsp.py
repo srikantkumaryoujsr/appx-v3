@@ -263,7 +263,7 @@ async def view_batches(bot, message):
         else:
             schedule_display = f"{hour:02d}:{minute:02d} IST"
         
-        response += f"**Batch Name:** {bname}\n"
+        response += f"**Batch Name:** `{bname}`\n"
         response += f"**Scheduled Time:** {schedule_display}\n"
         response += "====================\n"
         response += "====================\n\n"
