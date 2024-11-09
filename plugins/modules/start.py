@@ -111,3 +111,27 @@ async def handle_callback(bot, query: CallbackQuery):
                 await query.message.edit_text("An error occurred during the process. Please try again.")
 
     await query.answer()
+
+@Client.on_callback_query(filters.regex("view_batches") & filters.user(AUTH_USERS))
+async def view_batches(bot, callback_query):
+    if not batch_configs:
+        await callback_query.message.edit("No batches configured.")
+        return
+
+    # Collecting batch names and scheduler times
+    response = "**Current Batches:**\n\n"
+    for bname, details in batch_configs.items():
+        schedule_time = details.get("scheduler_time", {})
+        hour = schedule_time.get("hour")
+        minute = schedule_time.get("minute")
+        
+        if hour is None or minute is None:
+            schedule_display = "Not Set"
+        else:
+            schedule_display = f"{hour:02d}:{minute:02d} IST"
+        
+        response += f"**Batch Name:** `{bname}`\n"
+        response += f"**Scheduled Time:** {schedule_display}\n"
+        response += "-------------------------\n\n"
+
+    await callback_query.message.edit(response)
