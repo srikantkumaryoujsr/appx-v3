@@ -41,13 +41,13 @@ async def restart_handler(_, m):
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
-async def account_login(bot: Client, content, batch_name, chatid, message_thread_id):
+async def account_login(bot: Client, content, bname, chatid, message_thread_id):
     content = content.split("\n")
     links = []
     for i in content:
         links.append(i.split("://", 1))
     raw_text = 1
-    raw_text0 = batch_name
+    raw_text0 = bname
     raw_text2 = "360"
     if raw_text2 == "360":
         res = "640x360"
@@ -94,8 +94,8 @@ async def account_login(bot: Client, content, batch_name, chatid, message_thread
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[🟈] ʟᴇᴄ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** {name1} {res} ᴍʀ_ʜᴀᴄᴋᴇʀ.mkv\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {batch_name}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
-                cc1 = f'**[📚] ᴘᴅꜰ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ᴘᴅꜰ ᴛɪᴛʟᴇ : ➣** {name1} ᴍʀ_ʜᴀᴄᴋᴇʀ.pdf\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {batch_name}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
+                cc = f'**[🟈] ʟᴇᴄ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ʟᴇᴄ ᴛɪᴛʟᴇ : ➣** {name1} {res} ᴍʀ_ʜᴀᴄᴋᴇʀ.mkv\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {bname}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
+                cc1 = f'**[📚] ᴘᴅꜰ ɪᴅ : ➣** {str(count).zfill(3)}\n\n**[ॐ] ᴘᴅꜰ ᴛɪᴛʟᴇ : ➣** {name1} ᴍʀ_ʜᴀᴄᴋᴇʀ.pdf\n\n**[✵] ʙᴀᴛᴄʜ ɴᴀᴍᴇ : ➣** {bname}\n\n**[📆] ᴅᴀᴛᴇ & ᴅᴀʏ : ➣** {get_current_date()}\n\n**[✤] Qᴜᴀʟɪᴛʏ : ➣** 720p\n\n**➥ᴇxᴛʀᴀᴄᴛᴇᴅ ʙʏ : ➣{raw_text3}**\n\n'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
