@@ -29,79 +29,39 @@ def decrypt_link(link):
     except Exception:
         pass
 cc02=""
+TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUxNzA3NyIsImVtYWlsIjoidml2ZWtrYXNhbmE0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcyNjkzNzA4OX0.NM1SbOjDFZCLinFi66jKxwRQPgLWFN-_SAMgcPWvfk4"  # Replace this with your actual token
+
 @Client.on_message(filters.command("rwa"))
 async def account_login(bot: Client, m: Message):
-    global token
-    editable = await m.reply_text("Send *ID & Password* in this manner otherwise bot will not respond.\n\nSend likeh this:-  *ID*Password*")
-    input1 = await bot.listen(editable.chat.id)
+    editable = await m.reply_text("🟢🟡🔵𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐲𝐨𝐮𝐫 𝐛𝐚𝐭𝐜𝐡 𝐝𝐞𝐭𝐚𝐢𝐥𝐬... 𝐏𝐥𝐞𝐚𝐬𝐞 𝐰𝐚𝐢𝐭.")
+
     headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
         'auth-key': 'appxapi',
+        'authorization': TOKEN,  # Use the predefined token
         'accept-encoding': 'gzip, deflate, br',
         'accept-language': 'en-US,en;q=0.9'
     }
-    raw_text = input1.text
-    user_id = input1.from_user.id
-    print("Opponent's user_id:", user_id)
-    await input1.delete(True)
-    
-    headers2={
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'auth-key': 'appxapi',
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'en-US,en;q=0.9',
-            "Origin": "https://rojgarwithankit.co.in",
-            "Referer": "https://rojgarwithankit.co.in/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"}
-    async with aiohttp.ClientSession() as session:
-        try:
-            if '*' in raw_text:
-                email, password = raw_text.split('*')
-                if email and password:
-                    payload = {"source": "website", "email": email, "password": password, "extra_details": 1}
-                    url = "https://rozgarapinew.teachx.in/post/userLogin"
-                    async with session.post(url, data=payload, headers=headers2) as response:
-                        login = await response.json()
-                        login_data = login.get("data", {})
-                        token = login_data.get("token", '')
-                        if token:
-                            await m.reply_text(f"🤡𝐘𝐨𝐮𝐫 𝐓𝐨𝐤𝐞𝐧 𝐟𝐨𝐫 𝐑𝐨𝐣𝐠𝐚𝐫𝐰𝐢𝐭𝐡𝐚𝐧𝐤𝐢𝐭🤡:\n\n `{token}`")
-                        else:
-                            await m.reply_text("Failed to retrieve token.")
-            else:
-                token = raw_text
 
-            headers = {
-                'auth-key': 'appxapi',
-                'authorization': token,
-                'accept-encoding': 'gzip, deflate, br',
-                'accept-language': 'en-US,en;q=0.9'
-            }
-            userid = ""
-            await editable.edit("**🤡 𝐥𝐨𝐠𝐢𝐧 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥 🤡**")
-            headers = {
-            'auth-key': 'appxapi',
-            'authorization': token,
-            'accept-encoding': 'gzip, deflate, br',
-            'accept-language': 'en-US,en;q=0.9'
-                }
-            print(headers['authorization'])
-            res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=headers)
-
-            print("88",res1)
-            res1=requests.get(f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=headers).json()
-            # print(h)
-            print("91",res1)
+    try:
+        # Send request to fetch courses
+        async with aiohttp.ClientSession() as session:
+            res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={m.from_user.id}", headers=headers)
+            
+            # Check if there's valid data in the response
             bdetail = res1.get("data", [])
-            courseid=[]
+            if not bdetail:
+                await editable.edit("No courses found for this account.")
+                return
+
             cool = ""
             FFF = "**BATCH-ID -      BATCH NAME **"
-
+            
             # Start collecting batch details
             for item in bdetail:
                 id = item.get("id")
                 batch = item.get("course_name")
                 aa = f" {id}      - *{batch}*\n\n"
+                
                 if len(f'{cool}{aa}') > 4096:
                     # If the message exceeds 4096 characters, save to a file and send it
                     with open("batch_details.txt", "w", encoding="utf-8") as f:
@@ -116,9 +76,9 @@ async def account_login(bot: Client, m: Message):
             if len(cool) <= 4096:
                 await editable.edit(f'{"*You have these batches :-*"}\n\n{FFF}\n\n{cool}')
 
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            await m.reply(f"An error occurred. Please try again. Error: {e}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        await m.reply(f"An error occurred. Please try again. Error: {e}")
 
             editable1 = await m.reply_text("*Now send the Batch ID to Download*")
             print("User ID:", m.from_user.id)
@@ -136,15 +96,15 @@ async def account_login(bot: Client, m: Message):
                 await editable.delete()
                 await editable1.delete()
                 edit3=await m.reply_text(f"""Now send the  quality u want to download
-720p
-360p
-240p
+`720p`
+`360p`
+`240p`
 144p""")
                 input3 = await bot.listen(edit3.chat.id)
                 if input3.text not in ["720p","360p","240p","144p"]:
                     return await edit3.edit_text("enter valid quality try again")
                 
-                editable2 = await m.reply_text("Thoda Intzar Kariye , itni bhi kya jaldi hai , Aayegi TXT tabtak Chay pijiye")
+                editable2 = await m.reply_text("🔵🟡🟢𝐘𝐨𝐮𝐫 𝐁𝐚𝐭𝐜𝐡 𝐓𝐱𝐭 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠 𝐰𝐚𝐢𝐭 [ 𝟐 𝐦𝐢𝐧𝐮𝐭𝐬 𝐬𝐞 𝟐 𝐠𝐡𝐚𝐧𝐭𝐞 𝐭𝐚𝐤🔵🟡🟢...")
                 res2 = requests.get(f"https://rozgarapinew.teachx.in/get/allsubjectfrmlivecourseclass?courseid={raw_text2}&start=-1", headers=headers).json()
                 subject = res2.get("data", [])
                 subjID = "&".join([id["subjectid"] for id in subject])
