@@ -79,10 +79,9 @@ async def account_login(bot: Client, m: Message):
     except Exception as e:
         print(f"An error occurred: {e}")
         await m.reply(f"An error occurred. Please try again. Error: {e}")
-
-            editable1 = await m.reply_text("*Now send the Batch ID to Download*")
-            print("User ID:", m.from_user.id)
-            print("AUTH_USERS:", AUTH_USERS)
+     editable1 = await m.reply_text("*Now send the Batch ID to Download*")
+print("User ID:", m.from_user.id)
+print("AUTH_USERS:", AUTH_USERS)
  
             if user_id is not None and user_id not in AUTH_USERS:
                 print("User ID not in AUTH_USERS")
