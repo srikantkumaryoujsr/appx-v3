@@ -208,7 +208,6 @@ async def set_config(bot, message):
             await message.reply("Error: Invalid format. Use:\n"
                                 "`/setconfig1 batch_name subject_and_channel chat_id courseid hour minute`")
             return
-
         batch_name = parts[1]
         new_subject_and_channel = {}
         for pair in parts[2].split(","):
