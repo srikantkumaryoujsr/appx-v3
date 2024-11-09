@@ -247,8 +247,6 @@ async def set_config(bot, message):
 async def view_config(bot, message):
     config_data = json.dumps(batch_configs, indent=4)
     await message.reply(f"**Current Configurations:**\n\n```{config_data}```")
-    except Exception as e:
-        await message.reply(f"Error retrieving configuration: {e}")
 
 # Start scheduler
 scheduler.start()
