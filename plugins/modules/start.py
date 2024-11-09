@@ -17,9 +17,10 @@ async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton(f"🟢​𝐒𝐄𝐓_𝐂𝐎𝐔𝐑𝐒𝐄 {i}​🔴", callback_data=f"setconfig{i}"),
-             InlineKeyboardButton(f"🟢​𝐕𝐈𝐄𝐖_𝐂𝐎𝐔𝐑𝐒𝐄​ {i}🔴", callback_data=f"viewconfig{i}")] 
-            for i in range(1, 6)
+            [InlineKeyboardButton("🟢​ADD_𝐂𝐎𝐔𝐑𝐒𝐄​🔴", callback_data="addbatch"),
+             InlineKeyboardButton("🟢​Remove_𝐂𝐎𝐔𝐑𝐒𝐄​🔴", callback_data="removebatch")]
+        ] + [
+            [InlineKeyboardButton("📚view batches📚", callback_data="view_batches")]
         ] + [
             [InlineKeyboardButton("📚𝐆𝐞𝐭 𝐀𝐥𝐥 𝐑𝐰𝐚 𝐁𝐚𝐭𝐜𝐡 𝐈𝐧𝐟𝐨📚", callback_data="get_all_courses")]
         ] + [
@@ -49,16 +50,16 @@ async def start_message(bot, message: Message):
 async def handle_callback(bot, query: CallbackQuery):
     data = query.data
 
-    if data.startswith("setconfig"):
-        course_num = data.replace("setconfig", "")
+    if data.startswith("addbatch"):
+        course_num = data.replace("addbatch", "")
         await query.message.reply(
-            f"Use the command `/setconfig{course_num}` in the following format:\n"
-            f"`/setconfig{course_num} subjectid:chatid:threadid,... chat_id courseid bname hour minute`"
+            f"Use the command `/addbatch` in the following format:\n"
+            f"`/setconfig bname subjectid:chatid:threadid,... chat_id courseid hour minute`"
         )
-    elif data.startswith("viewconfig"):
-        course_num = data.replace("viewconfig", "")
+    elif data.startswith("removebatch"):
+        course_num = data.replace("removebatch", "")
         await query.message.reply(
-            f"Fetching configuration for Course {course_num}... Use `/viewconfig{course_num}` for details."
+            f"Fetching configuration for Course ... Use `/removebatch batch-Name` for details."
         )
     elif data == "get_all_courses":    
         await query.message.edit_text("सेवा में श्रीमान or श्रीमती हमको बैच डीटेल्स देने में थोड़ा समय लगेगा एक-दो मिनट का तब तक आप इंतजार करिए..... धन्यवाद 😜")
