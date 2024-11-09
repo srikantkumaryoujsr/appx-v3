@@ -104,8 +104,6 @@ async def all_subject_send(bot, batch_name):
         text=f"**❤️ क्लास अपडेट हो गई है ❤️**\n\n**[ॐ] Date & Day: ➣ {get_current_date_vsp()}**",
         message_thread_id=1
     )
-    except Exception as e:
-        print(f"Failed to send end message: {e}")
 
 async def account_logins(bot, subjectid, chatid, message_thread_id, courseid):
     # Implement your account login logic here
