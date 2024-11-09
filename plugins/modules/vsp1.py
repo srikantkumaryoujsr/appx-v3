@@ -245,10 +245,10 @@ async def add_batch(bot, message):
         await message.reply(f"Error adding batch: {e}")
 
 # Command to view all batch configurations
-@Client.on_callback_query(filters.regex("view_batches") & filters.user(AUTH_USERS))
-async def view_batches(bot, callback_query):
+@Client.on_message(filters.command("viewbatches") & filters.user(AUTH_USERS))
+async def view_batches(bot, message):
     if not batch_configs:
-        await callback_query.message.edit("No batches configured.")
+        await message.reply("No batches configured.")
         return
 
     # Collecting batch names and scheduler times
@@ -263,9 +263,11 @@ async def view_batches(bot, callback_query):
         else:
             schedule_display = f"{hour:02d}:{minute:02d} IST"
         
-        response += f"**Batch Name:** `{bname}`\n"
+        response += f"**Batch Name:** {bname}\n"
         response += f"**Scheduled Time:** {schedule_display}\n"
-        response += "-------------------------\n\n"
+        response += "-------------------------\n"
+
+    await message.reply(response)
 
     await callback_query.message.edit(response)
 
