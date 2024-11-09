@@ -102,13 +102,13 @@ async def account_login(bot: Client, m: Message):
                 # Check if adding the current batch will exceed the character limit
                 if len(f'{cool}{aa}') > 4096:
                     # If it exceeds, send the current batch info and reset `cool`
-                    await editable.edit(f'{"*You have these batches :-*"}\n\n{FFF}\n\n{cool}')
+                    await editable.edit(f'{"*You have these batches :-*"}\n\n`{FFF}`\n\n{cool}')
                     cool = ""  # Reset cool to start the next batch message
                 cool += aa
 
             # If there are remaining batches to be sent, send them
             if cool:
-                await editable.edit(f'{"*You have these batches :-*"}\n\n{FFF}\n\n{cool}')
+                await editable.edit(f'{"*You have these batches :-*"}\n\n`{FFF}`\n\n{cool}')
 
             editable1 = await m.reply_text("*Now send the Batch ID to Download*")
             print("User ID:", m.from_user.id)
