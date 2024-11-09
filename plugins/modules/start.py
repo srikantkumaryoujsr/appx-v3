@@ -17,10 +17,10 @@ async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🟢𝗔𝗗𝗗 𝗕𝗔𝗧𝗖𝗛➕", callback_data="addbatch"),
-             InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖", callback_data="removebatch")]
+            [InlineKeyboardButton("🟢𝗔𝗗𝗗 𝗕𝗔𝗧𝗖𝗛➕❤️", callback_data="addbatch"),
+             InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖❤️", callback_data="removebatch")]
         ] + [
-            [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️", callback_data="viewbatches")]
+            [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️❤️", callback_data="viewbatches")]
         ] + [
             [InlineKeyboardButton("🟢𝗚𝗘𝗧 𝗔𝗟𝗟 𝗥𝗪𝗔 𝗕𝗔𝗧𝗖𝗛 𝗜𝗡𝗙𝗢.🦋", callback_data="get_all_courses")]
         ] + [
@@ -30,11 +30,10 @@ async def start_message(bot, message: Message):
         photo_url = "https://te.legra.ph/file/509795aa19e893839762d.jpg"
 
         caption = (
-            "**Hello! 👋 Welcome to the bot.**\n\n"
-            "**RWA DAILY AUTO UPDATE BOT**\n\n"
-            "**/RWA - For Rwa Full Txt **\n\n"
-            "**/manage_auth - Only OWNER Use This Command**\n\n"
-            "**Use the buttons below to configure or view settings for each course. 😊**\n\n"
+            "**🔵🟡🟢𝐇𝐞𝐥𝐥𝐨! 👋 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡𝐞 𝐛𝐨𝐭.🔵🟡🟢**\n\n"
+            "**🔵🟡🟢𝐑𝐖𝐀 𝐃𝐀𝐈𝐋𝐘 𝐀𝐔𝐓𝐎 𝐔𝐏𝐃𝐀𝐓𝐄 𝐁𝐎𝐓🔵🟡🟢**\n\n"
+            "**/RWA - 🔵🟡🟢𝐅𝐨𝐫 𝐑𝐰𝐚 𝐅𝐮𝐥𝐥 𝐓𝐱𝐭 𝐍𝐨 𝐍𝐞𝐞𝐝 𝐈𝐝 𝐏𝐚𝐬𝐬𝐬𝐰𝐨𝐫𝐝🔵🟡🟢 **\n\n"
+            "**🔵🟡🟢𝐔𝐬𝐞 𝐭𝐡𝐞 𝐛𝐮𝐭𝐭𝐨𝐧𝐬 𝐛𝐞𝐥𝐨𝐰 𝐭𝐨 𝐜𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐞 𝐨𝐫 𝐯𝐢𝐞𝐰 𝐬𝐞𝐭𝐭𝐢𝐧𝐠𝐬 𝐟𝐨𝐫 𝐞𝐚𝐜𝐡 𝐜𝐨𝐮𝐫𝐬𝐞. 😊🔵🟡🟢**\n\n"
             "𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 :- @rojgaarwithankit"
         )
 
