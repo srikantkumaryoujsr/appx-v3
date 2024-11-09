@@ -2,19 +2,20 @@ import asyncio
 import os
 import aiohttp
 import aiofiles
-import base64,requests
+import base64
+import requests
 from pyrogram.types import Message
 from pyrogram import Client, filters
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
-from .. import bot as Client
+
 LOG_CHANNEL_ID = -1001801766701
-AUTH_USERS = [6748451207, 6804421130,6728038801,5565127109,6776883780,6741261680,6773081023,6793357832,7224758848]
- 
+AUTH_USERS = [6748451207, 6804421130, 6728038801, 5565127109, 6776883780, 6741261680, 6773081023, 6793357832, 7224758848]
+
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
- 
+
 def decrypt_link(link):
     try:
         decoded_link = base64.b64decode(link.encode('utf-8'))
@@ -25,29 +26,26 @@ def decrypt_link(link):
         return decrypted_link
     except ValueError:
         pass
-        
     except Exception:
         pass
-cc02=""
-TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUxNzA3NyIsImVtYWlsIjoidml2ZWtrYXNhbmE0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcyNjkzNzA4OX0.NM1SbOjDFZCLinFi66jKxwRQPgLWFN-_SAMgcPWvfk4"  # Replace this with your actual token
+
+cc02 = ""
+TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUxNzA3NyIsImVtYWlsIjoidml2ZWtrYXNhbmE0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcyNjkzNzA4OX0.NM1SbOjDFZCLinFi66jKxwRQPgLWFN-_SAMgcPWvfk4"
 
 @Client.on_message(filters.command("rwa"))
 async def account_login(bot: Client, m: Message):
-    editable = await m.reply_text("🟢🟡🔵𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐲𝐨𝐮𝐫 𝐛𝐚𝐭𝐜𝐡 𝐝𝐞𝐭𝐚𝐢𝐥𝐬... 𝐏𝐥𝐞𝐚𝐬𝐞 𝐰𝐚𝐢𝐭.")
+    editable = await m.reply_text("🟢🟡🔵𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐲𝐨𝐮𝐫 𝐛𝐚𝐭𝐜𝐡 𝐝𝐞𝐭𝐚𝐢𝐥𝐬... 𝐏𝐥𝐞𝐚𝐬𝐞 𝐰𝐚𝐢𝐭.🟢🟡🔵")
 
     headers = {
         'auth-key': 'appxapi',
-        'authorization': TOKEN,  # Use the predefined token
+        'authorization': TOKEN,
         'accept-encoding': 'gzip, deflate, br',
         'accept-language': 'en-US,en;q=0.9'
     }
 
     try:
-        # Send request to fetch courses
         async with aiohttp.ClientSession() as session:
             res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={m.from_user.id}", headers=headers)
-            
-            # Check if there's valid data in the response
             bdetail = res1.get("data", [])
             if not bdetail:
                 await editable.edit("No courses found for this account.")
@@ -55,135 +53,102 @@ async def account_login(bot: Client, m: Message):
 
             cool = ""
             FFF = "**BATCH-ID -      BATCH NAME **"
-            
-            # Start collecting batch details
             for item in bdetail:
                 id = item.get("id")
                 batch = item.get("course_name")
                 aa = f" {id}      - *{batch}*\n\n"
-                
                 if len(f'{cool}{aa}') > 4096:
-                    # If the message exceeds 4096 characters, save to a file and send it
                     with open("batch_details.txt", "w", encoding="utf-8") as f:
                         f.write(f'{FFF}\n\n{cool}')
                     await m.reply_document(document="batch_details.txt", caption="Batch details (file format due to large message size)")
-                    os.remove("batch_details.txt")  # Remove the file after sending
-                    cool = aa  # Reset 'cool' to start fresh with the new batch
+                    os.remove("batch_details.txt")
+                    cool = aa
                 else:
                     cool += aa
 
-            # If content fits within the limit, send it as a message
             if len(cool) <= 4096:
-                await editable.edit(f'{"*You have these batches :-*"}\n\n{FFF}\n\n{cool}')
+                await editable.edit(f'{"*🔵🟡🟢𝐘𝐨𝐮 𝐡𝐚𝐯𝐞 𝐭𝐡𝐞𝐬𝐞 𝐛𝐚𝐭𝐜𝐡𝐞𝐬 :-🔵🟡🟢*"}\n\n{FFF}\n\n{cool}')
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        await m.reply(f"An error occurred. Please try again. Error: {e}")
-     editable1 = await m.reply_text("*Now send the Batch ID to Download*")
-print("User ID:", m.from_user.id)
-print("AUTH_USERS:", AUTH_USERS)
- 
+            editable1 = await m.reply_text("*Now send the Batch ID to Download*")
+            user_id = m.from_user.id
+
             if user_id is not None and user_id not in AUTH_USERS:
-                print("User ID not in AUTH_USERS")
                 await m.reply("*PLEASE UPGRADE YOUR PLAN*", quote=True)
                 return
             else:
                 input2 = await bot.listen(editable.chat.id)
                 raw_text2 = input2.text
                 bname = next((x['course_name'] for x in bdetail if str(x['id']) == raw_text2), None)
-                await input2.delete(True)
+                await input2.delete()
                 await editable.delete()
                 await editable1.delete()
-                edit3=await m.reply_text(f"""Now send the  quality u want to download
+                edit3 = await m.reply_text(f"""Now send the quality you want to download:
 `720p`
 `360p`
 `240p`
-144p""")
+`144p`""")
                 input3 = await bot.listen(edit3.chat.id)
-                if input3.text not in ["720p","360p","240p","144p"]:
-                    return await edit3.edit_text("enter valid quality try again")
-                
-                editable2 = await m.reply_text("🔵🟡🟢𝐘𝐨𝐮𝐫 𝐁𝐚𝐭𝐜𝐡 𝐓𝐱𝐭 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠 𝐰𝐚𝐢𝐭 [ 𝟐 𝐦𝐢𝐧𝐮𝐭𝐬 𝐬𝐞 𝟐 𝐠𝐡𝐚𝐧𝐭𝐞 𝐭𝐚𝐤🔵🟡🟢...")
+                if input3.text not in ["720p", "360p", "240p", "144p"]:
+                    return await edit3.edit_text("Enter valid quality, try again.")
+
+                editable2 = await m.reply_text("🔵🟡🟢𝐘𝐨𝐮𝐫 𝐁𝐚𝐭𝐜𝐡 𝐓𝐱𝐭 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠 𝐰𝐚𝐢𝐭 [ 𝟐 𝐦𝐢𝐧𝐮𝐭𝐬 𝐬𝐞 𝟐 𝐠𝐡𝐚𝐧𝐭𝐞 𝐭𝐚𝐤🔵🟡🟢")
+
                 res2 = requests.get(f"https://rozgarapinew.teachx.in/get/allsubjectfrmlivecourseclass?courseid={raw_text2}&start=-1", headers=headers).json()
                 subject = res2.get("data", [])
                 subjID = "&".join([id["subjectid"] for id in subject])
-                print(f'All Subject Id Info: {subjID}')
                 subject_ids = subjID.split('&')
                 all_urls = ""
-                topicids=[]
-                title=""
+                topicids = []
+
                 for u in subject_ids:
-                    res3 = await fetch_data(session,f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={raw_text2}&subjectid={u}&start=-1", headers=headers)
+                    res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={raw_text2}&subjectid={u}&start=-1", headers=headers)
                     topic = res3.get("data", [])
                     topicids.extend([i["topicid"] for i in topic])
-       
-                    for t in topicids:
-                        url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid={raw_text2}&subjectid={u}&topicid={t}&start=-1&conceptid="
-    
-                        res4 = requests.get(url, headers=headers).json()
-                        videodata = res4.get("data", [])
-                       
-                        for i in videodata:
-                            courseid.append(i["id"])
-                            # print(i)
-                    
-                print(courseid)
-                try:
-                    for c in courseid:
-                        print(c)
-                        url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id={raw_text2}&video_id={c}&ytflag=0&folder_wise_course=0"
-                        # print(url)
-                        await asyncio.sleep(2)
-                        res4 = await fetch_data(session, url, headers=headers)
-                        data = res4.get("data", [])
-                        # print(data["Title"])
-                        title=data.get("Title")
-                        video = data.get('download_link',None)
-                        # print(video)
-                        if video is not None:
-                            video2 = decrypt_link(video.replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0])
-                            print(video2)
-                            if video2 is not None:
-                                all_urls += f"{title} : {video2}\n"
-                        pdf_1 = data.get('pdf_link')
-                        if pdf_1:
-                            pdf_1 = decrypt_link(pdf_1.replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0])
-                            all_urls+=f"{title} : {pdf_1}\n"
 
-                        pdf_2 = data.get('pdf_link2')
-                        if pdf_2:
-                            pdf_2 = decrypt_link(pdf_2.replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0])
-                            all_urls+=f"{title} : {pdf_2}\n"
-                        
-                        all_urls=all_urls.replace("720p",input3.text)
-                        if all_urls:
-                            with open(f"results.txt", 'w', encoding='utf-8') as f:
-                                f.write(all_urls)
-                    
-                    await m.reply_document(
-                                document=f"results.txt",
-                                caption=f"App Name: Rojgar With Ankit\nBatch Name: {bname}\nExtracted by  :- Chutiya"
-                        )
-                    await bot.send_document(LOG_CHANNEL_ID,
-                                document=f"results.txt",
-                                caption=f"App Name: Rojgar With Ankit\nBatch Name: {bname}\nExtracted by  :- Chutiya"
-                        )
-                except Exception as e:
-                    pass
-                    print(e)
-                    await m.reply_document(
-                                document=f"results.txt",
-                                caption=f"App Name: Rojgar With Ankit\nBatch Name: {bname}\nExtracted by  :- Chutiya"
-                        )
-                    await bot.send_document(LOG_CHANNEL_ID,
-                                document=f"results.txt",
-                                caption=f"App Name: Rojgar With Ankit\nBatch Name: {bname}\nExtracted by  :- Chutiya"
-                        )
-                    await m.reply_text(f"""Done âœ…
+                courseid = []
+                for t in topicids:
+                    url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid={raw_text2}&subjectid={u}&topicid={t}&start=-1&conceptid="
+                    res4 = requests.get(url, headers=headers).json()
+                    videodata = res4.get("data", [])
+                    for i in videodata:
+                        courseid.append(i["id"])
 
-Your Token for : Rojgarwithankit  {token}""")
-                 
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            
-            await m.reply(f"An error occurred. Please try again.{e}")
+                for c in courseid:
+                    url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id={raw_text2}&video_id={c}&ytflag=0&folder_wise_course=0"
+                    await asyncio.sleep(2)
+                    res4 = await fetch_data(session, url, headers=headers)
+                    data = res4.get("data", [])
+                    title = data.get("Title")
+                    video = data.get('download_link', None)
+                    if video is not None:
+                        video2 = decrypt_link(video.replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0])
+                        if video2 is not None:
+                            all_urls += f"{title} : {video2}\n"
+
+                    pdf_1 = data.get('pdf_link')
+                    if pdf_1:
+                        pdf_1 = decrypt_link(pdf_1.replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0])
+                        all_urls += f"{title} : {pdf_1}\n"
+
+                    pdf_2 = data.get('pdf_link2')
+                    if pdf_2:
+                        pdf_2 = decrypt_link(pdf_2.replace(":", "=").replace("ZmVkY2JhOTg3NjU0MzIxMA", "==").split(',')[0])
+                        all_urls += f"{title} : {pdf_2}\n"
+
+                all_urls = all_urls.replace("720p", input3.text)
+                if all_urls:
+                    with open(f"results.txt", 'w', encoding='utf-8') as f:
+                        f.write(all_urls)
+
+                    await m.reply_document(
+                        document=f"results.txt",
+                        caption=f"App Name: Rojgar With Ankit\nBatch Name: {bname}\nExtracted by  :- User"
+                    )
+                    await bot.send_document(LOG_CHANNEL_ID,
+                        document=f"results.txt",
+                        caption=f"App Name: Rojgar With Ankit\nBatch Name: {bname}\nExtracted by  :- User"
+                    )
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        await m.reply(f"An error occurred. Please try again. Error: {e}")
