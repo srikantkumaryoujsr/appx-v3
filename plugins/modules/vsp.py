@@ -24,7 +24,7 @@ import json
 import os
 
 # MongoDB configuration
-MONGO_URI = "your_mongo_connection_string"  # Replace with your MongoDB connection string
+MONGO_URI = "mongodb+srv://sarkari226:Nzp4hfYpAdoo2dYH@cluster0.lavidof.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Replace with your MongoDB connection string
 DB_NAME = "batch_db"
 
 # Initialize MongoDB client
