@@ -276,7 +276,7 @@ async def remove_batch(bot, message):
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
 
-@Client.on_start
+
 async def load_batches_on_start():
     global batch_configs
     batch_configs = await load_config_mongo()
