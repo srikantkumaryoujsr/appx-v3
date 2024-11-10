@@ -255,7 +255,7 @@ async def add_batch(bot, message):
             id=bname
         )
 
-        await message.reply(f"➕🟢ɴᴇᴡ ᴄᴏᴜʀꜱᴇ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ🟠\n\nʙᴀᴛᴄʜ ɴᴀᴍᴇ:- {bname}")
+        await message.reply(f"➕🟢ɴᴇᴡ ᴄᴏᴜʀꜱᴇ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ🟠\n\nʙᴀᴛᴄʜ ɴᴀᴍᴇ:- {bname}\n**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`")
 
     except Exception as e:
         await message.reply(f"Error adding batch: {e}")
@@ -275,6 +275,7 @@ async def view_batches(bot, message):
         schedule_display = f"{hour:02d}:{minute:02d} IST" if hour is not None else "Not Set"
         response += f"**Batch Name:** `{bname}`\n"
         response += f"**Scheduled Time:** {schedule_display}\n"
+        response += f"**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`\n"
         response += "====================\n\n"
 
     await message.reply(response)
