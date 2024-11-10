@@ -2,7 +2,7 @@ import aiohttp
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
-AUTH_USERS = [7224758848,7513565186,6804641253]
+AUTH_USERS = [7224758848,6804641253]
 
 
 # Predefined token
