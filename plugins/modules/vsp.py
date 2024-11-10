@@ -78,7 +78,6 @@ async def load_config_mongo():
     return batch_configs
 
 async def all_subject_send(bot, bname, batch_configs):
-    global batch_configs  # Add this line
     batch_config = batch_configs[bname]
     subject_and_channel = batch_config["subject_and_channel"]
     chat_id = batch_config["chat_id"]
