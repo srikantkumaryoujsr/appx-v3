@@ -1,44 +1,17 @@
 import asyncio
-import requests
+import os
 import aiohttp
-import base64
-import pytz
-from pytz import utc
-from datetime import datetime, timedelta
+import aiofiles
+import base64,requests
+from pyrogram.types import Message
 from pyrogram import Client, filters
 from Crypto.Cipher import AES
-from .. import bot as Client
 from Crypto.Util.Padding import unpad
-from .download import account_login
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-from pyrogram.errors import FloodWait
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from motor.motor_asyncio import AsyncIOMotorClient
-import asyncio
-import requests
-import aiohttp
-import base64
-import pytz
-from pytz import utc
-from datetime import datetime, timedelta
-from pyrogram import filters
 from .. import bot as Client
-from .. import bot
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
-from main import AUTH_USERS
-from .download import account_login
-from config import AUTH_USERS
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.schedulers.background import BackgroundScheduler
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from apscheduler.triggers.cron import CronTrigger
-from pyrogram.errors import FloodWait
-import os
 
 LOG_CHANNEL_ID = -1001801766701
-from config import AUTH_USERS
+AUTH_USERS = [6748451207, 6804421130,6728038801,5565127109,6776883780,6741261680,6773081023,6793357832,7224758848]
+
 
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
