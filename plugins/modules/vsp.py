@@ -5,14 +5,9 @@ import base64
 import pytz
 from pytz import utc
 from datetime import datetime, timedelta
-from pyrogram import filters
-from .. import bot as Client
-from .. import bot
+from pyrogram import Client, filters
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
-from main import AUTH_USERS
-from .download import account_login
-AUTH_USERS.extend([7224758848])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
@@ -21,14 +16,14 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 
 # MongoDB Configuration
-MONGO_URI = "mongodb+srv://heeokumailseptember:nfOkF8F4zn1FIAFQ@cluster0.xb62l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-DB_NAME = "bot_config"
-COLLECTION_NAME = "batch_configs"
-
+MONGO_URI = "mongodb+srv://heeokumailseptember:nfOkF8F4zn1FIAFQ@cluster0.xb62l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Update this URI if necessary
 client = AsyncIOMotorClient(MONGO_URI)
-db = client[DB_NAME]
-batch_collection = db[COLLECTION_NAME]
+db = client["bot_database"]
+config_collection = db["batch_configs"]
 
+# Global Variables
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+AUTH_USERS = [7224758848]
 LOG_CHANNEL_ID = -1002004338182
 
 def get_current_date():
@@ -68,23 +63,24 @@ def decrypt_link(link):
     except Exception as e:
         print(f"Error decrypting link: {e}")
 
-scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
+async def save_config_mongo(batch_name, config_data):
+    config_data["subject_and_channel"] = {str(k): v for k, v in config_data["subject_and_channel"].items()}
+    await config_collection.update_one({"batch_name": batch_name}, {"$set": config_data}, upsert=True)
 
-@Client.on_message(filters.command("startnow1") & filters.user(AUTH_USERS))
-async def start_subjects_command(bot, message):
-    batches = await batch_collection.find().to_list(length=None)
-    for batch in batches:
-        await all_subject_send(bot, batch["bname"])
+async def load_config_mongo():
+    cursor = config_collection.find()
+    batch_configs = {}
+    async for document in cursor:
+        batch_name = document.pop("batch_name")
+        document["subject_and_channel"] = {int(k): v for k, v in document["subject_and_channel"].items()}
+        batch_configs[batch_name] = document
+    return batch_configs
 
 async def all_subject_send(bot, bname):
-    batch = await batch_collection.find_one({"bname": bname})
-    if not batch:
-        print(f"Batch {bname} not found.")
-        return
-
-    subject_and_channel = batch["subject_and_channel"]
-    chat_id = batch["chat_id"]
-    courseid = batch["courseid"]
+    batch_config = batch_configs[bname]
+    subject_and_channel = batch_config["subject_and_channel"]
+    chat_id = batch_config["chat_id"]
+    courseid = batch_config["courseid"]
 
     for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
         try:
@@ -101,7 +97,7 @@ async def all_subject_send(bot, bname):
     )
 
 async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
-    # Implement your account login logic here
+    # Your account login and data fetching logic here
     pass
     userid = "189678"
     async with aiohttp.ClientSession() as session:
@@ -215,22 +211,21 @@ async def add_batch(bot, message):
         new_hour = int(parts[5])
         new_minute = int(parts[6])
 
-        batch_data = {
-            "bname": bname,
+        new_config = {
+            "batch_name": bname,
             "subject_and_channel": new_subject_and_channel,
             "chat_id": new_chat_id,
             "courseid": new_courseid,
             "scheduler_time": {"hour": new_hour, "minute": new_minute}
         }
 
-        await batch_collection.update_one({"bname": bname}, {"$set": batch_data}, upsert=True)
+        await save_config_mongo(bname, new_config)
 
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
             args=[bot, bname],
-            id=bname,
-            replace_existing=True
+            id=bname
         )
 
         await message.reply(f"New batch added: {bname}")
@@ -240,19 +235,22 @@ async def add_batch(bot, message):
 
 @Client.on_message(filters.command("viewbatches"))
 async def view_batches(bot, message):
-    batches = await batch_collection.find().to_list(length=None)
-    if not batches:
+    batch_configs = await load_config_mongo()
+    if not batch_configs:
         await message.reply("No batches configured.")
         return
 
     response = "**🦋𝐂𝐮𝐫𝐫𝐞𝐧𝐭 𝐁𝐚𝐭𝐜𝐡𝐞𝐬🦋:**\n\n"
-    for batch in batches:
-        schedule_time = batch.get("scheduler_time", {})
-        hour = schedule_time.get("hour", "N/A")
-        minute = schedule_time.get("minute", "N/A")
-        response += f"**Batch Name:** `{batch['bname']}`\n"
-        response += f"**Scheduled Time:** {hour:02d}:{minute:02d} IST\n"
-        response += "====================\n"
+    for bname, details in batch_configs.items():
+        schedule_time = details.get("scheduler_time", {})
+        hour = schedule_time.get("hour")
+        minute = schedule_time.get("minute")
+        
+        schedule_display = f"{hour:02d}:{minute:02d} IST" if hour is not None else "Not Set"
+        response += f"**Batch Name:** `{bname}`\n"
+        response += f"**Scheduled Time:** {schedule_display}\n"
+        response += "====================\n\n"
+
     await message.reply(response)
 
 @Client.on_message(filters.command("removebatch"))
@@ -265,17 +263,30 @@ async def remove_batch(bot, message):
             return
 
         bname = parts[1]
-        result = await batch_collection.delete_one({"bname": bname})
 
-        if result.deleted_count == 0:
+        if not await config_collection.find_one({"batch_name": bname}):
             await message.reply(f"Batch '{bname}' not found.")
             return
 
+        await config_collection.delete_one({"batch_name": bname})
         scheduler.remove_job(bname)
+
         await message.reply(f"Batch '{bname}' removed successfully.")
 
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
 
-# Start the scheduler
+@Client.on_start
+async def load_batches_on_start():
+    global batch_configs
+    batch_configs = await load_config_mongo()
+    for bname, config in batch_configs.items():
+        schedule_time = config["scheduler_time"]
+        scheduler.add_job(
+            func=all_subject_send,
+            trigger=CronTrigger(hour=schedule_time["hour"], minute=schedule_time["minute"], second=0, timezone="Asia/Kolkata"),
+            args=[Client, bname],
+            id=bname
+        )
+
 scheduler.start()
