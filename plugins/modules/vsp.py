@@ -97,7 +97,7 @@ async def all_subject_send(bot, bname, batch_configs):
         message_thread_id=1
     )
 
-async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
+async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, batch_configs):
     # Your account login and data fetching logic here
     pass
     userid = "189678"
@@ -183,7 +183,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, bname, chatid, message_thread_id)
+            await account_login(bot, all_urls, bname, chatid, message_thread_id, batch_configs)
         
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -286,7 +286,7 @@ async def load_batches_on_start():
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=schedule_time["hour"], minute=schedule_time["minute"], second=0, timezone="Asia/Kolkata"),
-            args=[Client, bname, batch_configs],
+            args=[Client, bname],
             id=bname
         )
 
