@@ -50,24 +50,32 @@ async def handle_callback(bot, query: CallbackQuery):
     data = query.data
 
     if data.startswith("addbatch"):
-        course_num = data.replace("addbatch", "")
+        if query.from_user.id not in AUTH_USERS:
+                await query.answer("You are not authorized to use this command.", show_alert=True)
+                return
+            
         await query.message.reply(
             f"Use the command `/addbatch` in the following format:\n"
             f"`/setconfig bname subjectid:chatid:threadid,... chat_id courseid hour minute`"
         )
     elif data.startswith("removebatch"):
-        course_num = data.replace("removebatch", "")
+        if query.from_user.id not in AUTH_USERS:
+                await query.answer("You are not authorized to use this command.", show_alert=True)
+                return
+            
         await query.message.reply(
             f"Fetching configuration for Course ... Use `/removebatch batch-Name` for details."
         )
 
     elif data.startswith("viewbatches"):
-        course_num = data.replace("removebatch", "")
+        if query.from_user.id not in AUTH_USERS:
+                await query.answer("You are not authorized to use this command.", show_alert=True)
+                return
+            
         await query.message.reply(
             f"Fetching configuration for Course ... Use `/viewbatches` for details."
         )
     elif data.startswith("help"):
-        course_num = data.replace("removebatch", "")
         await query.message.reply(
             f"**ᴡᴇ’ʀᴇ ᴡᴏʀᴋɪɴɢ ᴏɴ ᴀ ᴠɪᴅᴇᴏ ᴛᴜᴛᴏʀɪᴀʟ ᴛᴏ ᴍᴀᴋᴇ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ ᴇᴠᴇɴ ᴇᴀꜱɪᴇʀ! ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ꜱᴏᴏɴ. ᴋᴇᴇᴘ ʟᴇᴀʀɴɪɴɢ ᴡɪᴛʜ ᴜꜱ! 📹🚀**"
         )
