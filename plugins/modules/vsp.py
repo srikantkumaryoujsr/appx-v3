@@ -71,13 +71,14 @@ async def save_config_mongo(batch_name, config_data):
 async def load_config_mongo():
     cursor = config_collection.find()
     batch_configs = {}
+    global batch_configs
     async for document in cursor:
         batch_name = document.pop("batch_name")
         document["subject_and_channel"] = {int(k): v for k, v in document["subject_and_channel"].items()}
         batch_configs[batch_name] = document
     return batch_configs
 
-async def all_subject_send(bot, bname):
+async def all_subject_send(bot, bname, ):
     batch_config = batch_configs[bname]
     subject_and_channel = batch_config["subject_and_channel"]
     chat_id = batch_config["chat_id"]
