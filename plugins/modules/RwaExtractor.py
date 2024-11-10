@@ -33,7 +33,7 @@ def decrypt_link(link):
 cc02 = ""
 TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUxNzA3NyIsImVtYWlsIjoidml2ZWtrYXNhbmE0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcyNjkzNzA4OX0.NM1SbOjDFZCLinFi66jKxwRQPgLWFN-_SAMgcPWvfk4"
 
-@Client.on_message(filters.command("rwa"))
+@Client.on_message(filters.command("rwa") & filters.user(AUTH_USERS))
 async def account_login(bot: Client, m: Message):
     editable = await m.reply_text("🟢🟡🔵𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐲𝐨𝐮𝐫 𝐛𝐚𝐭𝐜𝐡 𝐝𝐞𝐭𝐚𝐢𝐥𝐬... 𝐏𝐥𝐞𝐚𝐬𝐞 𝐰𝐚𝐢𝐭.🟢🟡🔵")
 
