@@ -77,7 +77,7 @@ async def load_config_mongo():
         batch_configs[batch_name] = document
     return batch_configs
 
-async def all_subject_send(bot, bname, ):
+async def all_subject_send(bot, bname, batch_configs):
     global batch_configs  # Add this line
     batch_config = batch_configs[bname]
     subject_and_channel = batch_config["subject_and_channel"]
@@ -287,7 +287,7 @@ async def load_batches_on_start():
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=schedule_time["hour"], minute=schedule_time["minute"], second=0, timezone="Asia/Kolkata"),
-            args=[Client, bname],
+            args=[Client, bname, batch_configs],
             id=bname
         )
 
