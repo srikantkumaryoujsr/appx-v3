@@ -86,7 +86,7 @@ async def all_subject_send(bot, bname, batch_configs):
 
         for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
             try:
-                await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname)
+                await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, batch_configs)
             except FloodWait as e:
                 await asyncio.sleep(e.x)
             except Exception as e:
