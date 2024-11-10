@@ -17,17 +17,11 @@ async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🟢𝗔𝗗𝗗 𝗕𝗔𝗧𝗖𝗛➕❤️", callback_data="addbatch")]
-            
-        ] + [InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖❤️", callback_data="removebatch")]
-        
-        ] + [
-            [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️❤️", callback_data="viewbatches")]
-        ] + [
-            [InlineKeyboardButton("🟢𝗚𝗘𝗧 𝗔𝗟𝗟 𝗥𝗪𝗔 𝗕𝗔𝗧𝗖𝗛 𝗜𝗡𝗙𝗢.🦋", callback_data="get_all_courses")]
-        ] + [
-            [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/rojgaarwithankit")]
-        ] + [
+            [InlineKeyboardButton("🟢𝗔𝗗𝗗 𝗕𝗔𝗧𝗖𝗛➕❤️", callback_data="addbatch")],
+            [InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖❤️", callback_data="removebatch")],
+            [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️❤️", callback_data="viewbatches")],
+            [InlineKeyboardButton("🟢𝗚𝗘𝗧 𝗔𝗟𝗟 𝗥𝗪𝗔 𝗕𝗔𝗧𝗖𝗛 𝗜𝗡𝗙𝗢.🦋", callback_data="get_all_courses")],
+            [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/rojgaarwithankit")],
             [InlineKeyboardButton("❓ 𝐇𝐞𝐥𝐩 ❓", url="help")]
         ])
 
