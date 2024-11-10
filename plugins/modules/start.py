@@ -30,8 +30,7 @@ async def start_message(bot, message: Message):
         caption = (
             "**🔵🟡🟢ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ʀᴏᴊɢᴀʀᴡɪᴛʜᴀɴᴋɪᴛ ᴄᴏᴀᴄʜɪɴɢ ʙᴏᴛ! 🎓 ᴛʜɪꜱ ʙᴏᴛ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴘᴏꜱᴛꜱ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇꜱ, ɪɴᴄʟᴜᴅɪɴɢ ᴄʟᴀꜱꜱᴇꜱ ᴀɴᴅ ɴᴏᴛᴇꜱ ꜰᴏʀ ᴀʟʟ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴜʀꜱᴇꜱ. ꜱᴛᴀʏ ᴜᴘᴅᴀᴛᴇᴅ ᴡɪᴛʜ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴄᴏɴᴛᴇɴᴛ ᴇᴠᴇʀʏ ᴅᴀʏ!🔵🟡🟢**\n\n"
             "**🟢𝐈𝐦𝐩𝐨𝐫𝐭𝐚𝐧𝐭 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬🟢**\n"
-            "**/RWA -❝​🇷​​🇴​​🇯​​🇬​​🇦​​🇷​​🇼​​🇮​​🇹​​🇭​​🇦​​🇳​​🇰​​🇮​​🇹​❝ ​🇦​​🇵​​🇵​ ​🇦​​🇳​​🇩​ ​🇩​​🇮​​🇸​​🇵​​🇱​​🇦​​🇾​ ​🇹​​🇭​​🇪​​🇲​ ​🇮​​🇳​ ​🇦​ ​🇹​​🇪​​🇽​​🇹​ ​🇫​​🇴​​🇷​​🇲​​🇦​​🇹​ ​🇼​​🇮​​🇹​​🇭​ ​🇨​​🇴​​🇲​​🇵​​🇱​​🇪​​🇹​​🇪​ ​🇱​​🇮​​🇳​​🇰​​🇸​**\n"
-            "**/Help - ɢɪᴠᴇꜱ ᴀ ʟɪꜱᴛ ᴏꜰ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ ᴀɴᴅ ᴛʜᴇɪʀ ᴅᴇꜱᴄʀɪᴘᴛɪᴏɴꜱ.​**\n\n"
+            "**/RWA -ᴛʜᴀᴛ ꜰᴇᴛᴄʜᴇꜱ ᴛʜᴇ ᴄᴏᴍᴘʟᴇᴛᴇ ʟɪɴᴋꜱ ᴏꜰ ᴄᴏᴜʀꜱᴇꜱ ꜰʀᴏᴍ ᴛʜᴇ "ʀᴏᴊɢᴀʀᴡɪᴛʜᴀɴᴋɪᴛ" ᴀᴘᴘ ɪɴ ᴀ ᴛᴇxᴛ ꜰᴏʀᴍᴀᴛ, ʜᴇʀᴇ’ꜱ ʜᴏᴡ ʏᴏᴜ ᴄᴀɴ ꜱᴛʀᴜᴄᴛᴜʀᴇ ɪᴛ​**\n\n"
             "**❤️𝐓𝐡𝐚𝐧𝐤 𝐲𝐨𝐮 𝐟𝐨𝐫 𝐛𝐞𝐢𝐧𝐠 𝐩𝐚𝐫𝐭 𝐨𝐟 𝐭𝐡𝐞 𝐥𝐞𝐚𝐫𝐧𝐢𝐧𝐠 𝐣𝐨𝐮𝐫𝐧𝐞𝐲 𝐰𝐢𝐭𝐡 𝐑𝐨𝐣𝐠𝐚𝐫𝐖𝐢𝐭𝐡𝐀𝐧𝐤𝐢𝐭! 𝐊𝐞𝐞𝐩 𝐮𝐩 𝐭𝐡𝐞 𝐠𝐫𝐞𝐚𝐭 𝐰𝐨𝐫𝐤, 𝐚𝐧𝐝 𝐝𝐨𝐧'𝐭 𝐡𝐞𝐬𝐢𝐭𝐚𝐭𝐞 𝐭𝐨 𝐫𝐞𝐚𝐜𝐡 𝐨𝐮𝐭 𝐚𝐧𝐲𝐭𝐢𝐦𝐞. 🚀❤️**\n\n"
             "**🟢ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🟡:- @rojgaarwithankit**"
         )
@@ -65,6 +64,11 @@ async def handle_callback(bot, query: CallbackQuery):
         course_num = data.replace("removebatch", "")
         await query.message.reply(
             f"Fetching configuration for Course ... Use `/viewbatches` for details."
+        )
+    elif data.startswith("help"):
+        course_num = data.replace("removebatch", "")
+        await query.message.reply(
+            f"**ᴡᴇ’ʀᴇ ᴡᴏʀᴋɪɴɢ ᴏɴ ᴀ ᴠɪᴅᴇᴏ ᴛᴜᴛᴏʀɪᴀʟ ᴛᴏ ᴍᴀᴋᴇ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ ᴇᴠᴇɴ ᴇᴀꜱɪᴇʀ! ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ꜱᴏᴏɴ. ᴋᴇᴇᴘ ʟᴇᴀʀɴɪɴɢ ᴡɪᴛʜ ᴜꜱ! 📹🚀**"
         )
     elif data == "get_all_courses":    
         await query.message.edit_text("**ᴘʟᴇᴀꜱᴇ ᴡᴀɪᴛ ᴀ ᴍᴏᴍᴇɴᴛ, ɪ’ᴍ ᴘʀᴇᴘᴀʀɪɴɢ ᴛʜᴇ ʙᴀᴛᴄʜ ᴅᴇᴛᴀɪʟꜱ ꜰᴏʀ ʏᴏᴜ. ɪᴛ ᴡɪʟʟ ᴏɴʟʏ ᴛᴀᴋᴇ ᴀʙᴏᴜᴛ 2 ᴍɪɴᴜᴛᴇꜱ!...**")
@@ -116,13 +120,3 @@ async def handle_callback(bot, query: CallbackQuery):
                 await query.message.edit_text("An error occurred during the process. Please try again.")
 
     await query.answer()
-
-@Client.on_callback_query()
-async def handle_callback(bot, query: CallbackQuery):
-    data = query.data
-
-    if data == "help":
-        help_text = (
-            "**❝​🇼​​🇪​’​🇷​​🇪​ ​🇼​​🇴​​🇷​​🇰​​🇮​​🇳​​🇬​ ​🇴​​🇳​ ​🇦​ ​🇻​​🇮​​🇩​​🇪​​🇴​ ​🇹​​🇺​​🇹​​🇴​​🇷​​🇮​​🇦​​🇱​ ​🇹​​🇴​ ​🇲​​🇦​​🇰​​🇪​ ​🇺​​🇸​​🇮​​🇳​​🇬​ ​🇹​​🇭​​🇪​ ​🇧​​🇴​​🇹​ ​🇪​​🇻​​🇪​​🇳​ ​🇪​​🇦​​🇸​​🇮​​🇪​​🇷​❗ ​🇮​​🇹​ ​🇼​​🇮​​🇱​​🇱​ ​🇧​​🇪​ ​🇦​​🇻​​🇦​​🇮​​🇱​​🇦​​🇧​​🇱​​🇪​ ​🇸​​🇴​​🇴​​🇳​. ​🇰​​🇪​​🇪​​🇵​ ​🇱​​🇪​​🇦​​🇷​​🇳​​🇮​​🇳​​🇬​ ​🇼​​🇮​​🇹​​🇭​ ​🇺​​🇸​❗ 📹🚀❝**\n\n"
-        )
-        await query.message.edit_text(help_text)
