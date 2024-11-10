@@ -29,7 +29,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-AUTH_USERS.extend([7224758848])
+from config import AUTH_USERS
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -217,7 +217,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@Client.on_message(filters.command("addbatch"))
+@Client.on_message(filters.command("addbatch") & filters.user(AUTH_USERS))
 async def add_batch(bot, message):
     try:
         parts = message.text.split(" ", 6)
@@ -280,7 +280,7 @@ async def view_batches(bot, message):
 
     await message.reply(response)
 
-@Client.on_message(filters.command("removebatch"))
+@Client.on_message(filters.command("removebatch") & filters.user(AUTH_USERS))
 async def remove_batch(bot, message):
     try:
         parts = message.text.split(" ", 1)
