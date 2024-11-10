@@ -101,7 +101,7 @@ async def all_subject_send(bot, bname, batch_configs):
     except Exception as e:
         print(f"Error in all_subject_send: {e}")
 
-async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
+async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, batch_configs):
     # Add your login and data fetching logic here
     pass
     userid = "189678"
