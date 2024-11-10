@@ -66,7 +66,7 @@ def decrypt_link(link):
 
 async def save_config_mongo(batch_name, config_data):
     config_data["subject_and_channel"] = {str(k): v for k, v in config_data["subject_and_channel"].items()}
-    await config_collection.update_one({"batch_name": batch_name}, {"$set": config_data}, upsert=True
+    await config_collection.update_one({"batch_name": batch_name}, {"$set": config_data}, upsert=True)
 global batch_configs
 async def load_config_mongo():
     cursor = config_collection.find()
