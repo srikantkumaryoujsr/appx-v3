@@ -1,4 +1,5 @@
 import asyncio
+import sqlite3
 import requests
 import aiohttp
 import base64
@@ -11,35 +12,55 @@ from .. import bot
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
-from .download import account_login
-AUTH_USERS.extend([7224758848])
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.schedulers.background import BackgroundScheduler
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
-LOG_CHANNEL_ID = -1002004338182
-import json
 import os
+import json
 
-# Configuration file path
-CONFIG_FILE = "multi_config.json"
+AUTH_USERS.extend([7224758848])
 
-# Load configuration from file
-def load_config():
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, "r") as file:
-            return json.load(file)
-    return {}
+# Database initialization
+def init_db():
+    conn = sqlite3.connect("config.db")
+    cursor = conn.cursor()
+    # Create table for batch configuration
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS batch_config (
+        bname TEXT PRIMARY KEY,
+        config TEXT
+    )
+    ''')
+    conn.commit()
+    conn.close()
 
-# Save configuration to file
-def save_config(config):
-    with open(CONFIG_FILE, "w") as file:
-        json.dump(config, file, indent=4)
+def save_batch(bname, config):
+    conn = sqlite3.connect("config.db")
+    cursor = conn.cursor()
+    cursor.execute('''
+    INSERT OR REPLACE INTO batch_config (bname, config) VALUES (?, ?)
+    ''', (bname, json.dumps(config)))
+    conn.commit()
+    conn.close()
 
-# Initialize configuration
-config = load_config()
-batch_configs = config.get("batches", {})
+def load_all_batches():
+    conn = sqlite3.connect("config.db")
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM batch_config')
+    batches = {row[0]: json.loads(row[1]) for row in cursor.fetchall()}
+    conn.close()
+    return batches
+
+def remove_batch(bname):
+    conn = sqlite3.connect("config.db")
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM batch_config WHERE bname = ?', (bname,))
+    conn.commit()
+    conn.close()
+
+# Initialize database and load configuration
+init_db()
+batch_configs = load_all_batches()
 
 def get_current_date():
     ist = pytz.timezone('Asia/Kolkata')
@@ -52,14 +73,13 @@ def convert_timestamp_to_datetime(timestamp: int) -> str:
     return date_time.strftime('%Y-%m-%d')
 
 def get_current_date_vsp():
-    # Get the current time in IST
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
     yesterday = now - timedelta(days=1)
-    day_of_week = yesterday.strftime("%A").upper()  # Full weekday name
-    month_name = yesterday.strftime("%B").upper()  # Full month name
-    day = yesterday.strftime("%d").zfill(2)  # Day of the month
-    year = yesterday.strftime("%Y")  # Year
+    day_of_week = yesterday.strftime("%A").upper()
+    month_name = yesterday.strftime("%B").upper()
+    day = yesterday.strftime("%d").zfill(2)
+    year = yesterday.strftime("%Y")
     return f"{day}-{month_name}-{year}, {day_of_week}"
 
 async def fetch_data(session, url, headers=None):
@@ -74,11 +94,9 @@ def decrypt_link(link):
         cipher = AES.new(key, AES.MODE_CBC, iv)
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
-    except ValueError as ve:
-        print(f"Padding error while decrypting link: {ve}")
     except Exception as e:
         print(f"Error decrypting link: {e}")
-    
+
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 @Client.on_message(filters.command("startnow1") & filters.user(AUTH_USERS))
@@ -107,7 +125,7 @@ async def all_subject_send(bot, bname):
     )
 
 async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
-    # Implement your account login logic here
+    # Your account login logic here
     pass
     userid = "189678"
     async with aiohttp.ClientSession() as session:
@@ -206,8 +224,7 @@ async def add_batch(bot, message):
     try:
         parts = message.text.split(" ", 6)
         if len(parts) != 7:
-            await message.reply("Error: Invalid format. Use:\n"
-                                "`/addbatch bname subject_and_channel chat_id courseid hour minute`")
+            await message.reply("Error: Invalid format. Use:\n`/addbatch bname subject_and_channel chat_id courseid hour minute`")
             return
 
         bname = parts[1]
@@ -221,7 +238,6 @@ async def add_batch(bot, message):
         new_hour = int(parts[5])
         new_minute = int(parts[6])
 
-        # Add new batch to configuration
         batch_configs[bname] = {
             "subject_and_channel": new_subject_and_channel,
             "chat_id": new_chat_id,
@@ -229,57 +245,41 @@ async def add_batch(bot, message):
             "scheduler_time": {"hour": new_hour, "minute": new_minute}
         }
 
-        save_config({"batches": batch_configs})
+        save_batch(bname, batch_configs[bname])
 
-        # Schedule job for new batch
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
             args=[bot, bname],
-            id=bname  # Assign unique ID for each batch
+            id=bname
         )
 
         await message.reply(f"New batch added: {bname}")
-
     except Exception as e:
         await message.reply(f"Error adding batch: {e}")
 
-# Command to view all batch configurations
 @Client.on_message(filters.command("viewbatches"))
 async def view_batches(bot, message):
     if not batch_configs:
         await message.reply("No batches configured.")
         return
 
-    # Collecting batch names and scheduler times
-    response = "**🦋𝐂𝐮𝐫𝐫𝐞𝐧𝐭 𝐁𝐚𝐭𝐜𝐡𝐞𝐬🦋:**\n\n"
+    response = "**🦋Current Batches🦋:**\n\n"
     for bname, details in batch_configs.items():
         schedule_time = details.get("scheduler_time", {})
         hour = schedule_time.get("hour")
         minute = schedule_time.get("minute")
-        
-        if hour is None or minute is None:
-            schedule_display = "Not Set"
-        else:
-            schedule_display = f"{hour:02d}:{minute:02d} IST"
-        
-        response += f"**Batch Name:** `{bname}`\n"
-        response += f"**Scheduled Time:** {schedule_display}\n"
-        response += "====================\n"
-        response += "====================\n\n"
+        schedule_display = f"{hour:02d}:{minute:02d} IST" if hour is not None else "Not Set"
+        response += f"**Batch Name:** `{bname}`\n**Scheduled Time:** {schedule_display}\n====================\n"
 
     await message.reply(response)
 
-    await callback_query.message.edit(response)
-
-# Command to remove a batch configuration
 @Client.on_message(filters.command("removebatch"))
 async def remove_batch(bot, message):
     try:
         parts = message.text.split(" ", 1)
         if len(parts) != 2:
-            await message.reply("Error: Invalid format. Use:\n"
-                                "`/removebatch bname`")
+            await message.reply("Error: Invalid format. Use:\n`/removebatch bname`")
             return
 
         bname = parts[1]
@@ -288,17 +288,12 @@ async def remove_batch(bot, message):
             await message.reply(f"Batch '{bname}' not found.")
             return
 
-        # Remove batch from configuration
+        remove_batch(bname)
         del batch_configs[bname]
-        save_config({"batches": batch_configs})
 
-        # Remove scheduled job if exists
         scheduler.remove_job(bname)
-
-        await message.reply(f"Batch '{bname}' ➖removed successfully.➖")
-
+        await message.reply(f"Batch '{bname}' removed successfully.")
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
 
-# Start scheduler
 scheduler.start()
