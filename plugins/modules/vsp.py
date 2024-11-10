@@ -67,7 +67,7 @@ def decrypt_link(link):
 async def save_config_mongo(batch_name, config_data):
     config_data["subject_and_channel"] = {str(k): v for k, v in config_data["subject_and_channel"].items()}
     await config_collection.update_one({"batch_name": batch_name}, {"$set": config_data}, upsert=True)
-global batch_configs
+
 async def load_config_mongo():
     cursor = config_collection.find()
     batch_configs = {}
@@ -78,27 +78,31 @@ async def load_config_mongo():
     return batch_configs
 
 async def all_subject_send(bot, bname, batch_configs):
-    batch_config = batch_configs[bname]
-    subject_and_channel = batch_config["subject_and_channel"]
-    chat_id = batch_config["chat_id"]
-    courseid = batch_config["courseid"]
+    try:
+        batch_config = batch_configs[bname]
+        subject_and_channel = batch_config["subject_and_channel"]
+        chat_id = batch_config["chat_id"]
+        courseid = batch_config["courseid"]
 
-    for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
-        try:
-            await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname)
-        except FloodWait as e:
-            await asyncio.sleep(e.x)
-        except Exception as e:
-            print(f"Error processing subject {subjectid} in batch {bname}: {e}")
+        for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
+            try:
+                await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname)
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+            except Exception as e:
+                print(f"Error processing subject {subjectid} in batch {bname}: {e}")
 
-    await bot.send_message(
-        chat_id=chat_id,
-        text=f"**❤️ क्लास अपडेट हो गई है ❤️**\n\n**[ॐ] Date & Day: ➣ {get_current_date_vsp()}**",
-        message_thread_id=1
-    )
+        await bot.send_message(
+            chat_id=chat_id,
+            text=f"**❤️ क्लास अपडेट हो गई है ❤️**\n\n**[ॐ] Date & Day: ➣ {get_current_date_vsp()}**",
+            message_thread_id=1
+        )
 
-async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, batch_configs):
-    # Your account login and data fetching logic here
+    except Exception as e:
+        print(f"Error in all_subject_send: {e}")
+
+async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
+    # Add your login and data fetching logic here
     pass
     userid = "189678"
     async with aiohttp.ClientSession() as session:
@@ -222,10 +226,11 @@ async def add_batch(bot, message):
 
         await save_config_mongo(bname, new_config)
 
+        batch_configs = await load_config_mongo()  # Load updated configs
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
-            args=[bot, bname],
+            args=[bot, bname, batch_configs],  # Pass batch_configs
             id=bname
         )
 
@@ -246,7 +251,6 @@ async def view_batches(bot, message):
         schedule_time = details.get("scheduler_time", {})
         hour = schedule_time.get("hour")
         minute = schedule_time.get("minute")
-        
         schedule_display = f"{hour:02d}:{minute:02d} IST" if hour is not None else "Not Set"
         response += f"**Batch Name:** `{bname}`\n"
         response += f"**Scheduled Time:** {schedule_display}\n"
@@ -277,16 +281,14 @@ async def remove_batch(bot, message):
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
 
-
 async def load_batches_on_start():
-    global batch_configs
     batch_configs = await load_config_mongo()
     for bname, config in batch_configs.items():
         schedule_time = config["scheduler_time"]
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=schedule_time["hour"], minute=schedule_time["minute"], second=0, timezone="Asia/Kolkata"),
-            args=[Client, bname],
+            args=[Client, bname, batch_configs],
             id=bname
         )
 
