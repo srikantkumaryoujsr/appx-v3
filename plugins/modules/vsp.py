@@ -87,7 +87,7 @@ async def all_subject_send(bot, bname, batch_configs):
 
         for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
             try:
-                await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, batch_configs)
+                await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname)
             except FloodWait as e:
                 await asyncio.sleep(e.x)
             except Exception as e:
@@ -102,7 +102,7 @@ async def all_subject_send(bot, bname, batch_configs):
     except Exception as e:
         print(f"Error in all_subject_send: {e}")
 
-async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, batch_configs):
+async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
     # Add your login and data fetching logic here
     pass
     userid = "189678"
@@ -188,7 +188,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
             print(all_urls)
-            await account_login(bot, all_urls, bname, chatid, message_thread_id, batch_configs)
+            await account_login(bot, all_urls, bname, chatid, message_thread_id)
         
         except Exception as e:
             print(f"An error occurred: {e}")
