@@ -11,7 +11,7 @@ from Crypto.Util.Padding import unpad
 from .. import bot as Client
 
 LOG_CHANNEL_ID = -1001801766701
-AUTH_USERS = [6748451207, 6804421130, 6728038801, 5565127109, 6776883780, 6741261680, 6773081023, 6793357832, 7224758848]
+from config import AUTH_USERS
 
 async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
