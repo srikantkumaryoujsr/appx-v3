@@ -255,7 +255,7 @@ async def add_batch(bot, message):
             id=bname
         )
 
-        await message.reply(f"➕🟢ɴᴇᴡ ᴄᴏᴜʀꜱᴇ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ🟠\n\nʙᴀᴛᴄʜ ɴᴀᴍᴇ:- {bname}\n**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`")
+        await message.reply(f"**➕🟢ɴᴇᴡ ᴄᴏᴜʀꜱᴇ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ🟠**\n\nʙᴀᴛᴄʜ ɴᴀᴍᴇ:- {bname}\n**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`")
 
     except Exception as e:
         await message.reply(f"Error adding batch: {e}")
@@ -267,7 +267,7 @@ async def view_batches(bot, message):
         await message.reply("No batches configured.")
         return
 
-    response = "**🦋𝐂𝐮𝐫𝐫𝐞𝐧𝐭 𝐁𝐚𝐭𝐜𝐡𝐞𝐬🦋:**\n\n"
+    response = "**🟢ᴄᴜʀʀᴇɴᴛ ꜱᴄʜᴇᴅᴜʟᴇᴅ ᴄᴏᴜʀꜱᴇꜱ🟠**\n\n"
     for bname, details in batch_configs.items():
         schedule_time = details.get("scheduler_time", {})
         hour = schedule_time.get("hour")
