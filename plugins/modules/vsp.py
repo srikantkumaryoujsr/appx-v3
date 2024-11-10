@@ -29,7 +29,6 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from main import AUTH_USERS
 from .download import account_login
-from config import AUTH_USERS
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -45,7 +44,7 @@ config_collection = db["batch_configs"]
 
 # Global Variables
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-AUTH_USERS = [7224758848]
+AUTH_USERS = [7224758848,7513565186,6804641253]
 LOG_CHANNEL_ID = -1002004338182
 
 def get_current_date():
