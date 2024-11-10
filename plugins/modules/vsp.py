@@ -255,7 +255,7 @@ async def add_batch(bot, message):
             id=bname
         )
 
-        await message.reply(f"New batch added: {bname}")
+        await message.reply(f"➕🟢ɴᴇᴡ ᴄᴏᴜʀꜱᴇ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ🟠\n\nʙᴀᴛᴄʜ ɴᴀᴍᴇ:- {bname}")
 
     except Exception as e:
         await message.reply(f"Error adding batch: {e}")
@@ -297,7 +297,7 @@ async def remove_batch(bot, message):
         await config_collection.delete_one({"batch_name": bname})
         scheduler.remove_job(bname)
 
-        await message.reply(f"Batch '{bname}' removed successfully.")
+        await message.reply(f"🔴Batch🟠 '{bname}' removed successfully.✅")
 
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
