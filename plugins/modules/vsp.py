@@ -7,6 +7,7 @@ from pytz import utc
 from datetime import datetime, timedelta
 from pyrogram import Client, filters
 from Crypto.Cipher import AES
+from .. import bot as Client
 from Crypto.Util.Padding import unpad
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
