@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pymongo import MongoClient
 from dotenv import load_dotenv
+from .. import bot as Client
 
 # Load environment variables
 load_dotenv()
