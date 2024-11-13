@@ -81,39 +81,46 @@ async def handle_channel_selection(bot, query: CallbackQuery):
     await query.answer()
 
 # Gift card message handler
-@Client.on_message(filters.text & ~filters.command("startvsp"))
+# Gift card message handler (Only active after channel selection)
 async def handle_gift_card(bot, message: Message):
     """Forward gift card message to the owner for approval."""
     
-    # Regular expression to match gift card number and pin
-    gift_card_pattern = r"Gift Card Number: (\d{16})\s*Gift Card Pin: (\d{6})"
-    match = re.search(gift_card_pattern, message.text)
-    
-    if match:
-        gift_card_number = match.group(1)
-        gift_card_pin = match.group(2)
-        
-        user_id = message.from_user.id
-        if user_id in pending_approvals:
-            chat_id = pending_approvals[user_id]
-            logger.info(f"Forwarding gift card from user {message.from_user.id} for channel {chat_id}.")
-            
-            # Forward the gift card message to the owner
-            await bot.send_message(
-                OWNER_ID,
-                f"Gift card received from {message.from_user.mention}:\n\n"
-                f"Gift Card Number: {gift_card_number}\nGift Card Pin: {gift_card_pin}\n\n"
-                f"Channel requested: {chat_id}"
-            )
-            
-            # Inform the user
-            await message.reply("आपका गिफ्ट कार्ड भेज दिया गया है, अनुमोदन के बाद आपको चैनल लिंक प्राप्त होगा।")
-        else:
-            await message.reply("कृपया पहले चैनल चयन करें।")
-    else:
-        # If the message doesn't match the gift card format
-        await message.reply("कृपया गिफ्ट कार्ड नंबर और पिन सही फॉर्मेट में भेजें।\n\n**Example:**\nGift Card Number: 9092411066032820\nGift Card Pin: 651993")
+    # Only handle gift card messages if the user has selected a channel
+    user_id = message.from_user.id
+    if user_id in user_state and "channel" in user_state[user_id]:  # Check if the user is in "gift card input mode"
+        # Check if the message starts with "/gift"
+        if message.text.startswith("/gift"):
+            # Extract the card number and card pin from the message text
+            try:
+                # Strip the '/gift' command and split the rest into card number and pin
+                _, card_number, card_pin = message.text.split()
 
+                # Ensure both card number and card pin are of the correct length
+                if len(card_number) == 16 and len(card_pin) == 6:
+                    chat_id = user_state[user_id]["channel"]  # Get the selected channel's chat_id
+                    
+                    logger.info(f"Forwarding gift card from user {user_id} for channel {chat_id}.")
+                    
+                    # Forward the gift card message to the owner
+                    await bot.send_message(
+                        OWNER_ID,
+                        f"Gift card received from {message.from_user.mention}:\n\n"
+                        f"Gift Card Number: {card_number}\nGift Card Pin: {card_pin}\n\n"
+                        f"Channel requested: {chat_id}"
+                    )
+                    
+                    # Inform the user
+                    await message.reply("आपका गिफ्ट कार्ड भेज दिया गया है, अनुमोदन के बाद आपको चैनल लिंक प्राप्त होगा।")
+                else:
+                    await message.reply("गिफ्ट कार्ड नंबर और पिन का फॉर्मेट सही नहीं है। कृपया 16 अंकों का कार्ड नंबर और 6 अंकों का पिन भेजें।")
+            except ValueError:
+                # In case the message doesn't have the expected number of parameters
+                await message.reply("कृपया `/gift cardnumber cardpin` के फॉर्मेट में जानकारी भेजें।")
+        else:
+            await message.reply("कृपया गिफ्ट कार्ड नंबर और पिन `/gift` कमांड के साथ भेजें।")
+    else:
+        # If the user hasn't selected a channel yet
+        await message.reply("कृपया पहले चैनल चयन करें।")
 # Command handler for owner to approve gift card
 @Client.on_message(filters.command("approve") & filters.user(OWNER_ID))
 async def approve_gift_card(bot, message: Message):
