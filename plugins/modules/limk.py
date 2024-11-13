@@ -81,7 +81,7 @@ async def handle_channel_selection(bot, query: CallbackQuery):
     await query.answer()
 
 # Gift card message handler
-# Gift card message handler (Only active after channel selection)
+@Client.on_message(filters.command("gift"))
 async def handle_gift_card(bot, message: Message):
     """Forward gift card message to the owner for approval."""
     
