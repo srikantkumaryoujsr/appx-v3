@@ -5,6 +5,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from .. import bot as Client
+import re
 
 # Load environment variables
 load_dotenv()
@@ -83,19 +84,35 @@ async def handle_channel_selection(bot, query: CallbackQuery):
 @Client.on_message(filters.text)
 async def handle_gift_card(bot, message: Message):
     """Forward gift card message to the owner for approval."""
-    if message.text.startswith("Gift Card Number: 9092"):
+    
+    # Regular expression to match gift card number and pin
+    gift_card_pattern = r"Gift Card Number: (\d{16})\s*Gift Card Pin: (\d{6})"
+    match = re.search(gift_card_pattern, message.text)
+    
+    if match:
+        gift_card_number = match.group(1)
+        gift_card_pin = match.group(2)
+        
         user_id = message.from_user.id
         if user_id in pending_approvals:
             chat_id = pending_approvals[user_id]
             logger.info(f"Forwarding gift card from user {message.from_user.id} for channel {chat_id}.")
+            
+            # Forward the gift card message to the owner
             await bot.send_message(
                 OWNER_ID,
-                f"Gift card received from {message.from_user.mention}:\n\n{message.text}\n\n"
+                f"Gift card received from {message.from_user.mention}:\n\n"
+                f"Gift Card Number: {gift_card_number}\nGift Card Pin: {gift_card_pin}\n\n"
                 f"Channel requested: {chat_id}"
             )
+            
+            # Inform the user
             await message.reply("आपका गिफ्ट कार्ड भेज दिया गया है, अनुमोदन के बाद आपको चैनल लिंक प्राप्त होगा।")
         else:
             await message.reply("कृपया पहले चैनल चयन करें।")
+    else:
+        # If the message doesn't match the gift card format
+        await message.reply("कृपया गिफ्ट कार्ड नंबर और पिन सही फॉर्मेट में भेजें।\n\n**Example:**\nGift Card Number: 9092411066032820\nGift Card Pin: 651993")
 
 # Command handler for owner to approve gift card
 @Client.on_message(filters.command("approve") & filters.user(OWNER_ID))
