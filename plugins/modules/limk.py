@@ -25,7 +25,7 @@ OWNER_ID = "7224758848"
 pending_approvals = {}
 
 # Bot start command handler
-@Client.on_message(filters.command("start"))
+@Client.on_message(filters.command("startvsp"))
 async def start_message(bot, message: Message):
     """Start command handler to show welcome message and channel buttons."""
     try:
