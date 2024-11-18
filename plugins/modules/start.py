@@ -1,8 +1,9 @@
 import aiohttp
+import re
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
-AUTH_USERS = [7224758848,6804641253]
+AUTH_USERS = [7224758848,7513565186,6804641253]
 
 
 # Predefined token
@@ -13,7 +14,19 @@ async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
 
-@Client.on_message(filters.command("start"))
+# Function to delete join/leave messages
+@Client.on_chat_member_updated()
+async def hide_join_leave_messages(bot, update):
+    """Hides join/leave messages."""
+    if update.new_chat_member:
+        # Check if the event is a user joining or leaving
+        if update.new_chat_member.status in ["member", "left", "kicked"]:
+            try:
+                await update.message.delete()  # Delete join/leave message
+            except Exception as e:
+                print(f"Failed to delete join/leave message: {e}")
+
+@Client.on_message(filters.command("start") & filters.user(AUTH_USERS))
 async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
@@ -116,9 +129,9 @@ async def handle_callback(bot, query: CallbackQuery):
                     )
 
                     subjects = subjects_response.get("data", [])
-                    subjects_info = "\n".join([f"   - {subj['subjectid']}: {subj['subject_name']}" for subj in subjects])
+                    subjects_info = "\n".join([f"`{subj['subjectid']}`: `{subj['subject_name']}`" for subj in subjects])
 
-                    course_info = f"**Course ID**: `{course_id}`\n**Course Name**: {course_name}\n**Subjects**:\n{subjects_info}\n"
+                    course_info = f"**Course ID**: `{course_id}`\n**Course Name**: `{course_name}`\n**Subjects**:\n{subjects_info}\n"
                     course_details.append(course_info)
 
                 # Send results in chunks
@@ -133,3 +146,72 @@ async def handle_callback(bot, query: CallbackQuery):
                 await query.message.edit_text("An error occurred during the process. Please try again.")
 
     await query.answer()
+
+@Client.on_message(filters.command("creat") & filters.user(AUTH_USERS))
+async def create_topics(bot, message: Message):
+    """Creates topics in a specified group chat."""
+    try:
+        # Split input by lines
+        lines = message.text.strip().splitlines()
+
+        # Debug: Show each line of the input
+        print("Input lines:")
+        for line in lines:
+            print(line)
+
+        # Parse chat_id from the first line
+        chat_id_line = lines[0]
+        chat_id_match = re.search(r"-\d+", chat_id_line)
+        if not chat_id_match:
+            await message.reply_text("Invalid chat ID format.")
+            return
+
+        chat_id = int(chat_id_match.group())  # Extract chat ID as integer
+
+        # Extract topics (ID and name) from the remaining lines
+        topics = []
+        for line in lines[1:]:
+            # Adjusted regex to match without the leading hyphen
+            match = re.search(r"(\d+): (.+)", line)
+            if match:
+                topic_id = int(match.group(1))
+                topic_name = match.group(2).strip(" @")  # Remove trailing "@" or whitespace
+                topics.append((topic_id, topic_name))
+
+        # Debug: Show the parsed topics
+        print(f"Parsed Topics: {topics}")
+
+        # If no topics were parsed
+        if not topics:
+            await message.reply_text("No topics found in the provided input.")
+            return
+
+        # List to store created topics in the required format
+        created_topics = []
+        topic_counter = 3  # Start from topic number 3
+
+        # Create each topic in the specified chat
+        for topic_id, topic_name in topics:
+            try:
+                # Attempt to create the forum topic using the correct 'title' argument
+                result = await bot.create_forum_topic(chat_id=chat_id, title=topic_name)
+                print(f"Created topic: {topic_name} (ID: {topic_id})")  # Debug output
+                
+                # Add to the list of created topics with the sequential number starting from 3
+                created_topics.append(f"{topic_id}:{chat_id}:{topic_counter}")
+                topic_counter += 1  # Increment the counter for the next topic
+
+                await message.reply_text(f"Topic '{topic_name}' (ID: {topic_id}) created successfully.")
+            except Exception as e:
+                print(f"Error creating topic: {topic_name} (ID: {topic_id}) - {e}")  # Debug output
+                await message.reply_text(f"Failed to create topic '{topic_name}' (ID: {topic_id}): {e}")
+        
+        # If any topics were created, send the summary message
+        if created_topics:
+            # Join the created topics into the specified format
+            summary_message = ",".join(created_topics)
+            await message.reply_text(f"Created topics: `{summary_message}`")
+    
+    except Exception as e:
+        print(f"Error: {e}")  # Debug output for any errors
+        await message.reply_text(f"An error occurred: {e}")
