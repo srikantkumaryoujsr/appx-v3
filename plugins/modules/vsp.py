@@ -54,9 +54,13 @@ def get_current_date():
     yesterday = now - timedelta(days=1)
     return yesterday.strftime("%Y-%m-%d")
 
-# MongoDB job store for persistent job storage
-from apscheduler.jobstores.mongodb import MongoDBJobStore
-jobstores = {'default': MongoDBJobStore(url=MONGO_URI)}
+from apscheduler.jobstores.mongo import MongoDBJobStore
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+jobstores = {
+    'default': MongoDBJobStore(MONGO_URI)
+}
+
 scheduler = AsyncIOScheduler(jobstores=jobstores, timezone="Asia/Kolkata")
 
 def convert_timestamp_to_datetime(timestamp: int) -> str:
