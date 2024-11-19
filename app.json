@@ -1,6 +1,6 @@
 {
     "name": "@sarkari_student",
-    "description": "@sarkari_student",
+    "description": "@sarkari_student Telegram Bot",
     "repository": "https://github.com/vspteam/RWAGROUPBOT",
     "stack": "heroku-22",
     "keywords": [
@@ -19,17 +19,18 @@
             "required": true
         },
         "BOT_TOKEN": {
-            "description": "Your Bot token from @Botfather",
+            "description": "Your Bot token from @BotFather",
             "required": true
         },
         "AUTH_USERS": {
-            "description": "auth users",
+            "description": "Comma-separated list of authorized user IDs",
             "value": "7224758848",
             "required": true
         },
         "MONGO_URI": {
-            "description": "mongo db url",
+            "description": "MongoDB connection URI",
             "required": true
+        }
     },
     "addons": [],
     "buildpacks": [
