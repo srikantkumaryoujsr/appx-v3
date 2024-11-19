@@ -115,7 +115,7 @@ async def all_subject_send(bot, bname, batch_configs):
                 print(f"Error processing subject {subjectid} in batch {bname}: {e}")
 
         await bot.send_message(
-            chat_id=chat_id,
+            chat_id=chatid,
             text=f"**❤️ क्लास अपडेट हो गई है ❤️**\n\n**[ॐ] Date & Day: ➣ {get_current_date_vsp()}**",
             message_thread_id=1
         )
