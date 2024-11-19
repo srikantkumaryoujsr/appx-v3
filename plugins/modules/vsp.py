@@ -183,7 +183,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
                             
             date = get_current_date()
             if date not in all_important:
-                messages = {f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ\n"}
+                messages = {subjectid: f"{get_current_date_vsp()}\n कल इस Subject की कोई Class नहीं हुआ\n"}
                 await bot.send_message(chatid, text=messages[subjectid], message_thread_id=message_thread_id)
                 return
 
