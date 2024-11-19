@@ -314,4 +314,5 @@ async def load_batches_on_start():
             id=bname
         )
 
-scheduler.start()
+load_batches_on_start()  # Ensure jobs are loaded on bot startup
+scheduler.start()         # Start the scheduler
