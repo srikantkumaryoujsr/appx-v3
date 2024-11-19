@@ -1,5 +1,5 @@
 import asyncio
-import config
+from config import AUTH_USERS
 import requests
 import aiohttp
 import base64
