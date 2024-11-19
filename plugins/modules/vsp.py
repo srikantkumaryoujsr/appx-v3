@@ -74,17 +74,18 @@ async def fetch_data(session, url, headers=None):
 
 def decrypt_link(link):
     try:
-        decoded_link = base64.b64decode(link)
+        decoded_link = base64.b64decode(link.encode('utf-8'))
         key = b'638udh3829162018'
         iv = b'fedcba9876543210'
         cipher = AES.new(key, AES.MODE_CBC, iv)
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
-    except ValueError as ve:
-        print(f"Padding error while decrypting link: {ve}")
-    except Exception as e:
-        print(f"Error decrypting link: {e}")
-
+    except ValueError:
+        pass
+        
+    except Exception:
+        pass
+cc02=""
 async def save_config_mongo(batch_name, config_data):
     config_data["subject_and_channel"] = {str(k): v for k, v in config_data["subject_and_channel"].items()}
     await config_collection.update_one({"batch_name": batch_name}, {"$set": config_data}, upsert=True)
@@ -109,7 +110,7 @@ async def all_subject_send(bot, bname, batch_configs):
             try:
                 await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname)
             except FloodWait as e:
-                await asyncio.sleep(e.x)
+                await asyncio.sleep(1)
             except Exception as e:
                 print(f"Error processing subject {subjectid} in batch {bname}: {e}")
 
