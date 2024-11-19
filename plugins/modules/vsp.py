@@ -56,7 +56,7 @@ def get_current_date():
 
 # MongoDB job store for persistent job storage
 from apscheduler.jobstores.mongodb import MongoDBJobStore
-jobstores = {default': MongoDBJobStore(url=MONGO_URI)  # MongoDB for persistent job storage}
+jobstores = {'default': MongoDBJobStore(url=MONGO_URI)  # MongoDB for persistent job storage}
 scheduler = AsyncIOScheduler(jobstores=jobstores, timezone="Asia/Kolkata")
 
 def convert_timestamp_to_datetime(timestamp: int) -> str:
