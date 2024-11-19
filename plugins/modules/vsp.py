@@ -1,5 +1,5 @@
 import asyncio
-from config import AUTH_USERS
+import config
 import requests
 import aiohttp
 import base64
@@ -45,7 +45,7 @@ config_collection = db["batch_configs"]
 
 # Global Variables
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-# AUTH_USERS = [7224758848,7513565186,6804641253]
+AUTH_USERS = [7224758848,7513565186,6804641253]
 # LOG_CHANNEL_ID = -1002004338182
 
 def get_current_date():
