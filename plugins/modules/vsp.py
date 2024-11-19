@@ -54,15 +54,6 @@ def get_current_date():
     yesterday = now - timedelta(days=1)
     return yesterday.strftime("%Y-%m-%d")
 
-from apscheduler.jobstores.mongo import MongoDBJobStore
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
-jobstores = {
-    'default': MongoDBJobStore(MONGO_URI)
-}
-
-scheduler = AsyncIOScheduler(jobstores=jobstores, timezone="Asia/Kolkata")
-
 def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
     return date_time.strftime('%Y-%m-%d')
@@ -83,18 +74,17 @@ async def fetch_data(session, url, headers=None):
 
 def decrypt_link(link):
     try:
-        decoded_link = base64.b64decode(link.encode('utf-8'))
+        decoded_link = base64.b64decode(link)
         key = b'638udh3829162018'
         iv = b'fedcba9876543210'
         cipher = AES.new(key, AES.MODE_CBC, iv)
         decrypted_link = unpad(cipher.decrypt(decoded_link), AES.block_size).decode('utf-8')
         return decrypted_link
-    except ValueError:
-        pass
+    except ValueError as ve:
+        print(f"Padding error while decrypting link: {ve}")
+    except Exception as e:
+        print(f"Error decrypting link: {e}")
         
-    except Exception:
-        pass
-cc02=""
 async def save_config_mongo(batch_name, config_data):
     config_data["subject_and_channel"] = {str(k): v for k, v in config_data["subject_and_channel"].items()}
     await config_collection.update_one({"batch_name": batch_name}, {"$set": config_data}, upsert=True)
@@ -323,7 +313,4 @@ async def load_batches_on_start():
             id=bname
         )
 
-async def start_bot():
-    await load_batches_on_start()
-    scheduler.start()
-    await Client.start()
+scheduler.start()
