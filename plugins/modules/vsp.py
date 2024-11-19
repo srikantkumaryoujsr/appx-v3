@@ -38,7 +38,7 @@ from pyrogram.errors import FloodWait
 import os
 
 # MongoDB Configuration
-# Update this URI if necessary
+MONGO_URI = "mongodb+srv://aiitassam:SY06t3delyAShe71@cluster0.ugawa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = AsyncIOMotorClient(MONGO_URI)
 db = client["bot_database"]
 config_collection = db["batch_configs"]
