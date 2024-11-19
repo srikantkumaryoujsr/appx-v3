@@ -38,15 +38,15 @@ from pyrogram.errors import FloodWait
 import os
 
 # MongoDB Configuration
-MONGO_URI = "mongodb+srv://aiitassam:SY06t3delyAShe71@cluster0.ugawa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Update this URI if necessary
+# Update this URI if necessary
 client = AsyncIOMotorClient(MONGO_URI)
 db = client["bot_database"]
 config_collection = db["batch_configs"]
 
 # Global Variables
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-AUTH_USERS = [7224758848,7513565186,6804641253]
-LOG_CHANNEL_ID = -1002004338182
+# AUTH_USERS = [7224758848,7513565186,6804641253]
+# LOG_CHANNEL_ID = -1002004338182
 
 def get_current_date():
     ist = pytz.timezone('Asia/Kolkata')
