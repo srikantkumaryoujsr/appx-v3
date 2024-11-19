@@ -54,6 +54,13 @@ def get_current_date():
     yesterday = now - timedelta(days=1)
     return yesterday.strftime("%Y-%m-%d")
 
+# MongoDB job store for persistent job storage
+from apscheduler.jobstores.mongodb import MongoDBJobStore
+jobstores = {
+    'default': MongoDBJobStore(url=MONGO_URI)  # MongoDB for persistent job storage
+}
+scheduler = AsyncIOScheduler(jobstores=jobstores, timezone="Asia/Kolkata")
+
 def convert_timestamp_to_datetime(timestamp: int) -> str:
     date_time = datetime.utcfromtimestamp(timestamp)
     return date_time.strftime('%Y-%m-%d')
@@ -314,5 +321,7 @@ async def load_batches_on_start():
             id=bname
         )
 
-load_batches_on_start()  # Ensure jobs are loaded on bot startup
-scheduler.start()         # Start the scheduler
+async def start_bot():
+    await load_batches_on_start()
+    scheduler.start()
+    await Client.start()
