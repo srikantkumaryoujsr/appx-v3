@@ -303,20 +303,21 @@ async def remove_batch(bot, message):
         await message.reply(f"Error removing batch: {e}")
 
 async def load_batches_on_start():
-    batch_configs = await load_config_mongo()
-    for bname, config in batch_configs.items():
-        schedule_time = config["scheduler_time"]
-        scheduler.add_job(
-            func=all_subject_send,
-            trigger=CronTrigger(hour=schedule_time["hour"], minute=schedule_time["minute"], second=0, timezone="Asia/Kolkata"),
-            args=[Client, bname, batch_configs],
-            id=bname
-        )
-        print(f"Scheduled batch '{bname}' at {schedule_time['hour']}:{schedule_time['minute']} IST.")
-except Exception as e:
+    try:
+        batch_configs = await load_config_mongo()
+        for bname, config in batch_configs.items():
+            schedule_time = config["scheduler_time"]
+            scheduler.add_job(
+                func=all_subject_send,
+                trigger=CronTrigger(hour=schedule_time["hour"], minute=schedule_time["minute"], second=0, timezone="Asia/Kolkata"),
+                args=[Client, bname, batch_configs],
+                id=bname
+            )
+            print(f"Scheduled batch '{bname}' at {schedule_time['hour']}:{schedule_time['minute']} IST.")
+    except Exception as e:
         print(f"Error loading batches on startup: {e}")
 
-@app.on_startup
+@Client.on_startup
 async def startup_actions():
     print("Starting bot...")
     await load_batches_on_start()
