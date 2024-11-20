@@ -26,6 +26,11 @@ from config import *
 import sys
 import re
 import os
+import aiohttp
+import re
+from pyrogram import Client, filters
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from .. import bot as Client
 
 MONGO_URI = "mongodb+srv://stoner:ZrGD9K3ZPjsw6rVd@cluster0.tl9sc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" 
 
