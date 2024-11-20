@@ -51,7 +51,7 @@ async def account_login(bot: Client, content, bname, chatid, message_thread_id):
     raw_text2 = "360"
     if raw_text2 == "360":
         res = "640x360"
-    raw_text3 = "[🤡ᴀɴᴋɪᴛ ʙʜᴀᴛɪ ꜱɪʀ🤡](https://t.me/rojgaarwithankit)"
+    raw_text3 = "[🟢ʜᴇʟᴘ-ᴡɪᴛʜ-ʙᴇʀᴏᴊɢᴀʀ🟠](https://t.me/berojgaarwithankit)"
     backup = "[⛅𝐁𝐚𝐜𝐤𝐮𝐩 𝐂𝐡𝐚𝐧𝐧𝐞𝐥⛅](https://t.me/+YQPgMcccJmoyNjJl)"
     MR = raw_text3
     thumb = "no"
