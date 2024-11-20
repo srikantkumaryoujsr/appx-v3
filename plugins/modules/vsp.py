@@ -37,6 +37,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from apscheduler.triggers.cron import CronTrigger
 from pyrogram.errors import FloodWait
 import os
+from plugins.modules.subscription import check_subscription
 
 # MongoDB Configuration
 MONGO_URI = "mongodb+srv://heeokumailseptember:nfOkF8F4zn1FIAFQ@cluster0.xb62l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
