@@ -26,10 +26,6 @@
             "description": "Comma-separated list of authorized user IDs",
             "value": "7224758848",
             "required": true
-        },
-        "MONGO_URI": {
-            "description": "MongoDB connection URI",
-            "required": true
         }
     },
     "addons": [],
