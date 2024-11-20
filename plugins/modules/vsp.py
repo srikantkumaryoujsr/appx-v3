@@ -266,6 +266,9 @@ async def add_batch(bot, message):
 
 @Client.on_message(filters.command("viewbatches"))
 async def view_batches(bot, message):
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("❌ You do not have an active subscription.\nContact admin to subscribe.")
+        return
     batch_configs = await load_config_mongo()
     if not batch_configs:
         await message.reply("No batches configured.")
