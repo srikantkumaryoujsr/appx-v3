@@ -27,7 +27,7 @@ async def hide_join_leave_messages(bot, update):
             except Exception as e:
                 print(f"Failed to delete join/leave message: {e}")
 
-@Client.on_message(filters.command("start") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("start"))
 async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
@@ -36,7 +36,7 @@ async def start_message(bot, message: Message):
             [InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖❤️", callback_data="removebatch")],
             [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️❤️", callback_data="viewbatches")],
             [InlineKeyboardButton("🟢𝗚𝗘𝗧 𝗔𝗟𝗟 𝗥𝗪𝗔 𝗕𝗔𝗧𝗖𝗛 𝗜𝗡𝗙𝗢.🦋", callback_data="get_all_courses")],
-            [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/rojgaarwithankit")],
+            [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/Berojgaarwithankit")],
             [InlineKeyboardButton("❓ 𝐇𝐞𝐥𝐩 ❓", callback_data="help")]
         ])
 
@@ -47,7 +47,7 @@ async def start_message(bot, message: Message):
             "**🟢𝐈𝐦𝐩𝐨𝐫𝐭𝐚𝐧𝐭 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬🟢**\n"
             "**/RWA -ᴛʜᴀᴛ ꜰᴇᴛᴄʜᴇꜱ ᴛʜᴇ ᴄᴏᴍᴘʟᴇᴛᴇ ʟɪɴᴋꜱ ᴏꜰ ᴄᴏᴜʀꜱᴇꜱ ꜰʀᴏᴍ ᴛʜᴇ 'ʀᴏᴊɢᴀʀᴡɪᴛʜᴀɴᴋɪᴛ' ᴀᴘᴘ ɪɴ ᴀ ᴛᴇxᴛ ꜰᴏʀᴍᴀᴛ, ʜᴇʀᴇ’ꜱ ʜᴏᴡ ʏᴏᴜ ᴄᴀɴ ꜱᴛʀᴜᴄᴛᴜʀᴇ ɪᴛ​**\n\n"
             "**❤️𝐓𝐡𝐚𝐧𝐤 𝐲𝐨𝐮 𝐟𝐨𝐫 𝐛𝐞𝐢𝐧𝐠 𝐩𝐚𝐫𝐭 𝐨𝐟 𝐭𝐡𝐞 𝐥𝐞𝐚𝐫𝐧𝐢𝐧𝐠 𝐣𝐨𝐮𝐫𝐧𝐞𝐲 𝐰𝐢𝐭𝐡 𝐑𝐨𝐣𝐠𝐚𝐫𝐖𝐢𝐭𝐡𝐀𝐧𝐤𝐢𝐭! 𝐊𝐞𝐞𝐩 𝐮𝐩 𝐭𝐡𝐞 𝐠𝐫𝐞𝐚𝐭 𝐰𝐨𝐫𝐤, 𝐚𝐧𝐝 𝐝𝐨𝐧'𝐭 𝐡𝐞𝐬𝐢𝐭𝐚𝐭𝐞 𝐭𝐨 𝐫𝐞𝐚𝐜𝐡 𝐨𝐮𝐭 𝐚𝐧𝐲𝐭𝐢𝐦𝐞. 🚀❤️**\n\n"
-            "**🟢ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🟡:- @rojgaarwithankit**"
+            "**🟢ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🟡:- @Berojgaarwithankit**"
         )
 
         await bot.send_photo(
