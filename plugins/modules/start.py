@@ -3,6 +3,7 @@ import re
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
+from plugins.modules.subscription import check_subscription
 AUTH_USERS = [7224758848,7478730519]
 
 
@@ -14,7 +15,7 @@ async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
 
-@Client.on_message(filters.command("start") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("start"))
 async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
@@ -51,7 +52,7 @@ async def handle_callback(bot, query: CallbackQuery):
     data = query.data
 
     if data.startswith("addbatch"):
-        if query.from_user.id not in AUTH_USERS:
+        if not check_subscription(query.from_user.id):
                 await query.answer("You are not authorized to use this command.", show_alert=True)
                 return
             
@@ -60,7 +61,7 @@ async def handle_callback(bot, query: CallbackQuery):
             f"`/setconfig bname subjectid:chatid:threadid,... chat_id courseid hour minute`"
         )
     elif data.startswith("removebatch"):
-        if query.from_user.id not in AUTH_USERS:
+        if not check_subscription(query.from_user.id):
                 await query.answer("You are not authorized to use this command.", show_alert=True)
                 return
             
@@ -69,7 +70,7 @@ async def handle_callback(bot, query: CallbackQuery):
         )
 
     elif data.startswith("viewbatches"):
-        if query.from_user.id not in AUTH_USERS:
+        if not check_subscription(query.from_user.id):
                 await query.answer("You are not authorized to use this command.", show_alert=True)
                 return
             
@@ -81,7 +82,7 @@ async def handle_callback(bot, query: CallbackQuery):
             f"**ᴡᴇ’ʀᴇ ᴡᴏʀᴋɪɴɢ ᴏɴ ᴀ ᴠɪᴅᴇᴏ ᴛᴜᴛᴏʀɪᴀʟ ᴛᴏ ᴍᴀᴋᴇ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ ᴇᴠᴇɴ ᴇᴀꜱɪᴇʀ! ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ꜱᴏᴏɴ. ᴋᴇᴇᴘ ʟᴇᴀʀɴɪɴɢ ᴡɪᴛʜ ᴜꜱ! 📹🚀**"
         )
     elif data == "get_all_courses":
-        if query.from_user.id not in AUTH_USERS:
+        if not check_subscription(query.from_user.id):
                 await query.answer("You are not authorized to use this command.", show_alert=True)
                 return
             
