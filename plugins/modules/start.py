@@ -1,6 +1,5 @@
 import aiohttp
 import re
-import config
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
@@ -15,19 +14,7 @@ async def fetch_data(session, url, headers=None):
     async with session.get(url, headers=headers) as response:
         return await response.json()
 
-# Function to delete join/leave messages
-@Client.on_chat_member_updated()
-async def hide_join_leave_messages(bot, update):
-    """Hides join/leave messages."""
-    if update.new_chat_member:
-        # Check if the event is a user joining or leaving
-        if update.new_chat_member.status in ["member", "left", "kicked"]:
-            try:
-                await update.message.delete()  # Delete join/leave message
-            except Exception as e:
-                print(f"Failed to delete join/leave message: {e}")
-
-@Client.on_message(filters.command("start"))
+@Client.on_message(filters.command("start") & filters.user(AUTH_USERS))
 async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
@@ -99,7 +86,6 @@ async def handle_callback(bot, query: CallbackQuery):
                 return
             
         await query.message.reply_text("**ᴘʟᴇᴀꜱᴇ ᴡᴀɪᴛ ᴀ ᴍᴏᴍᴇɴᴛ, ɪ’ᴍ ᴘʀᴇᴘᴀʀɪɴɢ ᴛʜᴇ ʙᴀᴛᴄʜ ᴅᴇᴛᴀɪʟꜱ ꜰᴏʀ ʏᴏᴜ. ɪᴛ ᴡɪʟʟ ᴏɴʟʏ ᴛᴀᴋᴇ ᴀʙᴏᴜᴛ 2 ᴍɪɴᴜᴛᴇꜱ!...**")
-
         headers = {
             'auth-key': 'appxapi',
             'authorization': TOKEN,
@@ -116,37 +102,36 @@ async def handle_callback(bot, query: CallbackQuery):
                 if not courses:
                     return await query.message.edit_text("No courses found for this account.")
 
-                # Prepare course and subject details
-                course_details = []
+                # Send details for each course
                 for course in courses:
                     course_id = course.get("id")
                     course_name = course.get("course_name")
 
-                    # Fetch subjects under each course
+                    # Fetch subjects under the course
                     subjects_response = await fetch_data(
-                        session, 
-                        f"https://rozgarapinew.teachx.in/get/allsubjectfrmlivecourseclass?courseid={course_id}&start=-1", 
+                        session,
+                        f"https://rozgarapinew.teachx.in/get/allsubjectfrmlivecourseclass?courseid={course_id}&start=-1",
                         headers=headers
                     )
 
                     subjects = subjects_response.get("data", [])
-                    subjects_info = "\n".join([f"`{subj['subjectid']}`: `{subj['subject_name']}`" for subj in subjects])
+                    subjects_info = "\n".join([f"`{subj['subjectid']}`: `{subj['subject_name']}`" for subj in subjects]) if subjects else "No subjects found."
 
-                    course_info = f"**Course ID**: `{course_id}`\n**Course Name**: `{course_name}`\n**Subjects**:\n{subjects_info}\n"
-                    course_details.append(course_info)
-
-                # Send results in chunks
-                result = "\n\n".join(course_details)
-                for chunk in [result[i:i+4000] for i in range(0, len(result), 4000)]:
-                    await query.message.reply_text(chunk)
+                    # Send course info
+                    course_info = (
+                        f"**Course ID**: `{course_id}`\n"
+                        f"**Course Name**: `{course_name}`\n"
+                        f"**Subjects**:\n`{subjects_info}`\n"
+                    )
+                    await query.message.reply_text(course_info)
 
                 await query.message.delete()
 
             except Exception as e:
-                print(f"Error: {e}")
-                await query.message.edit_text("An error occurred during the process. Please try again.")
+                print(f"Error fetching courses: {e}")
+                await query.message.edit_text("An error occurred. Please try again.")
 
-    await query.answer()
+        await query.answer()
 
 @Client.on_message(filters.command("creat") & filters.user(AUTH_USERS))
 async def create_topics(bot, message: Message):
