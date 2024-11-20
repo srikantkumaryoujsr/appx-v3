@@ -76,7 +76,23 @@ async def subscribe_user(bot, m: Message):
         user_id = int(user_id)
         days = int(days)
         add_subscription(user_id, days)
-        await m.reply_text(f"**🟠🟡🟢 User {user_id} subscribed for {days} days.❤️**")
+        
+        # Notify the user
+        try:
+            await bot.send_message(
+                user_id,
+                f"🎉 **ᴄᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴꜱ!**\n\n"
+                f"**✅ ʏᴏᴜ ʜᴀᴠᴇ ʙᴇᴇɴ ꜱᴜʙꜱᴄʀɪʙᴇᴅ ꜰᴏʀ {days} days.**\n"
+                f"**🎈🟢🟡🟠 ᴇɴᴊᴏʏ ʏᴏᴜʀ ᴀᴄᴄᴇꜱꜱ! ɪꜰ ʏᴏᴜ ʜᴀᴠᴇ ᴀɴʏ Qᴜᴇꜱᴛɪᴏɴꜱ, ꜰᴇᴇʟ ꜰʀᴇᴇ ᴛᴏ ʀᴇᴀᴄʜ ᴏᴜᴛ.🟢🟡🟠**"
+            )
+            notification_status = "Notification sent successfully."
+        except Exception as e:
+            notification_status = f"Failed to notify the user: {e}"
+        
+        # Acknowledge the admin
+        await m.reply_text(
+            f"**🟠🟡🟢 User {user_id} subscribed for {days} days.❤️**\n{notification_status}"
+        )
     except Exception as e:
         await m.reply_text(f"❌ Failed to add subscription: {e}")
 
