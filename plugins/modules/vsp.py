@@ -1,4 +1,5 @@
 import asyncio
+import sys
 import config
 import requests
 import aiohttp
@@ -322,3 +323,14 @@ async def load_batches_on_start():
         print(f"Error loading batches on startup: {e}")
         
 scheduler.start()
+
+@Client.on_message(filters.command("restart") & filters.user(AUTH_USERS))
+async def restart_bot(bot, message):
+    try:
+        await message.reply("🟠🟢𝐁𝐨𝐭 𝐑𝐞𝐬𝐭𝐚𝐫𝐭𝐞𝐝 𝐒𝐮𝐜𝐜𝐞𝐜𝐟𝐮𝐥𝐥𝐲🔴✅")
+        # Save any critical data or perform cleanup if necessary here
+        
+        # Restart the bot using execv
+        os.execv(sys.executable, ['python'] + sys.argv)
+    except Exception as e:
+        await message.reply(f"Failed to restart the bot: {e}")
