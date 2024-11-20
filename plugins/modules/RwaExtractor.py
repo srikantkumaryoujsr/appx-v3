@@ -8,9 +8,10 @@ from pyrogram import Client, filters
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from .. import bot as Client
+from plugins.modules.subscription import check_subscription
 
 LOG_CHANNEL_ID = -1001801766701
-AUTH_USERS = [7224758848,7478730519]
+
 
 
 async def fetch_data(session, url, headers=None):
@@ -33,8 +34,11 @@ def decrypt_link(link):
 cc02 = ""
 TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjUxNzA3NyIsImVtYWlsIjoidml2ZWtrYXNhbmE0QGdtYWlsLmNvbSIsInRpbWVzdGFtcCI6MTcyNjkzNzA4OX0.NM1SbOjDFZCLinFi66jKxwRQPgLWFN-_SAMgcPWvfk4"
 
-@Client.on_message(filters.command("rwa") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("rwa"))
 async def account_login(bot: Client, m: Message):
+    if not check_subscription(m.from_user.id):
+        await m.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
     editable = await m.reply_text("🟢🟡🔵𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐲𝐨𝐮𝐫 𝐛𝐚𝐭𝐜𝐡 𝐝𝐞𝐭𝐚𝐢𝐥𝐬... 𝐏𝐥𝐞𝐚𝐬𝐞 𝐰𝐚𝐢𝐭.🟢🟡🔵")
 
     headers = {
