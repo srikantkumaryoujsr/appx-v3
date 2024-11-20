@@ -64,8 +64,8 @@ def remove_subscription(user_id):
     return result.deleted_count > 0
 
 
-@bot.on_message(filters.command("subscribe") & filters.user(ADMINS))
-async def subscribe_user(bot: Client, m: Message):
+@Client.on_message(filters.command("subscribe") & filters.user(ADMINS))
+async def subscribe_user(bot, m: Message):
     """Admin command to add a subscription for a user."""
     try:
         _, user_id, days = m.text.split()
@@ -76,8 +76,8 @@ async def subscribe_user(bot: Client, m: Message):
     except Exception as e:
         await m.reply_text(f"❌ Failed to add subscription: {e}")
 
-@bot.on_message(filters.command("myplan"))
-async def my_plan(bot: Client, m: Message):
+@Client.on_message(filters.command("myplan"))
+async def my_plan(bot, m: Message):
     """Check the subscription details for the current user."""
     try:
         user_id = m.from_user.id
@@ -94,8 +94,8 @@ async def my_plan(bot: Client, m: Message):
     except Exception as e:
         await m.reply_text(f"❌ Error checking your plan: {e}")
 
-@bot.on_message(filters.command("status") & filters.user(ADMINS))
-async def subscription_status(bot: Client, m: Message):
+@Client.on_message(filters.command("status") & filters.user(ADMINS))
+async def subscription_status(bot, m: Message):
     """Check the subscription status of a user."""
     try:
         user_id = int(m.text.split()[1])
@@ -108,8 +108,8 @@ async def subscription_status(bot: Client, m: Message):
     except Exception as e:
         await m.reply_text(f"❌ Error checking status: {e}")
 
-@bot.on_message(filters.command("remove") & filters.user(ADMINS))
-async def remove_user_subscription(bot: Client, m: Message):
+@Client.on_message(filters.command("remove") & filters.user(ADMINS))
+async def remove_user_subscription(bot, m: Message):
     """Admin command to remove a subscription for a user."""
     try:
         user_id = int(m.text.split()[1])
