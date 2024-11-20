@@ -37,7 +37,7 @@ client = MongoClient(MONGO_URI)
 db = client["bot_database"]  
 subscriptions = db["subscriptions"]  
 
-ADMINS = [7015210460,7224758848] 
+ADMINS = [7224758848] 
 
 def add_subscription(user_id, days=30):
     """Add or extend a subscription for a user."""
@@ -68,7 +68,7 @@ def remove_subscription(user_id):
     return result.deleted_count > 0
 
 
-@Client.on_message(filters.command("subscribe") & filters.user(ADMINS))
+@Client.on_message(filters.command("auth") & filters.user(ADMINS))
 async def subscribe_user(bot, m: Message):
     """Admin command to add a subscription for a user."""
     try:
@@ -76,7 +76,7 @@ async def subscribe_user(bot, m: Message):
         user_id = int(user_id)
         days = int(days)
         add_subscription(user_id, days)
-        await m.reply_text(f"✅ User {user_id} subscribed for {days} days.")
+        await m.reply_text(f"**🟠🟡🟢 User {user_id} subscribed for {days} days.❤️**")
     except Exception as e:
         await m.reply_text(f"❌ Failed to add subscription: {e}")
 
@@ -89,9 +89,10 @@ async def my_plan(bot, m: Message):
         if expires_at:
             status = "Active" if expires_at > datetime.utcnow() else "Expired"
             await m.reply_text(
-                f"📋 **Your Subscription Details**:\n"
+                f"🟢🟡🟠**Your Subscription Details**☢️\n"
                 f"**Status**: {status}✅\n"
                 f"**Expires At**: {expires_at}"
+                f"**========================**"
             )
         else:
             await m.reply_text("❌ You do not have an active subscription.")
@@ -118,7 +119,7 @@ async def remove_user_subscription(bot, m: Message):
     try:
         user_id = int(m.text.split()[1])
         if remove_subscription(user_id):
-            await m.reply_text(f"✅ User {user_id}'s subscription has been removed.")
+            await m.reply_text(f"**✅ User {user_id}'s subscription has been removed.🟠🟡🟢**")
         else:
             await m.reply_text(f"❌ User {user_id} does not have a subscription.")
     except Exception as e:
