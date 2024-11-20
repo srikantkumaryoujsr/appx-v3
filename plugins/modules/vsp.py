@@ -312,5 +312,13 @@ async def load_batches_on_start():
             args=[Client, bname, batch_configs],
             id=bname
         )
+        print(f"Scheduled batch '{bname}' at {schedule_time['hour']}:{schedule_time['minute']} IST.")
+except Exception as e:
+        print(f"Error loading batches on startup: {e}")
 
-scheduler.start()
+@app.on_startup
+async def startup_actions():
+    print("Starting bot...")
+    await load_batches_on_start()
+    print("All batches loaded and scheduled.")
+    scheduler.start()
