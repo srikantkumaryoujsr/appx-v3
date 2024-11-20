@@ -132,8 +132,11 @@ async def handle_callback(bot, query: CallbackQuery):
 
         await query.answer()
 
-@Client.on_message(filters.command("creat") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("creat"))
 async def create_topics(bot, message: Message):
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
     """Creates topics in a specified group chat."""
     try:
         # Split input by lines
