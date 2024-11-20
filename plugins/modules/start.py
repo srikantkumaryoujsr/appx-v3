@@ -4,7 +4,6 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
 from plugins.modules.subscription import check_subscription
-AUTH_USERS = [7224758848,7478730519]
 
 
 # Predefined token
@@ -53,29 +52,28 @@ async def handle_callback(bot, query: CallbackQuery):
 
     if data.startswith("addbatch"):
         if not check_subscription(query.from_user.id):
-                await query.answer("You are not authorized to use this command.", show_alert=True)
+                await query.answer("❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴", show_alert=True)
                 return
             
         await query.message.reply(
-            f"Use the command `/addbatch` in the following format:\n"
-            f"`/setconfig bname subjectid:chatid:threadid,... chat_id courseid hour minute`"
+            f"**🟢🔵🟡 ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ🟠☢️ :-**\n\n`/setconfig bname subjectid:chatid:threadid,... chat_id courseid hour minute`"
         )
     elif data.startswith("removebatch"):
         if not check_subscription(query.from_user.id):
-                await query.answer("You are not authorized to use this command.", show_alert=True)
+                await query.answer("❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴", show_alert=True)
                 return
             
         await query.message.reply(
-            f"Fetching configuration for Course ... Use `/removebatch batch-Name` for details."
+            f"**🟢🔵🟡 ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ🟠☢️ :-**\n\n `/removebatch batch-Name`"
         )
 
     elif data.startswith("viewbatches"):
         if not check_subscription(query.from_user.id):
-                await query.answer("You are not authorized to use this command.", show_alert=True)
+                await query.answer("❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴", show_alert=True)
                 return
             
         await query.message.reply(
-            f"Fetching configuration for Course ... Use `/viewbatches` for details."
+            f"**🟢🔵🟡 ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ🟠☢️ :-**\n\n `/viewbatches`"
         )
     elif data.startswith("help"):
         await query.message.reply(
@@ -83,7 +81,7 @@ async def handle_callback(bot, query: CallbackQuery):
         )
     elif data == "get_all_courses":
         if not check_subscription(query.from_user.id):
-                await query.answer("You are not authorized to use this command.", show_alert=True)
+                await query.answer("❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴", show_alert=True)
                 return
             
         await query.message.reply_text("**ᴘʟᴇᴀꜱᴇ ᴡᴀɪᴛ ᴀ ᴍᴏᴍᴇɴᴛ, ɪ’ᴍ ᴘʀᴇᴘᴀʀɪɴɢ ᴛʜᴇ ʙᴀᴛᴄʜ ᴅᴇᴛᴀɪʟꜱ ꜰᴏʀ ʏᴏᴜ. ɪᴛ ᴡɪʟʟ ᴏɴʟʏ ᴛᴀᴋᴇ ᴀʙᴏᴜᴛ 2 ᴍɪɴᴜᴛᴇꜱ!...**")
