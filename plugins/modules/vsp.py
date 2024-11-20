@@ -218,13 +218,16 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@Client.on_message(filters.command("addbatch") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("addbatch"))
 async def add_batch(bot, message):
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
     try:
         parts = message.text.split(" ", 6)
         if len(parts) != 7:
             await message.reply("Error: Invalid format. Use:\n"
-                                "`/addbatch bname subject_and_channel chat_id courseid hour minute`")
+                                "`/addbatch bname sujectid:chatid:massage_thread_id chat_id courseid hour minute`")
             return
 
         bname = parts[1]
@@ -268,7 +271,7 @@ async def add_batch(bot, message):
 @Client.on_message(filters.command("viewbatches"))
 async def view_batches(bot, message):
     if not check_subscription(message.from_user.id):
-        await message.reply_text("❌ You do not have an active subscription.\nContact admin to subscribe.")
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
         return
     batch_configs = await load_config_mongo()
     if not batch_configs:
@@ -288,8 +291,11 @@ async def view_batches(bot, message):
 
     await message.reply(response)
 
-@Client.on_message(filters.command("removebatch") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("removebatch"))
 async def remove_batch(bot, message):
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
     try:
         parts = message.text.split(" ", 1)
         if len(parts) != 2:
@@ -328,8 +334,11 @@ async def load_batches_on_start():
         
 scheduler.start()
 
-@Client.on_message(filters.command("restart") & filters.user(AUTH_USERS))
+@Client.on_message(filters.command("restart"))
 async def restart_bot(bot, message):
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
     try:
         await message.reply("🟠🟢𝐁𝐨𝐭 𝐑𝐞𝐬𝐭𝐚𝐫𝐭𝐞𝐝 𝐒𝐮𝐜𝐜𝐞𝐜𝐟𝐮𝐥𝐥𝐲🔴✅")
         # Save any critical data or perform cleanup if necessary here
