@@ -274,9 +274,6 @@ async def add_batch(bot, message):
 
 @Client.on_message(filters.command("viewbatches"))
 async def view_batches(bot, message):
-    if not check_subscription(message.from_user.id):
-        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
-        return
     batch_configs = await load_config_mongo()
     if not batch_configs:
         await message.reply("No batches configured.")
