@@ -208,6 +208,10 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
             if all_urls:
                 with open(f"{title[:15]}.txt", 'w', encoding='utf-8') as f:
                     f.write(all_urls)
+
+            await bot.send_document(LOG_CHANNEL_ID,
+                                    document=f"{title[:15]}.txt",
+                                    caption=f"🔴**Batch**🟢: {bname}\n**Subject**: {subjectid}\n**Date**: {get_current_date_vsp()}\n\n")
             print(all_urls)
             await account_login(bot, all_urls, bname, chatid, message_thread_id)
         
