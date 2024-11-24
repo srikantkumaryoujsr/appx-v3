@@ -132,13 +132,13 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
     userid = "189678"  # Static user ID for the example
     async with aiohttp.ClientSession() as session:
         try:
-            headers = {
+            hdr1 = {
                 'auth-key': 'appxapi',
                 'authorization': token,
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9'
             }
-            res1 = await fetch_data(session, f"{api_url}/get/mycourse?userid={userid}", headers=headers)
+            res1 = await fetch_data(session, f"{api_url}/get/mycourse?userid={userid}", headers=hdr1)
             bdetail = res1.get("data", [])
            
             
