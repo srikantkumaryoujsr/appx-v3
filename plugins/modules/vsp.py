@@ -40,7 +40,7 @@ import os
 from plugins.modules.subscription import check_subscription
 
 # MongoDB Configuration
-MONGO_URI = "mongodb+srv://heeokumailseptember:nfOkF8F4zn1FIAFQ@cluster0.xb62l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+MONGO_URI = "mongodb+srv://aiitassam:SY06t3delyAShe71@cluster0.ugawa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = AsyncIOMotorClient(MONGO_URI)
 db = client["bot_database"]
 config_collection = db["batch_configs"]
@@ -101,50 +101,50 @@ async def load_config_mongo():
     return batch_configs
 
 async def all_subject_send(bot, bname, batch_configs):
+    """Send updates for all subjects in a batch."""
     try:
         batch_config = batch_configs[bname]
         subject_and_channel = batch_config["subject_and_channel"]
         chat_id = batch_config["chat_id"]
         courseid = batch_config["courseid"]
+        api_url = batch_config.get("api_url", "https://rozgarapinew.teachx.in")
+        token = batch_config.get("token", "default_token_here")
 
         for subjectid, (chatid, message_thread_id) in subject_and_channel.items():
             try:
-                await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname)
+                await account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, api_url, token)
             except FloodWait as e:
-                await asyncio.sleep(1)
+                await asyncio.sleep(e.value)
             except Exception as e:
                 print(f"Error processing subject {subjectid} in batch {bname}: {e}")
 
         await bot.send_message(
             chat_id=chatid,
-            text=f"**❤️ क्लास अपडेट हो गई है ❤️**\n\n**[ॐ] Date & Day: ➣ {get_current_date_vsp()}**",
+            text=f"**❤️ Class update completed ❤️**\n\n**[ॐ] Date & Day: ➣ {get_current_date_vsp()}**",
             message_thread_id=1
         )
 
     except Exception as e:
         print(f"Error in all_subject_send: {e}")
 
-async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname):
-    # Add your login and data fetching logic here
-    pass
-    userid = "189678"
+async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bname, api_url, token):
+    """Process account logins and handle data."""
+    userid = "189678"  # Static user ID for the example
     async with aiohttp.ClientSession() as session:
         try:
-            token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjQzMDIyMzEiLCJlbWFpbCI6InNhdXJhYmhrYXVzaGlrc2hhcm1hc0BnbWFpbC5jb20iLCJ0aW1lc3RhbXAiOjE3MTUxNDg3ODl9.YHQvtTXSjEsaytQI1p2TVzb0faIm5R3e96LVKtCsZQU"
-            hdr1 = {
+            headers = {
                 'auth-key': 'appxapi',
                 'authorization': token,
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'en-US,en;q=0.9'
             }
-            
-            res1 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/mycourse?userid={userid}", headers=hdr1)
+            res1 = await fetch_data(session, f"{api_url}/get/mycourse?userid={userid}", headers=headers)
             bdetail = res1.get("data", [])
            
             
             all_urls = ""
             couserid = []
-            res3 = await fetch_data(session, f"https://rozgarapinew.teachx.in/get/alltopicfrmlivecourseclass?courseid={courseid}&subjectid={subjectid}&start=-1", headers=hdr1)
+            res3 = await fetch_data(session, f"{api_url}/get/alltopicfrmlivecourseclass?courseid={courseid}&subjectid={subjectid}&start=-1", headers=hdr1)
             topic = res3.get("data", [])
             
             topicids = [i["topicid"] for i in topic]
@@ -153,7 +153,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
             all_important = {}  
             all_urls = ""
             for t in topicids:
-                url = f"https://rozgarapinew.teachx.in/get/livecourseclassbycoursesubtopconceptapiv3?courseid={courseid}&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
+                url = f"{api_url}/get/livecourseclassbycoursesubtopconceptapiv3?courseid={courseid}&subjectid={subjectid}&topicid={t}&start=-1&conceptid="
                 
                 res4 = await fetch_data(session, url, headers=hdr1)
                 videodata = res4.get("data", [])
@@ -165,7 +165,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
                 except Exception as e:
                     print(e)
             for c in couserid:
-                url = f"https://rozgarapinew.teachx.in/get/fetchVideoDetailsById?course_id={courseid}&video_id={c}&ytflag=0&folder_wise_course=0"
+                url = f"{api_url}/get/fetchVideoDetailsById?course_id={courseid}&video_id={c}&ytflag=0&folder_wise_course=0"
                 res4 = requests.get(url, headers=hdr1).json()
                 video = res4.get("data", [])
                 videos.append(video)
@@ -222,16 +222,17 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@Client.on_message(filters.command("addbatch"))
+@app.on_message(filters.command("addbatch"))
 async def add_batch(bot, message):
+    """Add a new batch with configuration."""
     if not check_subscription(message.from_user.id):
-        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        await message.reply_text("**❌ You do not have an active subscription. Contact admin to subscribe.**")
         return
     try:
-        parts = message.text.split(" ", 6)
-        if len(parts) != 7:
+        parts = message.text.split(" ", 8)
+        if len(parts) != 9:
             await message.reply("Error: Invalid format. Use:\n"
-                                "`/addbatch bname sujectid:chatid:massage_thread_id chat_id courseid hour minute`")
+                                "`/addbatch bname sujectid:chatid:message_thread_id chat_id courseid hour minute api_url token`")
             return
 
         bname = parts[1]
@@ -244,29 +245,35 @@ async def add_batch(bot, message):
         new_courseid = int(parts[4])
         new_hour = int(parts[5])
         new_minute = int(parts[6])
+        new_api_url = parts[7]
+        new_token = parts[8]
 
         new_config = {
             "batch_name": bname,
             "subject_and_channel": new_subject_and_channel,
             "chat_id": new_chat_id,
             "courseid": new_courseid,
-            "scheduler_time": {"hour": new_hour, "minute": new_minute}
+            "scheduler_time": {"hour": new_hour, "minute": new_minute},
+            "api_url": new_api_url,
+            "token": new_token
         }
 
         await save_config_mongo(bname, new_config)
 
-        batch_configs = await load_config_mongo()  # Load updated configs
+        batch_configs = await load_config_mongo()
         scheduler.add_job(
             func=all_subject_send,
             trigger=CronTrigger(hour=new_hour, minute=new_minute, second=0, timezone="Asia/Kolkata"),
-            args=[bot, bname, batch_configs],  # Pass batch_configs
+            args=[bot, bname, batch_configs],
             id=bname
         )
 
-        await message.reply(f"**➕🟢ɴᴇᴡ ᴄᴏᴜʀꜱᴇ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ🟠**\n\nʙᴀᴛᴄʜ ɴᴀᴍᴇ:- {bname}\n**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`")
+        await message.reply(f"**➕ New batch added successfully!**\n\nBatch Name: {bname}\nAPI URL: {new_api_url}\nToken: {new_token}\n\n"
+                            f"To remove this batch, use:\n`/removebatch {bname}`")
         await bot.send_message(
             LOG_CHANNEL_ID,
-            f"**➕🟢ɴᴇᴡ ᴄᴏᴜʀꜱᴇ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ🟠**\n\nʙᴀᴛᴄʜ ɴᴀᴍᴇ:- `{bname}`\n**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`"
+            f"**➕ New batch added successfully!**\n\nBatch Name: `{bname}`\nAPI URL: `{new_api_url}`\nToken: `{new_token}`\n\n"
+            f"To remove this batch, use:\n`/removebatch {bname}`"
         )
 
     except Exception as e:
@@ -292,28 +299,22 @@ async def view_batches(bot, message):
 
     await message.reply(response)
 
-@Client.on_message(filters.command("removebatch"))
+@app.on_message(filters.command("removebatch"))
 async def remove_batch(bot, message):
-    if not check_subscription(message.from_user.id):
-        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
-        return
+    """Remove a batch and its configuration."""
     try:
         parts = message.text.split(" ", 1)
         if len(parts) != 2:
-            await message.reply("Error: Invalid format. Use:\n"
-                                "`/removebatch bname`")
+            await message.reply("Error: Invalid format. Use: `/removebatch bname`")
             return
 
         bname = parts[1]
 
-        if not await config_collection.find_one({"batch_name": bname}):
-            await message.reply(f"Batch '{bname}' not found.")
-            return
-
-        await config_collection.delete_one({"batch_name": bname})
+        batch_collection.delete_one({"batch_name": bname})
         scheduler.remove_job(bname)
 
-        await message.reply(f"🔴Batch🟠 '{bname}' removed successfully.✅")
+        await message.reply(f"**➖ Batch '{bname}' removed successfully!**")
+        await bot.send_message(LOG_CHANNEL_ID, f"**➖ Batch '{bname}' removed successfully!**")
 
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
