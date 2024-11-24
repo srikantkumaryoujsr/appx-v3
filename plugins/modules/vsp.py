@@ -222,7 +222,7 @@ async def account_logins(bot, subjectid, chatid, message_thread_id, courseid, bn
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 # Command to set configuration
-@app.on_message(filters.command("addbatch"))
+@Client.on_message(filters.command("addbatch"))
 async def add_batch(bot, message):
     """Add a new batch with configuration."""
     if not check_subscription(message.from_user.id):
@@ -299,7 +299,7 @@ async def view_batches(bot, message):
 
     await message.reply(response)
 
-@app.on_message(filters.command("removebatch"))
+@Client.on_message(filters.command("removebatch"))
 async def remove_batch(bot, message):
     """Remove a batch and its configuration."""
     try:
