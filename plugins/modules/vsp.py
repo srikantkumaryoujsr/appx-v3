@@ -301,20 +301,26 @@ async def view_batches(bot, message):
 
 @Client.on_message(filters.command("removebatch"))
 async def remove_batch(bot, message):
-    """Remove a batch and its configuration."""
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
     try:
         parts = message.text.split(" ", 1)
         if len(parts) != 2:
-            await message.reply("Error: Invalid format. Use: `/removebatch bname`")
+            await message.reply("Error: Invalid format. Use:\n"
+                                "`/removebatch bname`")
             return
 
         bname = parts[1]
 
-        batch_collection.delete_one({"batch_name": bname})
+        if not await config_collection.find_one({"batch_name": bname}):
+            await message.reply(f"Batch '{bname}' not found.")
+            return
+
+        await config_collection.delete_one({"batch_name": bname})
         scheduler.remove_job(bname)
 
-        await message.reply(f"**➖ Batch '{bname}' removed successfully!**")
-        await bot.send_message(LOG_CHANNEL_ID, f"**➖ Batch '{bname}' removed successfully!**")
+        await message.reply(f"🔴Batch🟠 '{bname}' removed successfully.✅")
 
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
