@@ -355,3 +355,35 @@ async def restart_bot(bot, message):
         os.execv(sys.executable, ['python'] + sys.argv)
     except Exception as e:
         await message.reply(f"Failed to restart the bot: {e}")
+
+@Client.on_message(filters.command("batch"))
+async def start_batch_immediately(bot, message):
+    """Immediately start a specific batch."""
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
+    try:
+        parts = message.text.split(" ", 1)
+        if len(parts) != 2:
+            await message.reply("Error: Invalid format. Use:\n"
+                                "`/batch bname`")
+            return
+
+        bname = parts[1]
+
+        # Load the batch configuration from MongoDB
+        batch_configs = await load_config_mongo()
+        if bname not in batch_configs:
+            await message.reply(f"Batch '{bname}' not found.")
+            return
+
+        # Trigger the batch process immediately
+        await all_subject_send(bot, bname, batch_configs)
+        await message.reply(f"**🟢Batch🟠 '{bname}' started immediately!✅**")
+        await bot.send_message(
+            LOG_CHANNEL_ID,
+            f"**🟢Batch🟠 '{bname}' started immediately by {message.from_user.mention}.✅**"
+        )
+
+    except Exception as e:
+        await message.reply(f"Error starting batch: {e}")
