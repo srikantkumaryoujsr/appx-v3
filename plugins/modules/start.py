@@ -19,20 +19,23 @@ async def start_message(bot, message: Message):
     """Start message with multiple options."""
     try:
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🟢𝗔𝗗𝗗 𝗕𝗔𝗧𝗖𝗛➕❤️", callback_data="addbatch")],
-            [InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖❤️", callback_data="removebatch")],
-            [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️❤️", callback_data="viewbatches")],
-            [InlineKeyboardButton("🟢𝗚𝗘𝗧 𝗔𝗟𝗟 𝗥𝗪𝗔 𝗕𝗔𝗧𝗖𝗛 𝗜𝗡𝗙𝗢.🦋", callback_data="get_all_courses")],
-            [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/Berojgaarwithankit")],
+            [InlineKeyboardButton("🟢ᴀᴅᴅ ʙᴀᴛᴄʜᴇꜱ🟡", callback_data="addbatch")],
+            [InlineKeyboardButton("🟢​ʀᴇᴍᴏᴠᴇ ʙᴀᴛᴄʜᴇꜱ🟡", callback_data="removebatch")],
+            [InlineKeyboardButton("🟢ᴠɪᴇᴡ ꜱᴇᴛᴛ ʙᴀᴛᴄʜᴇꜱ🟠", callback_data="viewbatches")],
+            [InlineKeyboardButton("🟢ɢᴇᴛ ʀᴡᴀ ᴀʟʟ ʙᴀᴛᴄʜᴇꜱ ɪɴꜰᴏ🟠", callback_data="get_all_courses")],
+            [InlineKeyboardButton("👨‍💻ᴅᴇᴠᴇʟᴏᴘᴇʀ ᴄᴏɴᴛᴀᴄᴛ👨‍💻", url="https://t.me/skillgram")],
             [InlineKeyboardButton("❓ 𝐇𝐞𝐥𝐩 ❓", callback_data="help")]
         ])
 
         photo_url = "https://te.legra.ph/file/509795aa19e893839762d.jpg"
 
         caption = (
-            "**🔵🟡🟢ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ʀᴏᴊɢᴀʀᴡɪᴛʜᴀɴᴋɪᴛ ᴄᴏᴀᴄʜɪɴɢ ʙᴏᴛ! 🎓 ᴛʜɪꜱ ʙᴏᴛ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴘᴏꜱᴛꜱ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇꜱ- ɪɴᴄʟᴜᴅɪɴɢ ᴄʟᴀꜱꜱᴇꜱ ᴀɴᴅ ɴᴏᴛᴇꜱ ꜰᴏʀ ᴀʟʟ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴜʀꜱᴇꜱ. ꜱᴛᴀʏ ᴜᴘᴅᴀᴛᴇᴅ ᴡɪᴛʜ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴄᴏɴᴛᴇɴᴛ ᴇᴠᴇʀʏ ᴅᴀʏ!🔵🟡🟢**\n\n"
-            "**❤️𝐓𝐡𝐚𝐧𝐤 𝐲𝐨𝐮 𝐟𝐨𝐫 𝐛𝐞𝐢𝐧𝐠 𝐩𝐚𝐫𝐭 𝐨𝐟 𝐭𝐡𝐞 𝐥𝐞𝐚𝐫𝐧𝐢𝐧𝐠 𝐣𝐨𝐮𝐫𝐧𝐞𝐲 𝐰𝐢𝐭𝐡 𝐑𝐨𝐣𝐠𝐚𝐫𝐖𝐢𝐭𝐡𝐀𝐧𝐤𝐢𝐭! 𝐊𝐞𝐞𝐩 𝐮𝐩 𝐭𝐡𝐞 𝐠𝐫𝐞𝐚𝐭 𝐰𝐨𝐫𝐤, 𝐚𝐧𝐝 𝐝𝐨𝐧'𝐭 𝐡𝐞𝐬𝐢𝐭𝐚𝐭𝐞 𝐭𝐨 𝐫𝐞𝐚𝐜𝐡 𝐨𝐮𝐭 𝐚𝐧𝐲𝐭𝐢𝐦𝐞. 🚀❤️**\n\n"
-            "**🟢ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🟡:- @Berojgaarwithankit**"
+            "**🔵🟡🟢🤖 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴀᴘᴘx ᴠ3 ᴀᴜᴛᴏᴍᴀᴛɪᴄ ᴄʟᴀꜱꜱ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ!🔵🟡🟢**\n\n"
+            "**📅 ᴅᴀɪʟʏ ʟɪᴠᴇ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇꜱ – ꜰᴜʟʟʏ ᴀᴜᴛᴏᴍᴀᴛᴇᴅ🚀❤️**\n"
+            "**🕒 ꜱᴀᴠᴇ ᴛɪᴍᴇ ᴡɪᴛʜ ʜᴀꜱꜱʟᴇ-ꜰʀᴇᴇ ꜱᴄʜᴇᴅᴜʟɪɴɢ🚀❤️**\n"
+            "**📲 ɪɴꜱᴛᴀɴᴛ ᴜᴘᴅᴀᴛᴇꜱ ᴛᴏ ʏᴏᴜʀ ᴛᴇʟᴇɢʀᴀᴍ ɢʀᴏᴜᴘ ꜱᴜʙᴊᴇᴄᴛ ᴛᴏᴘɪᴄꜱ🚀❤️**\n"
+            "**💡 ɴᴇᴇᴅ ʜᴇʟᴘ? ᴏʀ ᴍᴏʀᴇ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ᴘʀᴇꜱꜱ ʜᴇʟᴘ ʙᴏᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ꜱᴛᴀʀᴛᴇᴅ! 🚀❤️**\n\n"
+            "**🟢ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🟡:- @skillgram**"
         )
 
         await bot.send_photo(
