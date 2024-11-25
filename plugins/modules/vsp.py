@@ -226,7 +226,7 @@ scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 async def add_batch(bot, message):
     """Add a new batch with configuration."""
     if not check_subscription(message.from_user.id):
-        await message.reply_text("**❌ You do not have an active subscription. Contact admin to subscribe.**")
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
         return
     try:
         parts = message.text.split(" ", 8)
@@ -268,12 +268,12 @@ async def add_batch(bot, message):
             id=bname
         )
 
-        await message.reply(f"**➕ New batch added successfully!**\n\nBatch Name: {bname}\nAPI URL: {new_api_url}\nToken: {new_token}\n\n"
-                            f"To remove this batch, use:\n`/removebatch {bname}`")
+        await message.reply(f"**🟢ɴᴇᴡ ʙᴀᴛᴄʜ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!🟠**\n\n**🟢ʙᴀᴛᴄʜ ɴᴀᴍᴇ:🟡** `{bname}`\n\n**🟢ᴀᴘɪ ᴜʀʟ:🟡** `{new_api_url}`\n\n**🟢ᴀᴘɪ ᴄᴏᴜʀꜱᴇ ᴛᴏᴋᴇɴ:🟡** `{new_token}`\n\n**⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ :- @SKILLGRAM**\n"
+                            f"**🟢ᴛᴏ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ, ᴜꜱᴇ:🟠**\n\n`/removebatch {bname}`")
         await bot.send_message(
             LOG_CHANNEL_ID,
-            f"**➕ New batch added successfully!**\n\nBatch Name: `{bname}`\nAPI URL: `{new_api_url}`\nToken: `{new_token}`\n\n"
-            f"To remove this batch, use:\n`/removebatch {bname}`"
+            f"**🟢ɴᴇᴡ ʙᴀᴛᴄʜ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!🟠**\n\n**🟢ʙᴀᴛᴄʜ ɴᴀᴍᴇ:🟡** `{bname}`\n\n**🟢ᴀᴘɪ ᴜʀʟ:🟡** `{new_api_url}`\n\n**🟢ᴀᴘɪ ᴄᴏᴜʀꜱᴇ ᴛᴏᴋᴇɴ:🟡** `{new_token}`\n\n**⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ :- @SKILLGRAM**\n"
+            f"**🟢ᴛᴏ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ, ᴜꜱᴇ:🟠**\n\n`/removebatch {bname}`"
         )
 
     except Exception as e:
@@ -292,8 +292,8 @@ async def view_batches(bot, message):
         hour = schedule_time.get("hour")
         minute = schedule_time.get("minute")
         schedule_display = f"{hour:02d}:{minute:02d} IST" if hour is not None else "Not Set"
-        response += f"**Batch Name:** `{bname}`\n"
-        response += f"**Scheduled Time:** {schedule_display}\n"
+        response += f"**🟢Batch Name🟠:** `{bname}`\n"
+        response += f"**🟢Scheduled Time🟠:** {schedule_display}\n"
         response += f"**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`\n"
         response += "====================\n\n"
 
