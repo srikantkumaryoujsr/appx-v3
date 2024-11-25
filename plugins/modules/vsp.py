@@ -339,7 +339,8 @@ async def load_batches_on_start():
             print(f"Scheduled batch '{bname}' at {schedule_time['hour']}:{schedule_time['minute']} IST.")
     except Exception as e:
         print(f"Error loading batches on startup: {e}")
-        
+
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")       
 scheduler.start()
 
 @Client.on_message(filters.command("restart"))
