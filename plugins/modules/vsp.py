@@ -387,3 +387,31 @@ async def start_batch_immediately(bot, message):
 
     except Exception as e:
         await message.reply(f"Error starting batch: {e}")
+
+@Client.on_message(filters.command("getdata"))
+async def get_mongo_data(bot, message):
+    """Retrieve and display batch data from MongoDB."""
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
+    try:
+        # Load all batch data from MongoDB
+        batch_data = await load_config_mongo()
+
+        if not batch_data:
+            await message.reply("No batch data found in MongoDB.")
+            return
+
+        # Format the batch data for display
+        response = "**📋 Available Batches in MongoDB:**\n\n"
+        for batch_name, batch_info in batch_data.items():
+            response += f"**Batch Name:** `{batch_name}`\n"
+            response += f"**Subjects:** {', '.join(batch_info.get('subjects', []))}\n"
+            response += f"**Created By:** {batch_info.get('created_by', 'Unknown')}\n"
+            response += f"**Last Updated:** {batch_info.get('last_updated', 'Unknown')}\n\n"
+
+        # Send the formatted response
+        await message.reply(response)
+
+    except Exception as e:
+        await message.reply(f"Error retrieving data: {e}")
