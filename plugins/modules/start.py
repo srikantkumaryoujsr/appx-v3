@@ -27,7 +27,7 @@ async def start_message(bot, message: Message):
             [InlineKeyboardButton("❓ 𝐇𝐞𝐥𝐩 ❓", callback_data="help")]
         ])
 
-        photo_url = "https://te.legra.ph/file/509795aa19e893839762d.jpg"
+        photo_url = "https://i.ibb.co/1qMcqjx/file-3071.jpg"
 
         caption = (
             "**🔵🟡🟢🤖 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴀᴘᴘx ᴠ3 ᴀᴜᴛᴏᴍᴀᴛɪᴄ ᴄʟᴀꜱꜱ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ!🔵🟡🟢**\n\n"
@@ -78,7 +78,7 @@ async def handle_callback(bot, query: CallbackQuery):
         )
     elif data.startswith("help"):
         await query.message.reply(
-            f"**ᴡᴇ’ʀᴇ ᴡᴏʀᴋɪɴɢ ᴏɴ ᴀ ᴠɪᴅᴇᴏ ᴛᴜᴛᴏʀɪᴀʟ ᴛᴏ ᴍᴀᴋᴇ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ ᴇᴠᴇɴ ᴇᴀꜱɪᴇʀ! ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ꜱᴏᴏɴ. ᴋᴇᴇᴘ ʟᴇᴀʀɴɪɴɢ ᴡɪᴛʜ ᴜꜱ! 📹🚀**"
+            f"**ᴡᴇ’ʀᴇ ᴡᴏʀᴋɪɴɢ ᴏɴ ᴀ ᴠɪᴅᴇᴏ ᴛᴜᴛᴏʀɪᴀʟ ᴛᴏ ᴍᴀᴋᴇ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ ᴇᴠᴇɴ ᴇᴀꜱɪᴇʀ! ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ꜱᴏᴏɴ. ᴋᴇᴇᴘ ʟᴇᴀʀɴɪɴɢ ᴡɪᴛʜ ᴜꜱ! 📹🚀**\n\n**ᴀᴘᴘx ᴠ3 ꜱᴏᴍᴇ ᴀᴘɪ :-**\nRojgar With Ankit :-`https://rozgarapinew.teachx.in`\nTarget With Ankit :- `https://targetwithankitapi.classx.co.in`"
         )
     elif data == "get_all_courses":
         if not check_subscription(query.from_user.id):
