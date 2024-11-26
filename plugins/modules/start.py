@@ -78,7 +78,7 @@ async def handle_callback(bot, query: CallbackQuery):
         )
     elif data.startswith("help"):
         await query.message.reply(
-            f"**ᴡᴇ’ʀᴇ ᴡᴏʀᴋɪɴɢ ᴏɴ ᴀ ᴠɪᴅᴇᴏ ᴛᴜᴛᴏʀɪᴀʟ ᴛᴏ ᴍᴀᴋᴇ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ ᴇᴠᴇɴ ᴇᴀꜱɪᴇʀ! ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ꜱᴏᴏɴ. ᴋᴇᴇᴘ ʟᴇᴀʀɴɪɴɢ ᴡɪᴛʜ ᴜꜱ! 📹🚀**\n\n**ᴀᴘᴘx ᴠ3 ꜱᴏᴍᴇ ᴀᴘɪ :-**\nRojgar With Ankit :-`https://rozgarapinew.teachx.in`\nTarget With Ankit :- `https://targetwithankitapi.classx.co.in`"
+            f"**ᴡᴇ’ʀᴇ ᴡᴏʀᴋɪɴɢ ᴏɴ ᴀ ᴠɪᴅᴇᴏ ᴛᴜᴛᴏʀɪᴀʟ ᴛᴏ ᴍᴀᴋᴇ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ ᴇᴠᴇɴ ᴇᴀꜱɪᴇʀ! ɪᴛ ᴡɪʟʟ ʙᴇ ᴀᴠᴀɪʟᴀʙʟᴇ ꜱᴏᴏɴ. ᴋᴇᴇᴘ ʟᴇᴀʀɴɪɴɢ ᴡɪᴛʜ ᴜꜱ! 📹🚀**\n\n**ᴀᴘᴘx ᴠ3 ꜱᴏᴍᴇ ᴀᴘɪ :-**\nRojgar With Ankit :-`https://rozgarapinew.teachx.in`\nTarget With Ankit :- `https://targetwithankitapi.classx.co.in`\n\n🟢ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🟡:- @skillgram"
         )
     elif data == "get_all_courses":
         if not check_subscription(query.from_user.id):
