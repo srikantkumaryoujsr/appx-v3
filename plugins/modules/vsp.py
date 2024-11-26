@@ -268,11 +268,11 @@ async def add_batch(bot, message):
             id=bname
         )
 
-        await message.reply(f"**🟢ɴᴇᴡ ʙᴀᴛᴄʜ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!🟠**\n\n**🟢ʙᴀᴛᴄʜ ɴᴀᴍᴇ:🟡** `{bname}`\n\n**🟢ᴀᴘɪ ᴜʀʟ:🟡** `{new_api_url}`\n\n**🟢ᴀᴘɪ ᴄᴏᴜʀꜱᴇ ᴛᴏᴋᴇɴ:🟡** `{new_token}`\n\n**⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ :- @SKILLGRAM**\n"
+        await message.reply(f"**🟢ɴᴇᴡ ʙᴀᴛᴄʜ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!🟠**\n\n**🟢ʙᴀᴛᴄʜ ɴᴀᴍᴇ:🟡** `{bname}`\n\n**🟢ᴀᴘɪ ᴜʀʟ:🟡** `{new_api_url}`\n\n**🟢ᴀᴘɪ ᴄᴏᴜʀꜱᴇ ᴛᴏᴋᴇɴ:🟡** `{new_token}`\n\n**⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ :- @SKILLGRAM**\n\n**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:-{message.from_user.mention}**\n"
                             f"**🟢ᴛᴏ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ, ᴜꜱᴇ:🟠**\n\n`/removebatch {bname}`")
         await bot.send_message(
             LOG_CHANNEL_ID,
-            f"**🟢ɴᴇᴡ ʙᴀᴛᴄʜ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!🟠**\n\n**🟢ʙᴀᴛᴄʜ ɴᴀᴍᴇ:🟡** `{bname}`\n\n**🟢ᴀᴘɪ ᴜʀʟ:🟡** `{new_api_url}`\n\n**🟢ᴀᴘɪ ᴄᴏᴜʀꜱᴇ ᴛᴏᴋᴇɴ:🟡** `{new_token}`\n\n**⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ :- @SKILLGRAM**\n"
+            f"**🟢ɴᴇᴡ ʙᴀᴛᴄʜ ᴀᴅᴅᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!🟠**\n\n**🟢ʙᴀᴛᴄʜ ɴᴀᴍᴇ:🟡** `{bname}`\n\n**🟢ᴀᴘɪ ᴜʀʟ:🟡** `{new_api_url}`\n\n**🟢ᴀᴘɪ ᴄᴏᴜʀꜱᴇ ᴛᴏᴋᴇɴ:🟡** `{new_token}`\n\n**⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ :- @SKILLGRAM**\n\n**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:-{message.from_user.mention}**\n"
             f"**🟢ᴛᴏ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ, ᴜꜱᴇ:🟠**\n\n`/removebatch {bname}`"
         )
 
@@ -295,6 +295,7 @@ async def view_batches(bot, message):
         response += f"**🟢Batch Name🟠:** `{bname}`\n"
         response += f"**🟢Scheduled Time🟠:** {schedule_display}\n"
         response += f"**☢️ɪꜰ ʏᴏᴜ ʀᴇᴍᴏᴠᴇ ᴛʜɪꜱ ʙᴀᴛᴄʜ ᴄᴏᴘʏ ʙᴇʟᴏᴡ ᴛᴇxᴛ☢️**\n`/removebatch {bname}`\n"
+        response += f"**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:-{message.from_user.mention}**\n"
         response += "====================\n\n"
 
     await message.reply(response)
@@ -320,7 +321,7 @@ async def remove_batch(bot, message):
         await config_collection.delete_one({"batch_name": bname})
         scheduler.remove_job(bname)
 
-        await message.reply(f"🔴Batch🟠 '{bname}' removed successfully.✅")
+        await message.reply(f"🔴Batch🟠 '{bname}' removed successfully.✅\n\n**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:-{message.from_user.mention}**")
 
     except Exception as e:
         await message.reply(f"Error removing batch: {e}")
@@ -349,7 +350,7 @@ async def restart_bot(bot, message):
         await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
         return
     try:
-        await message.reply("🟠🟢𝐁𝐨𝐭 𝐑𝐞𝐬𝐭𝐚𝐫𝐭𝐞𝐝 𝐒𝐮𝐜𝐜𝐞𝐜𝐟𝐮𝐥𝐥𝐲🔴✅")
+        await message.reply("🟠🟢𝐁𝐨𝐭 𝐑𝐞𝐬𝐭𝐚𝐫𝐭𝐞𝐝 𝐒𝐮𝐜𝐜𝐞𝐜𝐟𝐮𝐥𝐥𝐲🔴✅\n**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:-{message.from_user.mention}**")
         # Save any critical data or perform cleanup if necessary here
         
         # Restart the bot using execv
@@ -379,8 +380,8 @@ async def start_batch_immediately(bot, message):
             return
 
         # Trigger the batch process immediately
+        await message.reply(f"**🟢Batch🟠 '{bname}' started immediately!✅**\n\n**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:-{message.from_user.mention}**")
         await all_subject_send(bot, bname, batch_configs)
-        await message.reply(f"**🟢Batch🟠 '{bname}' started immediately!✅**")
         await bot.send_message(
             LOG_CHANNEL_ID,
             f"**🟢Batch🟠 '{bname}' started immediately by {message.from_user.mention}.✅**"
