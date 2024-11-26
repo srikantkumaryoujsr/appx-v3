@@ -31,7 +31,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
 
-MONGO_URI = "mongodb+srv://heeokumailseptember:nfOkF8F4zn1FIAFQ@cluster0.xb62l.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" 
+MONGO_URI = "mongodb+srv://chutiya:fghytrhfhdfghh@cluster0.iomlk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" 
 
 client = MongoClient(MONGO_URI)
 db = client["bot_database"]  
