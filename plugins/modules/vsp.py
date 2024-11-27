@@ -350,7 +350,7 @@ async def restart_bot(bot, message):
         await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
         return
     try:
-        await message.reply("🟠🟢𝐁𝐨𝐭 𝐑𝐞𝐬𝐭𝐚𝐫𝐭𝐞𝐝 𝐒𝐮𝐜𝐜𝐞𝐜𝐟𝐮𝐥𝐥𝐲🔴✅\n**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:-{message.from_user.mention}**")
+        await message.reply("🟠🟢𝐁𝐨𝐭 𝐑𝐞𝐬𝐭𝐚𝐫𝐭𝐞𝐝 𝐒𝐮𝐜𝐜𝐞𝐜𝐟𝐮𝐥𝐥𝐲🔴✅\n")
         # Save any critical data or perform cleanup if necessary here
         
         # Restart the bot using execv
