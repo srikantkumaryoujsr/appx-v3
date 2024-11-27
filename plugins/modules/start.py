@@ -57,7 +57,7 @@ async def handle_callback(bot, query: CallbackQuery):
                 return
             
         await query.message.reply(
-            f"**🟢🔵🟡 ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ🟠☢️ :-**\n\n`/setconfig bname subjectid:chatid:threadid,... chat_id courseid hour minute`"
+            f"**🟢🔵🟡 ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ🟠☢️ :-**\n\n`/addbatch bname sujectid:chatid:message_thread_id,... chat_id courseid hour minute api_url token`"
         )
     elif data.startswith("removebatch"):
         if not check_subscription(query.from_user.id):
