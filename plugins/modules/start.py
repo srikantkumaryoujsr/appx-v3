@@ -106,6 +106,9 @@ async def handle_callback(bot, query: CallbackQuery):
                 for course in courses:
                     course_id = course.get("id")
                     course_name = course.get("course_name")
+                    thumbnail = course.get("course_thumbnail")
+                    startdate = course.get("start_date")
+                    enddate = course.get("end_date")
 
                     # Fetch subjects under the course
                     subjects_response = await fetch_data(
@@ -115,13 +118,16 @@ async def handle_callback(bot, query: CallbackQuery):
                     )
 
                     subjects = subjects_response.get("data", [])
-                    subjects_info = "\n".join([f"`{subj['subjectid']}`: `{subj['subject_name']}`" for subj in subjects]) if subjects else "No subjects found."
+                    subjects_info = "\n".join([f"{subj['subjectid']}: {subj['subject_name']}" for subj in subjects]) if subjects else "No subjects found."
 
                     # Send course info
                     course_info = (
-                        f"**Course ID**: `{course_id}`\n"
-                        f"**Course Name**: `{course_name}`\n"
-                        f"**Subjects**:\n`{subjects_info}`\n"
+                        f"**🟠𝐂𝐨𝐮𝐫𝐬𝐞 𝐈𝐃🟡**: `{course_id}`\n"
+                        f"**🔰𝐂𝐨𝐮𝐫𝐬𝐞 𝐍𝐚𝐦𝐞🔰**: `{course_name}`\n"
+                        f"**💠𝐒𝐮𝐛𝐣𝐞𝐜𝐭𝐬💠**:\n`{subjects_info}`\n\n"
+                        f"**📅𝐬𝐭𝐚𝐫𝐭 𝐝𝐚𝐭𝐞📅**:\n`{startdate}`\n"
+                        f"**🟢𝐄𝐧𝐝 𝐃𝐚𝐭𝐞🟢**:\n`{enddate}`\n"
+                        f"**🔵𝐓𝐡𝐮𝐦𝐛 𝐔𝐫𝐥🔵**:\n{thumbnail}\n\n🟠𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲🟠 :- @skillgram"
                     )
                     await query.message.reply_text(course_info)
 
