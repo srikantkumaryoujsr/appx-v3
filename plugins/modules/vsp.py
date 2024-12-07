@@ -300,6 +300,28 @@ async def view_batches(bot, message):
 
     await message.reply(response)
 
+    # Save response to .txt file
+    file_name = "batch_details.txt"
+    with open(file_name, "w", encoding="utf-8") as file:
+        file.write(response)
+
+    # Send the .txt file to the user
+    await bot.send_document(
+        chat_id=message.chat.id,
+        document=file_name,
+        caption=f"**📋 All Scheduled Batch List:**\n\nThis file contains the list of all currently active scheduled batches. 📂\n\n**Requested By:** {message.from_user.mention}"
+    )
+
+    # Send the .txt file to the log channel
+    await bot.send_document(
+        chat_id=LOG_CHANNEL_ID,
+        document=file_name,
+        caption=f"**📋 All Scheduled Batch List:**\n\nThis file contains the list of all currently active scheduled batches. 📂\n\n**Requested By:** {message.from_user.mention}"
+    )
+
+    # Clean up the file (optional, but good practice)
+    os.remove(file_name)
+
 @Client.on_message(filters.command("removebatch"))
 async def remove_batch(bot, message):
     if not check_subscription(message.from_user.id):
