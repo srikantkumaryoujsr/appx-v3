@@ -10,19 +10,16 @@ async def _start():
     try:
         await app.start()
     except Exception as ex:
-        LOGGER.error(f"Bot start failed: {ex}")
+        LOGGER.error(ex)
         quit(1)
 
     for all_module in ALL_MODULES:
-        try:
-            importlib.import_module("plugins.modules." + all_module)
-            LOGGER.info(f"Module {all_module} imported successfully.")
-        except Exception as e:
-            LOGGER.error(f"Failed to import module {all_module}: {e}")
+        importlib.import_module("plugins.modules." + all_module)
 
     LOGGER.info(f"@{app.username} Started.")
     
     try:
+        # Call load_batches_on_start to initialize scheduled batches
         await load_batches_on_start()
         LOGGER.info("Batches loaded and scheduled.")
     except Exception as e:
@@ -32,7 +29,9 @@ async def _start():
     await idle()
 
 if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
     try:
-        asyncio.run(_start())
-    except KeyboardInterrupt:
-        LOGGER.info("Bot stopped manually.")
+        loop.run_until_complete(_start())
+    finally:
+        loop.close()
+    LOGGER.info("Stopping bot")
