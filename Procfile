@@ -1,1 +1,1 @@
-worker: python plugins
+worker: python plugins/__main__.py
