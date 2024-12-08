@@ -1,5 +1,6 @@
 # @sarkari_student
 import asyncio
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import importlib
 from pyrogram import idle
 from plugins import LOGGER, bot as app
