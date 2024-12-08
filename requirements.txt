@@ -2,7 +2,7 @@ aiofiles
 pyrogram
 cryptography
 aiohttp==3.8.4
-apscheduler
+apscheduler==3.9.1  # Adjust to the latest compatible version
 async-lru==2.0.2
 beautifulsoup4==4.9.3
 bs4==0.0.1
