@@ -4,6 +4,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
 from plugins.modules.subscription import check_subscription
+LOG_CHANNEL_ID = -1002336806073
 
 
 # Predefined token
@@ -210,3 +211,65 @@ async def create_topics(bot, message: Message):
     except Exception as e:
         print(f"Error: {e}")  # Debug output for any errors
         await message.reply_text(f"An error occurred: {e}")
+
+@Client.on_message(filters.command("createcmd"))
+async def start_batchcreate(bot, message: Message):
+    
+    editable = await message.reply(f"**🟢𝐄𝐧𝐭𝐞𝐫 𝐁𝐚𝐭𝐜𝐡 𝐍𝐚𝐦𝐞: ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 👇🟠**\n\n`DSSSB+SSC-MTS(दफ्तरी-बैच)`")
+    input1: Message = await bot.listen(editable.chat.id)
+    batch_name = input1.text
+    await input1.delete()
+    await editable.delete()
+    
+    editable = await message.reply(f"**🟢ᴇɴᴛᴇʀ ɢʀᴏᴜᴘ ᴛᴏᴘɪᴄ ᴅᴇᴛᴇʟꜱ : ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 🟡**\n\n`754:-1002193289509:3,759:-1002193289509:4,874:-1002193289509:5,944:-1002193289509:6`")
+    input2: Message = await bot.listen(editable.chat.id)
+    topic = input2.text
+    await input2.delete()
+    await editable.delete()
+    
+    editable = await message.reply(f"**🟢ᴇɴᴛᴇʀ ɢʀᴏᴜᴘ ᴄʜᴀᴛɪᴅ : ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 👇🔵**\n\n`-1007666666666`")
+    input3: Message = await bot.listen(editable.chat.id)
+    chatid = input3.text
+    await input3.delete()
+    await editable.delete()
+    
+    editable = await message.reply(f"**🟢ᴇɴᴛᴇʀ ᴄᴏᴜʀꜱᴇ ʙᴀᴛᴄʜ ɪᴅ : ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 👇🟡**\n\n`101`")
+    input4: Message = await bot.listen(editable.chat.id)
+    batchid = input4.text
+    await input4.delete()
+    await editable.delete()
+    
+    editable = await message.reply(f"**🟢ᴇɴᴛᴇʀ ꜱᴄʜᴀᴅᴜʟᴇᴅ ᴛɪᴍᴇ ʜᴏᴜʀꜱ ɪɴ 2 ᴅɪɢɪᴛꜱ : ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 👇🟠**\n\n0 se `23` ʜᴏʀꜱᴇ ꜰᴏʀᴍᴀᴛᴇ ᴍᴇ")
+    input5: Message = await bot.listen(editable.chat.id)
+    hourse = input5.text
+    await input5.delete()
+    await editable.delete()
+    
+    editable = await message.reply(f"**🟢ᴇɴᴛᴇʀ ꜱᴄʜᴀᴅᴜʟᴇᴅ ᴛɪᴍᴇ ᴍɪɴᴜᴛꜱ ɪɴ 2 ᴅɪɢɪᴛꜱ : ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 👇🟠**\n\n0 se `60` horse formate me")
+    input6: Message = await bot.listen(editable.chat.id)
+    minuts = input6.text
+    await input6.delete()
+    await editable.delete()
+    
+    editable = await message.reply(f"**🟢ᴇɴᴛᴇʀ ᴀᴘᴘx ᴠ3 ᴄᴏᴀᴄʜɪɴɢ ᴀᴘɪ : ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 👇🟠**\n\nFor Rwa :- `https://rozgarapinew.teachx.in`")
+    input7: Message = await bot.listen(editable.chat.id)
+    API = input7.text
+    await input7.delete()
+    await editable.delete()
+    
+    editable = await message.reply(f"**🟢ᴇɴᴛᴇʀ ᴀᴘᴘx ᴠ3 ᴄᴏᴀᴄʜɪɴɢ ᴛᴏᴋᴇɴ ꜰᴏʀ ꜱᴘᴇᴄɪᴀʟ ʙᴀᴛᴄʜ : ᴡɪᴛʜᴏᴜᴛ ᴀɴʏ ꜱᴘᴀᴄᴇ ʟɪᴋᴇ 👇🟡**\n\nꜰᴏʀ ʀᴡᴀ ᴀʟʟ ʙᴀᴛᴄʜ:- `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9`")
+    input8: Message = await bot.listen(editable.chat.id)
+    Token = input8.text
+    await input8.delete()
+    await editable.delete()
+    
+    final_string_live = f"/addbatch {batch_name} {topic} {chatid} {batchid} {hourse} {minuts} {API} {Token}"
+    final_string_Recorded = f"/addbatch {batch_name} {topic} {batchid}"
+    await message.reply(f"🟢**𝐇𝐞𝐫𝐞 𝐢𝐬 𝐲𝐨𝐮𝐫 𝐟𝐢𝐧𝐚𝐥 ʙᴀᴛᴄʜ ᴀᴅᴅ ᴄᴏᴍᴍᴀɴᴅ ꜰᴏʀ ᴛʜɪꜱ ʙᴀᴛᴄʜ :- {batch_name}**🟠\n\n👇🔰**ꜰᴏʀ ʟɪᴠᴇ ᴄᴏᴜʀꜱᴇ ᴜᴘᴅᴀᴛᴇ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ**🔰👇\n\n`{final_string_live}`\n\n👇🔰**ꜰᴏʀ ᴄᴏᴍᴘʟᴇᴛᴇ ᴄᴏᴜʀꜱᴇ ᴜᴘᴅᴀᴛᴇ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ**🔰👇\n\n`{final_string_Recorded}`\n\n🟢**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:- {message.from_user.mention}**🟠")
+    await bot.send_message(
+            LOG_CHANNEL_ID,
+            f"🟢**𝐇𝐞𝐫𝐞 𝐢𝐬 𝐲𝐨𝐮𝐫 𝐟𝐢𝐧𝐚𝐥 ʙᴀᴛᴄʜ ᴀᴅᴅ ᴄᴏᴍᴍᴀɴᴅ ꜰᴏʀ ᴛʜɪꜱ ʙᴀᴛᴄʜ :- {batch_name}**🟠\n\n👇🔰**ꜰᴏʀ ʟɪᴠᴇ ᴄᴏᴜʀꜱᴇ ᴜᴘᴅᴀᴛᴇ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ**🔰👇\n\n`{final_string_live}`\n\n👇🔰**ꜰᴏʀ ᴄᴏᴍᴘʟᴇᴛᴇ ᴄᴏᴜʀꜱᴇ ᴜᴘᴅᴀᴛᴇ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ**🔰👇\n\n`{final_string_Recorded}`\n\n🟢**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:- {message.from_user.mention}**🟠"
+        )
+
+
+
