@@ -38,20 +38,19 @@ async def start_message(bot, message: Message):
     # Continue with the original start message after the animation
     try:
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🟢𝗔𝗗𝗗 𝗕𝗔𝗧𝗖𝗛➕❤️", callback_data="addbatch")],
-            [InlineKeyboardButton("🟢​𝗥𝗘𝗠𝗢𝗩𝗘 𝗕𝗔𝗧𝗖𝗛➖❤️", callback_data="removebatch")],
-            [InlineKeyboardButton("🟢𝗩𝗜𝗘𝗪 𝗕𝗔𝗧𝗖𝗛𝗘𝗦👁️‍🗨️❤️", callback_data="viewbatches")],
-            [InlineKeyboardButton("🟢𝗚𝗘𝗧 𝗔𝗟𝗟 𝗥𝗪𝗔 𝗕𝗔𝗧𝗖𝗛 𝗜𝗡𝗙𝗢.🦋", callback_data="get_all_courses")],
+            [InlineKeyboardButton("🟢ᴀᴅᴅ ʙᴀᴛᴄʜ❤️", callback_data="addbatch")],
+            [InlineKeyboardButton("🟢​ʀᴇᴍᴏᴠᴇ ʙᴀᴛᴄʜ➖❤️", callback_data="removebatch")],
+            [InlineKeyboardButton("🟢​ᴠɪᴇᴡ ʙᴀᴛᴄʜᴇꜱ❤️", callback_data="viewbatches")],
+            [InlineKeyboardButton("🟢​ɢᴇᴛ ᴀʟʟ ʀᴡᴀ ʙᴀᴛᴄʜ ɪɴꜰᴏ❤️", callback_data="get_all_courses")],
             [InlineKeyboardButton("👨‍💻 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐂𝐨𝐧𝐭𝐚𝐜𝐭 👨‍💻", url="https://t.me/skillgram")],
             [InlineKeyboardButton("❓ 𝐇𝐞𝐥𝐩 ❓", callback_data="help")]
         ])
 
-        photo_url = "https://te.legra.ph/file/509795aa19e893839762d.jpg"
+        photo_url = "https://i.ibb.co/bdT4GDX/file-7291.jpg"
 
         caption = (
-            "**🔵🟡🟢ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ʀᴏᴊɢᴀʀᴡɪᴛʜᴀɴᴋɪᴛ ᴄᴏᴀᴄʜɪɴɢ ʙᴏᴛ! 🎓 ᴛʜɪꜱ ʙᴏᴛ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴘᴏꜱᴛꜱ ᴅᴀɪʟʏ ᴜᴘᴅᴀᴛᴇꜱ- ɪɴᴄʟᴜᴅɪɴɢ ᴄʟᴀꜱꜱᴇꜱ ᴀɴᴅ ɴᴏᴛᴇꜱ ꜰᴏʀ ᴀʟʟ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴜʀꜱᴇꜱ. ꜱᴛᴀʏ ᴜᴘᴅᴀᴛᴇᴅ ᴡɪᴛʜ ᴛʜᴇ ʟᴀᴛᴇꜱᴛ ᴄᴏɴᴛᴇɴᴛ ᴇᴠᴇʀʏ ᴅᴀʏ!🔵🟡🟢**\n\n"
-            "**❤️𝐓𝐡𝐚𝐧𝐤 𝐲𝐨𝐮 𝐟𝐨𝐫 𝐛𝐞𝐢𝐧𝐠 𝐩𝐚𝐫𝐭 𝐨𝐟 𝐭𝐡𝐞 𝐥𝐞𝐚𝐫𝐧𝐢𝐧𝐠 𝐣𝐨𝐮𝐫𝐧𝐞𝐲 𝐰𝐢𝐭𝐡 𝐑𝐨𝐣𝐠𝐚𝐫𝐖𝐢𝐭𝐡𝐀𝐧𝐤𝐢𝐭! 𝐊𝐞𝐞𝐩 𝐮𝐩 𝐭𝐡𝐞 𝐠𝐫𝐞𝐚𝐭 𝐰𝐨𝐫𝐤, 𝐚𝐧𝐝 𝐝𝐨𝐧'𝐭 𝐡𝐞𝐬𝐢𝐭𝐚𝐭𝐞 𝐭𝐨 𝐫𝐞𝐚𝐜𝐡 𝐨𝐮𝐭 𝐚𝐧𝐲𝐭𝐢𝐦𝐞. 🚀❤️**\n\n"
-            "**🔵Live 𝐁𝐚𝐭𝐜𝐡 𝐓𝐨𝐩𝐢𝐜 𝐖𝐢𝐬𝐞 𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐫🟠**\n"
+            "**🔵🟡🟢🤖 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴀᴘᴘx ᴠ3 ᴀᴜᴛᴏᴍᴀᴛɪᴄ ᴄʟᴀꜱꜱ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ!🔵🟡🟢**\n\n"
+            "** ᴅᴀɪʟʏ ʟɪᴠᴇ ᴄʟᴀꜱꜱ ᴜᴘᴅᴀᴛᴇꜱ – ꜰᴜʟʟʏ ᴀᴜᴛᴏᴍᴀᴛᴇᴅ🚀❤️ 🕒 ꜱᴀᴠᴇ ᴛɪᴍᴇ ᴡɪᴛʜ ʜᴀꜱꜱʟᴇ-ꜰʀᴇᴇ ꜱᴄʜᴇᴅᴜʟɪɴɢ🚀❤️ 📲 ɪɴꜱᴛᴀɴᴛ ᴜᴘᴅᴀᴛᴇꜱ ᴛᴏ ʏᴏᴜʀ ᴛᴇʟᴇɢʀᴀᴍ ɢʀᴏᴜᴘ ꜱᴜʙᴊᴇᴄᴛ ᴛᴏᴘɪᴄꜱ🚀❤️ 💡 ɴᴇᴇᴅ ʜᴇʟᴘ? ᴏʀ ᴍᴏʀᴇ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ᴘʀᴇꜱꜱ ʜᴇʟᴘ ʙᴏᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ꜱᴛᴀʀᴛᴇᴅ! 🚀❤️**\n\n"
             "**🟢ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🟡:- @skillgram**"
         )
 
@@ -286,6 +285,4 @@ async def start_batchcreate(bot, message: Message):
             LOG_CHANNEL_ID,
             f"🟢**𝐇𝐞𝐫𝐞 𝐢𝐬 𝐲𝐨𝐮𝐫 𝐟𝐢𝐧𝐚𝐥 ʙᴀᴛᴄʜ ᴀᴅᴅ ᴄᴏᴍᴍᴀɴᴅ ꜰᴏʀ ᴛʜɪꜱ ʙᴀᴛᴄʜ :- {batch_name}**🟠\n\n👇🔰**ꜰᴏʀ ʟɪᴠᴇ ᴄᴏᴜʀꜱᴇ ᴜᴘᴅᴀᴛᴇ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ**🔰👇\n\n`{final_string_live}`\n\n👇🔰**ꜰᴏʀ ᴄᴏᴍᴘʟᴇᴛᴇ ᴄᴏᴜʀꜱᴇ ᴜᴘᴅᴀᴛᴇ ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅ**🔰👇\n\n`{final_string_Recorded}`\n\n🟢**☢️ᴄᴍᴅ ɢɪᴠᴇɴ ʙʏ ☢️:- {message.from_user.mention}**🟠"
         )
-
-
 
