@@ -351,6 +351,8 @@ async def remove_batch(bot, message):
 async def load_batches_on_start():
     try:
         batch_configs = await load_config_mongo()
+        if not scheduler.running:
+            scheduler.start()
         for bname, config in batch_configs.items():
             schedule_time = config["scheduler_time"]
             scheduler.add_job(
@@ -363,8 +365,7 @@ async def load_batches_on_start():
     except Exception as e:
         print(f"Error loading batches on startup: {e}")
 
-scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")       
-scheduler.start()
+scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
 
 @Client.on_message(filters.command("restart"))
 async def restart_bot(bot, message):
@@ -414,28 +415,70 @@ async def start_batch_immediately(bot, message):
 
 @Client.on_message(filters.command("getdata"))
 async def get_mongo_data(bot, message):
-    """Retrieve and display batch data from MongoDB."""
+    """
+    Fetch all saved batch configurations from MongoDB and send them in the same format 
+    as used in the /addbatch command.
+    """
     if not check_subscription(message.from_user.id):
         await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
         return
     try:
-        # Load all batch data from MongoDB
-        batch_data = await load_config_mongo()
+        # Fetch all batch data from MongoDB
+        batch_configs = await load_config_mongo()
 
-        if not batch_data:
-            await message.reply("No batch data found in MongoDB.")
+        if not batch_configs:
+            await message.reply("**❌ No batch configurations found in the database.**")
             return
 
-        # Format the batch data for display
-        response = "**📋 Available Batches in MongoDB:**\n\n"
-        for batch_name, batch_info in batch_data.items():
-            response += f"**Batch Name:** `{batch_name}`\n"
-            response += f"**Subjects:** {', '.join(batch_info.get('subjects', []))}\n"
-            response += f"**Created By:** {batch_info.get('created_by', 'Unknown')}\n"
-            response += f"**Last Updated:** {batch_info.get('last_updated', 'Unknown')}\n\n"
+        response = "**🟢 𝐒𝐚𝐯𝐞𝐝 𝐁𝐚𝐭𝐜𝐡 𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧𝐬:🟠**\n\n"
+        
+        for bname, details in batch_configs.items():
+            # Extract required fields
+            subject_and_channel = details.get("subject_and_channel", {})
+            chat_id = details.get("chat_id", "")
+            courseid = details.get("courseid", "")
+            scheduler_time = details.get("scheduler_time", {})
+            api_url = details.get("api_url", "")
+            token = details.get("token", "")
 
-        # Send the formatted response
+            # Format the subject_and_channel data
+            subject_channel_pairs = []
+            for subject_id, (chatid, thread_id) in subject_and_channel.items():
+                subject_channel_pairs.append(f"{subject_id}:{chatid}:{thread_id}")
+
+            subject_channel_str = ",".join(subject_channel_pairs)
+            hour = scheduler_time.get("hour", 0)
+            minute = scheduler_time.get("minute", 0)
+
+            # Prepare the response format
+            response += f"🔹 **Batch Name:**🟡 `{bname}`\n"
+            response += f"📚 **Add Command:**🟢 `/addbatch {bname} {subject_channel_str} {chat_id} {courseid} {hour} {minute} {api_url} {token}`\n"
+            response += "=====================\n\n"
+
+        # Send the response
         await message.reply(response)
 
+        # Save response to .txt file for easy reference
+        file_name = "saved_batches.txt"
+        with open(file_name, "w", encoding="utf-8") as file:
+            file.write(response)
+
+        # Send the .txt file to the user
+        await bot.send_document(
+            chat_id=message.chat.id,
+            document=file_name,
+            caption=f"**📋 ᴀʟʟ ꜱᴀᴠᴇᴅ ʙᴀᴛᴄʜ ᴄᴏɴꜰɪɢᴜʀᴀᴛɪᴏɴꜱ:🟠**\n\n**🔵ʜᴇʀᴇ ɪꜱ ᴀ ꜰɪʟᴇ ᴄᴏɴᴛᴀɪɴɪɴɢ ᴀʟʟ ᴛʜᴇ ꜱᴀᴠᴇᴅ ʙᴀᴛᴄʜ ᴄᴏɴꜰɪɢᴜʀᴀᴛɪᴏɴꜱ ɪɴ ᴛʜᴇ ꜱᴀᴍᴇ ꜰᴏʀᴍᴀᴛ ᴀꜱ `/ᴀᴅᴅʙᴀᴛᴄʜ`. 📂**\n\n**🟠ʀᴇQᴜᴇꜱᴛᴇᴅ ʙʏ:🟡** {message.from_user.mention}"
+        )
+
+        # Optional: Send the .txt file to the log channel for admin reference
+        await bot.send_document(
+            chat_id=LOG_CHANNEL_ID,
+            document=file_name,
+            caption=f"**📋 ᴀʟʟ ꜱᴀᴠᴇᴅ ʙᴀᴛᴄʜ ᴄᴏɴꜰɪɢᴜʀᴀᴛɪᴏɴꜱ:🟠**\n\n**🔵ʜᴇʀᴇ ɪꜱ ᴀ ꜰɪʟᴇ ᴄᴏɴᴛᴀɪɴɪɴɢ ᴀʟʟ ᴛʜᴇ ꜱᴀᴠᴇᴅ ʙᴀᴛᴄʜ ᴄᴏɴꜰɪɢᴜʀᴀᴛɪᴏɴꜱ ɪɴ ᴛʜᴇ ꜱᴀᴍᴇ ꜰᴏʀᴍᴀᴛ ᴀꜱ `/ᴀᴅᴅʙᴀᴛᴄʜ`. 📂**\n\n**🟠ʀᴇQᴜᴇꜱᴛᴇᴅ ʙʏ:🟡** {message.from_user.mention}"
+        )
+
+        # Clean up the file after sending
+        os.remove(file_name)
+
     except Exception as e:
-        await message.reply(f"Error retrieving data: {e}")
+        await message.reply(f"❌ **Error fetching batch data:** {e}")
