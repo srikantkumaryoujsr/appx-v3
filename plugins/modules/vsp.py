@@ -40,7 +40,7 @@ import os
 from plugins.modules.subscription import check_subscription
 
 # MongoDB Configuration
-MONGO_URI = "mongodb+srv://admin:GJbTcd31APW1YI7o@cluster0.5ng0lcy.mongodb.net/?retryWrites=true&w=majority"
+MONGO_URI = "mongodb+srv://sethshuey1:YSedTMwYcS77yilr@cluster0.2rpti.mongodb.net/theatom?retryWrites=true&w=majority"
 client = AsyncIOMotorClient(MONGO_URI)
 db = client["bot_database"]
 config_collection = db["batch_configs"]
