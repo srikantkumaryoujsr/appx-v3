@@ -456,7 +456,8 @@ async def get_mongo_data(bot, message):
             response += "=====================\n\n"
 
         # Send the response
-        await message.reply(response)
+        if len(response) < 4096: 
+            await message.reply(response)
 
         # Save response to .txt file for easy reference
         file_name = "saved_batches.txt"
