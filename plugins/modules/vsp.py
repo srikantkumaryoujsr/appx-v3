@@ -483,3 +483,38 @@ async def get_mongo_data(bot, message):
 
     except Exception as e:
         await message.reply(f"❌ **Error fetching batch data:** {e}")
+
+@Client.on_message(filters.command("startallbatches"))
+async def start_all_batches(bot, message):
+    """Start all scheduled batches sequentially, one after another."""
+    if not check_subscription(message.from_user.id):
+        await message.reply_text("**❌ ʏᴏᴜ ᴅᴏ ɴᴏᴛ ʜᴀᴠᴇ ᴀɴ ᴀᴄᴛɪᴠᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ.🟠🟢🔴**\n\n**🟡☢️ᴄᴏɴᴛᴀᴄᴛ ᴀᴅᴍɪɴ ᴛᴏ ꜱᴜʙꜱᴄʀɪʙᴇ.🔵❤️**")
+        return
+
+    try:
+        # Load all batch configurations from MongoDB
+        batch_configs = await load_config_mongo()
+
+        if not batch_configs:
+            await message.reply("**❌ No batches configured.**")
+            return
+
+        await message.reply("**🟢 Starting all batches sequentially... 🟠**")
+
+        # Iterate through all batches and start them one by one
+        total_batches = len(batch_configs)
+        current_batch = 1
+
+        for bname, config in batch_configs.items():
+            await message.reply(f"**🟢 Starting batch {current_batch}/{total_batches}:🟠 `{bname}`**")
+            
+            # Await the completion of the current batch
+            await all_subject_send(bot, bname, batch_configs)
+            
+            await message.reply(f"**🟢 Batch {current_batch}/{total_batches} completed:🟠 `{bname}`**")
+            current_batch += 1
+
+        await message.reply("**🟢 All batches completed successfully! 🟠**")
+
+    except Exception as e:
+        await message.reply(f"**❌ Error starting batches: {e}**")
