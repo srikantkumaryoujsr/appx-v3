@@ -1,6 +1,6 @@
 
-# code wrriten by vspteam
+# code wrriten by kush live uploader
 
 # Deploy Your App to Heroku
 
-[![Deploy to heroku chacha](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/vspjidev/DELHIPOLICELIVE1)
+[![Deploy to heroku chacha](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/lovekush0710/APPX-V3-LIVE-AUTO)
