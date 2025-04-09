@@ -5,7 +5,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
 from plugins.modules.subscription import check_subscription
-LOG_CHANNEL_ID = -1002511853256
+LOG_CHANNEL_ID = -1002608752035
 
 
 # Predefined token
