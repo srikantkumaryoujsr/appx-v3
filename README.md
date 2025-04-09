@@ -3,4 +3,4 @@
 
 # Deploy Your App to Heroku
 
-[![Deploy to heroku chacha](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/lovekush0710/APPX-V3-LIVE-PRO)
+[![Deploy to heroku chacha](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/srikantkumaryoujsr1/app3)
