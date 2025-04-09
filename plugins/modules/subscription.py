@@ -31,13 +31,13 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from .. import bot as Client
 
-MONGO_URI = "mongodb+srv://azaki:123@cluster0.56xkote.mongodb.net/inventory3-test?retryWrites=true&w=majority" 
+MONGO_URI = "mongodb+srv://srikantkumar2025:QC5M1BgTGxxUqM4R@cluster0.u6zhg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0" 
 
 client = MongoClient(MONGO_URI)
 db = client["bot_database"]  
 subscriptions = db["subscriptions"]  
 
-ADMINS = [7653322737] 
+ADMINS = [7734031524] 
 
 def add_subscription(user_id, days=30):
     """Add or extend a subscription for a user."""
